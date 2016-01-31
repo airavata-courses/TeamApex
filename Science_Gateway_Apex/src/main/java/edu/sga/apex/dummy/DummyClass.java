@@ -1,4 +1,4 @@
-package com.apex.dummy;
+package edu.sga.apex.dummy;
 
 public class DummyClass {
 
