@@ -6,6 +6,37 @@
     <artifactId>ScienceGatewayApex</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0</version>
+    
+    <properties>
+
+		<!-- Logging -->
+		<slf4j.version>1.7.5</slf4j.version>
+		
+	</properties>
+	
+   	<dependencies>
+   		
+   		<!-- SLF4J Logging -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Jcraft -->
+   		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>0.1.53</version>
+		</dependency>
+   	</dependencies>
 
 	<build>
 	  <directory>target</directory>
