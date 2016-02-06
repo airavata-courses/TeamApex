@@ -153,10 +153,4 @@ public class KarstSCImpl implements SCInterface{
 
 		return null;
 	}
-
-	public static void main(String[] args) {
-		KarstSCImpl kimpl = new KarstSCImpl();
-		
-		kimpl.monitorJob("2323");
-	}
 }
