@@ -11,9 +11,11 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import edu.sga.apex.bean.SCPRequestBean;
+import edu.sga.apex.bean.SSHRequestBean;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.util.Constants;
 import edu.sga.apex.util.SFTPUtil;
+import edu.sga.apex.util.SSHUtil;
 
 
 /**
@@ -23,18 +25,18 @@ public class KarstSCImpl implements SCInterface{
 
 	private static final String script_path = "template/karst_job.script";
 	private static final String local_output_path = System.getProperty("user.home") + "/temp.script";
-	
+
 	private Properties properties;
-	
+
 	public KarstSCImpl() {
 		try
 		{
 			this.properties = new Properties();
 			String propFileName = "config.properties";
-	
+
 			InputStream inputStream = getClass().getClassLoader()
 					.getResourceAsStream(propFileName);
-	
+
 			if(inputStream != null) {
 				properties.load(inputStream);
 			}
@@ -121,10 +123,10 @@ public class KarstSCImpl implements SCInterface{
 			bean.setPassPhrase(passPhrase);
 			bean.setPrivateKeyFilePath(loginKey);
 			bean.setKnownHostsFilePath(knownHosts);
-			
+
 			bean.setSourceFilePath(srcFile);
 			bean.setDestFilePath(destFile);
-			
+
 			SFTPUtil util = new SFTPUtil(bean);
 			util.sendToServer();
 		}
@@ -142,15 +144,37 @@ public class KarstSCImpl implements SCInterface{
 		// Copy Email send script.
 		String srcFileEmail = properties.getProperty("srcFileEmail");
 		String destFileEmail = properties.getProperty("destFileEmail");
-		
+
 		this.copyFiles(srcFileEmail, destFileEmail);
-		
+
 		// Copy Email Properties Script.
 		String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
 		String destFileEmailProp = properties.getProperty("destFileEmailProp");
-		
+
 		this.copyFiles(srcFileEmailProp, destFileEmailProp);
 
+		// Calling the email send
+
+		String sendEmailcommand = "source " + destFileEmail + " " + jobId;
+
+		String loginUser = properties.getProperty("loginUser");
+		String loginKey = properties.getProperty("loginKey");
+		String knownHosts = properties.getProperty("knownHosts");
+		String hostName = properties.getProperty("hostName");
+		String passPhrase = properties.getProperty("passPhrase");
+
+		SSHRequestBean bean = new SSHRequestBean();
+		bean.setHostName(hostName);
+		bean.setSshPort(Constants.SSH_PORT);
+		bean.setUserName(loginUser);
+		bean.setPassPhrase(passPhrase);
+		bean.setPrivateKeyFilePath(loginKey);
+		bean.setKnownHostsFilePath(knownHosts);
+		bean.setCommands(sendEmailcommand);
+
+		SSHUtil util = new SSHUtil(bean);
+		util.executeCommands();
+		System.out.println("Command Executed: " + sendEmailcommand);
 		return null;
 	}
 }

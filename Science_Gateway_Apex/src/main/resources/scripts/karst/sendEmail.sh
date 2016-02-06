@@ -13,7 +13,7 @@ mailFile=report.mail
 jobId=$1
 
 if [ -z $1 ];then
-	echo "ERROR: Insufficient Arguments [USAGE: sendEmail.sh <JOB_ID>]."
+	/bin/echo "ERROR: Insufficient Arguments [USAGE: sendEmail.sh <JOB_ID>]."
 	exit 1
 fi
 
@@ -21,13 +21,13 @@ fi
 cat /dev/null > $mailFile
 
 # Creating a mail headers
-echo "From: $mailfrom" >> $mailFile
-echo "To: $mailto" >> $mailFile
-echo "Subject: Job ID: $jobId $subject" >> $mailFile
+/bin/echo "From: $mailfrom" >> $mailFile
+/bin/echo "To: $mailto" >> $mailFile
+/bin/echo "Subject: Job ID: $jobId $subject" >> $mailFile
 
 # Adding job status report.
-echo "Following is the status of Job $jobId:-" >> $mailFile
-qstat $jobId >> $mailFile
+/bin/echo "Following is the status of Job $jobId:-" >> $mailFile
+/usr/local/bin/qstat $jobId >> $mailFile
 
 # Send the mail notification.
-sendmail $mailto < $mailFile
+/usr/sbin/sendmail $mailto < $mailFile
