@@ -11,9 +11,11 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import edu.sga.apex.bean.SCPRequestBean;
+import edu.sga.apex.bean.SSHRequestBean;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.util.Constants;
 import edu.sga.apex.util.SFTPUtil;
+import edu.sga.apex.util.SSHUtil;
 
 
 /**
@@ -22,7 +24,7 @@ import edu.sga.apex.util.SFTPUtil;
 public class KarstSCImpl implements SCInterface{
 
 	private static final String script_path = "template/karst_job.script";
-	private static final String local_output_path = System.getProperty("user.home") + "/temp.script";
+	//private static final String local_output_path = System.getProperty("user.home") + "/temp.script";
 	
 	private Properties properties;
 	
@@ -49,9 +51,13 @@ public class KarstSCImpl implements SCInterface{
 
 	public void createJobScript(){
 		Scanner input = new Scanner(System.in);
-
-		File tempFile = new File(local_output_path);
-
+		
+		String path = properties.getProperty("tempJobScript");
+		if (path.startsWith("~" + File.separator)) {
+		    path = System.getProperty("user.home") + path.substring(1);
+		}
+		File tempFile = new File(path);
+		
 		try 
 		{
 			InputStreamReader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream(script_path));
@@ -98,9 +104,43 @@ public class KarstSCImpl implements SCInterface{
 	}
 
 	@Override
-	public String submitJob(SCPRequestBean SCPRequestBean) {
-		// TODO Auto-generated method stub
-		return null;
+	public String submitJob() {
+		try{
+			// create the job script file
+			createJobScript();
+			
+			// copy the job script
+			String tempJobScript = properties.getProperty("tempJobScript");
+			String destJobScript = properties.getProperty("destJobScript");
+			this.copyFiles(tempJobScript, destJobScript);
+			
+			// Copy Email send script.
+			String srcFileEmail = properties.getProperty("srcFileEmail");
+			String destFileEmail = properties.getProperty("destFileEmail");
+			this.copyFiles(srcFileEmail, destFileEmail);
+			
+			// Copy Email Properties Script.
+			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
+			String destFileEmailProp = properties.getProperty("destFileEmailProp");
+			this.copyFiles(srcFileEmailProp, destFileEmailProp);
+			
+			// submit the job
+			SSHRequestBean bean = new SSHRequestBean();
+			bean.setHostName(properties.getProperty("hostName"));
+			bean.setSshPort(Constants.SSH_PORT);
+			bean.setUserName(properties.getProperty("loginUser"));
+			bean.setPassPhrase(properties.getProperty("passPhrase"));
+			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
+			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+			bean.setCommands("qsub temp.script");
+			
+			SSHUtil util = new SSHUtil(bean);
+			util.executeCommands();
+			return "Job submitted successfully";
+		}catch(Exception e){
+			e.printStackTrace();
+			return "Job failed to submit";
+		}
 	}
 
 	@Override
@@ -152,5 +192,10 @@ public class KarstSCImpl implements SCInterface{
 		this.copyFiles(srcFileEmailProp, destFileEmailProp);
 
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		KarstSCImpl karst = new KarstSCImpl();
+		karst.submitJob();
 	}
 }
