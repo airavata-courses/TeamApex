@@ -95,7 +95,7 @@ public class SSHUtil {
 		
 		try {
 			System.out.println("Starting command execution...");
-			execChannel.setCommand(this.requestBean.getCommand());
+			execChannel.setCommand(this.requestBean.getCommands());
 			execChannel.connect();
 			System.out.println("Execution completed!");
 			
@@ -126,7 +126,7 @@ public class SSHUtil {
 		bean.setPassPhrase("aq1sw2de3");
 		bean.setPrivateKeyFilePath("C:\\Users\\Gaurav-PC\\.ssh\\id_rsa");
 		bean.setKnownHostsFilePath("C:\\Users\\Gaurav-PC\\.ssh\\known_hosts");
-		bean.setCommand("pwd;");
+		bean.setCommands("pwd;");
 		
 		SSHUtil util = new SSHUtil(bean);
 		util.executeCommands();

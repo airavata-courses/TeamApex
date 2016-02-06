@@ -26,7 +26,7 @@ public class SSHRequestBean {
 	private int sshPort;
 	
 	/** The command. */
-	private String command;
+	private String commands;
 
 	/**
 	 * Gets the user name.
@@ -141,8 +141,8 @@ public class SSHRequestBean {
 	 *
 	 * @return the command
 	 */
-	public String getCommand() {
-		return command;
+	public String getCommands() {
+		return commands;
 	}
 
 	/**
@@ -150,8 +150,8 @@ public class SSHRequestBean {
 	 *
 	 * @param command the new command
 	 */
-	public void setCommand(String command) {
-		this.command = command;
+	public void setCommands(String command) {
+		this.commands = command;
 	}
 
 	/* (non-Javadoc)
@@ -163,7 +163,7 @@ public class SSHRequestBean {
 				+ hostName + ", passPhrase=" + passPhrase
 				+ ", privateKeyFilePath=" + privateKeyFilePath
 				+ ", KnownHostsFilePath=" + KnownHostsFilePath + ", sshPort="
-				+ sshPort + ", command=" + command + "]";
+				+ sshPort + ", command=" + commands + "]";
 	}
 
 }
