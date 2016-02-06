@@ -87,7 +87,9 @@ public class KarstSCImpl implements SCInterface{
 					System.out.println("Please enter the job");
 					job_name = input.nextLine();
 					line = line.replace("$job_name", job_name);
-				}				
+				}else if(line.contains("$job_name")){
+					line = line.replace("$job_name", job_name);
+				}
 				pw.println(line);
 				pw.flush();
 			}
