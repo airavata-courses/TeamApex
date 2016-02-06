@@ -122,13 +122,6 @@ public class KarstSCImpl implements SCInterface{
 			bean.setPrivateKeyFilePath(loginKey);
 			bean.setKnownHostsFilePath(knownHosts);
 			
-			System.out.println("hostname: " + hostName);
-			System.out.println("portName: " + portName);
-			System.out.println("loginUser: " + loginUser);
-			System.out.println("passPhrase: " + passPhrase);
-			System.out.println("loginKey: " + loginKey);
-			System.out.println("knownHosts: " + knownHosts);
-			
 			bean.setSourceFilePath(srcFile);
 			bean.setDestFilePath(destFile);
 			
