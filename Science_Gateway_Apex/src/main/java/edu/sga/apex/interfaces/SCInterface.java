@@ -1,4 +1,4 @@
-package com.sga.apex.interfaces;
+package edu.sga.apex.interfaces;
 
 import edu.sga.apex.bean.SCPRequestBean;
 
