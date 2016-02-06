@@ -1,7 +1,12 @@
 package edu.sga.apex.impl;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -10,13 +15,62 @@ import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.util.Constants;
 import edu.sga.apex.util.SFTPUtil;
 
-public class KarstSCImpl implements SCInterface {
 
-	/**
-	 * 
-	 */
+/**
+ * 
+ */
+public class KarstSCImpl implements SCInterface{
+
+	private static final String script_path = "template/karst_job.script";
+	private static final String local_output_path = System.getProperty("user.home") + "/temp.script";
+
 	public void createJobScript(){
 		Scanner input = new Scanner(System.in);
+
+		File tempFile = new File(local_output_path);
+
+		try 
+		{
+			InputStreamReader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream(script_path));
+			BufferedReader br = new BufferedReader(reader);
+
+			tempFile.getParentFile().mkdirs();
+			PrintWriter pw = new PrintWriter(tempFile);
+
+			String line = null, job_name = null;
+			while((line = br.readLine()) != null){
+				if(line.contains("$nodes")){
+					System.out.println("Please enter the number of nodes");
+					String nodes = input.nextLine();
+					line = line.replace("$nodes", nodes);
+				}
+				if(line.contains("$processors_per_node")){
+					System.out.println("Please enter the processors per node");
+					String ppn = input.nextLine();
+					line = line.replace("$processors_per_node", ppn);
+
+				}
+				if(line.contains("$emailId")){
+					System.out.println("Please enter the email id");
+					String emailId = input.nextLine();
+					line = line.replace("$emailId", emailId);
+				}
+				if(line.contains("$job_name") && job_name == null){
+					System.out.println("Please enter the job");
+					job_name = input.nextLine();
+					line = line.replace("$job_name", job_name);
+				}				
+				pw.println(line);
+				pw.flush();
+			}
+			pw.close();
+			br.close();
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 		input.close();
 	}
 
@@ -63,12 +117,12 @@ public class KarstSCImpl implements SCInterface {
 			bean.setKnownHostsFilePath(knownHosts);
 
 			SFTPUtil util = new SFTPUtil(bean);
-			
+
 			// Copy Email send script.
 			bean.setSourceFilePath(srcFile);
 			bean.setDestFilePath(destFile);
 			util.sendToServer();
-			
+
 			// Copy email send properties.
 			bean.setSourceFilePath(srcFileProp);
 			bean.setDestFilePath(destFileProp);
@@ -92,10 +146,4 @@ public class KarstSCImpl implements SCInterface {
 
 		return null;
 	}
-
-	public static void main(String[] args) {
-		KarstSCImpl kimpl = new KarstSCImpl();
-		kimpl.monitorJob("12345");
-	}
-
 }
