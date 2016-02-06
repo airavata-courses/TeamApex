@@ -17,7 +17,7 @@ public interface SCInterface {
 	 * @param SCPRequestBean
 	 * @return a status saying its submitted successfully or failed
 	 */
-	public String submitJob(SCPRequestBean SCPRequestBean);
+	public String submitJob();
 	
 	/**
 	 * TODO
