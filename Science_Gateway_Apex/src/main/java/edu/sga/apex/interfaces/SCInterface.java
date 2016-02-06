@@ -23,7 +23,7 @@ public interface SCInterface {
 	 * TODO
 	 * @return 
 	 */
-	public String copyFiles();
+	public String copyFiles(String srcFile, String destFile);
 	
 	/**
 	 * Function is used to get an explicit status update of a job submitted

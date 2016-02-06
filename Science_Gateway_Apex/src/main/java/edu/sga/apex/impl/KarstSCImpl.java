@@ -23,6 +23,29 @@ public class KarstSCImpl implements SCInterface{
 
 	private static final String script_path = "template/karst_job.script";
 	private static final String local_output_path = System.getProperty("user.home") + "/temp.script";
+	
+	private Properties properties;
+	
+	public KarstSCImpl() {
+		try
+		{
+			this.properties = new Properties();
+			String propFileName = "config.properties";
+	
+			InputStream inputStream = getClass().getClassLoader()
+					.getResourceAsStream(propFileName);
+	
+			if(inputStream != null) {
+				properties.load(inputStream);
+			}
+			else {
+				throw new FileNotFoundException("property file: " + propFileName + " not found!");
+			}
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
 	public void createJobScript(){
 		Scanner input = new Scanner(System.in);
@@ -81,29 +104,12 @@ public class KarstSCImpl implements SCInterface{
 	}
 
 	@Override
-	public String copyFiles() {
+	public String copyFiles(String srcFile, String destFile) {
 
 		try {
-			Properties properties = new Properties();
-			String propFileName = "config.properties";
-
-			InputStream inputStream = getClass().getClassLoader()
-					.getResourceAsStream(propFileName);
-
-			if(inputStream != null) {
-				properties.load(inputStream);
-			}
-			else {
-				throw new FileNotFoundException("property file: " + propFileName + " not found!");
-			}
-
 			String loginUser = properties.getProperty("loginUser");
 			String loginKey = properties.getProperty("loginKey");
 			String knownHosts = properties.getProperty("knownHosts");
-			String srcFile = properties.getProperty("srcFile");
-			String srcFileProp = properties.getProperty("srcFileProp");
-			String destFile = properties.getProperty("destFile");
-			String destFileProp = properties.getProperty("destFileProp");
 			String hostName = properties.getProperty("hostName");
 			Integer portName = Constants.SSH_PORT;
 			String passPhrase = properties.getProperty("passPhrase");
@@ -115,21 +121,19 @@ public class KarstSCImpl implements SCInterface{
 			bean.setPassPhrase(passPhrase);
 			bean.setPrivateKeyFilePath(loginKey);
 			bean.setKnownHostsFilePath(knownHosts);
-
-			SFTPUtil util = new SFTPUtil(bean);
-
-			// Copy Email send script.
+			
+			System.out.println("hostname: " + hostName);
+			System.out.println("portName: " + portName);
+			System.out.println("loginUser: " + loginUser);
+			System.out.println("passPhrase: " + passPhrase);
+			System.out.println("loginKey: " + loginKey);
+			System.out.println("knownHosts: " + knownHosts);
+			
 			bean.setSourceFilePath(srcFile);
 			bean.setDestFilePath(destFile);
+			
+			SFTPUtil util = new SFTPUtil(bean);
 			util.sendToServer();
-
-			// Copy email send properties.
-			bean.setSourceFilePath(srcFileProp);
-			bean.setDestFilePath(destFileProp);
-			util.sendToServer();
-
-			System.out.println("SUCCESS");
-
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
@@ -142,8 +146,24 @@ public class KarstSCImpl implements SCInterface{
 	@Override
 	public String monitorJob(String jobId) {
 
-		this.copyFiles();
+		// Copy Email send script.
+		String srcFileEmail = properties.getProperty("srcFileEmail");
+		String destFileEmail = properties.getProperty("destFileEmail");
+		
+		this.copyFiles(srcFileEmail, destFileEmail);
+		
+		// Copy Email Properties Script.
+		String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
+		String destFileEmailProp = properties.getProperty("destFileEmailProp");
+		
+		this.copyFiles(srcFileEmailProp, destFileEmailProp);
 
 		return null;
+	}
+
+	public static void main(String[] args) {
+		KarstSCImpl kimpl = new KarstSCImpl();
+		
+		kimpl.monitorJob("2323");
 	}
 }
