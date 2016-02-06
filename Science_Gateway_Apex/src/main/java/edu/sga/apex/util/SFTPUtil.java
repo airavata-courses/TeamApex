@@ -9,7 +9,7 @@ import edu.sga.apex.bean.SCPRequestBean;
  * 
  * @author Gourav Shenoy
  */
-public class SCPUtil {
+public class SFTPUtil {
 
 	/** The jsch. */
 	private JSch jsch = null;
@@ -31,7 +31,7 @@ public class SCPUtil {
 	 *
 	 * @param requestBean the request bean
 	 */
-	public SCPUtil(SCPRequestBean requestBean) {
+	public SFTPUtil(SCPRequestBean requestBean) {
 		this.requestBean = requestBean;
 		this.jsch = new JSch();
 	}
@@ -115,7 +115,7 @@ public class SCPUtil {
 		bean.setPrivateKeyFilePath("C:\\Users\\Gaurav-PC\\.ssh\\id_rsa");
 		bean.setKnownHostsFilePath("C:\\Users\\Gaurav-PC\\.ssh\\known_hosts");
 		
-		SCPUtil util = new SCPUtil(bean);
+		SFTPUtil util = new SFTPUtil(bean);
 		util.sendToServer();
 	}
 }

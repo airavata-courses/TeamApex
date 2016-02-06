@@ -12,6 +12,9 @@
 		<!-- Logging -->
 		<slf4j.version>1.7.5</slf4j.version>
 		
+		<!-- Test -->
+		<junit.version>4.11</junit.version>
+		
 	</properties>
 	
    	<dependencies>
@@ -36,8 +39,17 @@
 			<artifactId>jsch</artifactId>
 			<version>0.1.53</version>
 		</dependency>
+		
+		<!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	
    	</dependencies>
-
+   	
 	<build>
 	  <directory>target</directory>
 	  <outputDirectory>target/classes</outputDirectory>
