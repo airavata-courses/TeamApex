@@ -23,13 +23,14 @@ public interface SCInterface {
 	 * TODO
 	 * @return 
 	 */
-	public String copyFile();
+	public String copyFiles();
 	
 	/**
-	 * TODO
+	 * Function is used to get an explicit status update of a job submitted
+	 * @param jobId
 	 * @return
 	 */
-	public String monitorJob();
+	public String monitorJob(String jobId);
 	
 	
 }
