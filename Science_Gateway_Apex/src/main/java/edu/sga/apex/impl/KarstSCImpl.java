@@ -168,53 +168,58 @@ public class KarstSCImpl implements SCInterface{
 
 			SFTPUtil util = new SFTPUtil(bean);
 			util.sendToServer();
+			return "File copied successfully";
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
+			return "Failed to copy file";
 		}
-
-		return null;
 
 	}
 
 	@Override
-	public String monitorJob(String jobId) {
-
-		// Copy Email send script.
-		String srcFileEmail = properties.getProperty("srcFileEmail");
-		String destFileEmail = properties.getProperty("destFileEmail");
-
-		this.copyFiles(srcFileEmail, destFileEmail);
-
-		// Copy Email Properties Script.
-		String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
-		String destFileEmailProp = properties.getProperty("destFileEmailProp");
-
-		this.copyFiles(srcFileEmailProp, destFileEmailProp);
-
-		// Calling the email send
-
-		String sendEmailcommand = "source " + destFileEmail + " " + jobId;
-
-		String loginUser = properties.getProperty("loginUser");
-		String loginKey = properties.getProperty("loginKey");
-		String knownHosts = properties.getProperty("knownHosts");
-		String hostName = properties.getProperty("hostName");
-		String passPhrase = properties.getProperty("passPhrase");
-
-		SSHRequestBean bean = new SSHRequestBean();
-		bean.setHostName(hostName);
-		bean.setSshPort(Constants.SSH_PORT);
-		bean.setUserName(loginUser);
-		bean.setPassPhrase(passPhrase);
-		bean.setPrivateKeyFilePath(loginKey);
-		bean.setKnownHostsFilePath(knownHosts);
-		bean.setCommands(sendEmailcommand);
-
-		SSHUtil util = new SSHUtil(bean);
-		util.executeCommands();
-		System.out.println("Command Executed: " + sendEmailcommand);
-		return null;
+	public String monitorJob(String jobId) {	
+		try{
+			// Copy Email send script.
+			String srcFileEmail = properties.getProperty("srcFileEmail");
+			String destFileEmail = properties.getProperty("destFileEmail");
+	
+			this.copyFiles(srcFileEmail, destFileEmail);
+	
+			// Copy Email Properties Script.
+			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
+			String destFileEmailProp = properties.getProperty("destFileEmailProp");
+	
+			this.copyFiles(srcFileEmailProp, destFileEmailProp);
+	
+			// Calling the email send
+	
+			String sendEmailcommand = "source " + destFileEmail + " " + jobId;
+	
+			String loginUser = properties.getProperty("loginUser");
+			String loginKey = properties.getProperty("loginKey");
+			String knownHosts = properties.getProperty("knownHosts");
+			String hostName = properties.getProperty("hostName");
+			String passPhrase = properties.getProperty("passPhrase");
+	
+			SSHRequestBean bean = new SSHRequestBean();
+			bean.setHostName(hostName);
+			bean.setSshPort(Constants.SSH_PORT);
+			bean.setUserName(loginUser);
+			bean.setPassPhrase(passPhrase);
+			bean.setPrivateKeyFilePath(loginKey);
+			bean.setKnownHostsFilePath(knownHosts);
+			bean.setCommands(sendEmailcommand);
+	
+			SSHUtil util = new SSHUtil(bean);
+			util.executeCommands();
+			System.out.println("Command Executed: " + sendEmailcommand);
+			return "Monitor job successful";
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+			return "Monitor job failed";
+		}
 	}
 	
 	public static void main(String[] args) {
