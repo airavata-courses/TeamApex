@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import edu.sga.apex.bean.SCPRequestBean;
 import edu.sga.apex.util.Constants;
-import edu.sga.apex.util.SCPUtil;
+import edu.sga.apex.util.SFTPUtil;
 
 public class TestSCPUtil {
 	
@@ -41,8 +41,8 @@ public class TestSCPUtil {
 			bean.setPrivateKeyFilePath(properties.getProperty("privateKey"));
 			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));		
 			
-			SCPUtil util = new SCPUtil(bean);
-			util.sendToServer();
+			//SCPUtil util = new SCPUtil(bean);
+			//util.sendToServer();
 			
 			assertTrue(true);
 		}
