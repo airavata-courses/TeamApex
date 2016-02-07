@@ -50,13 +50,13 @@ public class KarstSCImpl implements SCInterface{
 
 	public void createJobScript(){
 		Scanner input = new Scanner(System.in);
-		
+
 		String path = properties.getProperty("tempJobScript");
 		if (path.startsWith("~" + File.separator)) {
-		    path = System.getProperty("user.home") + path.substring(1);
+			path = System.getProperty("user.home") + path.substring(1);
 		}
 		File tempFile = new File(path);
-		
+
 		try 
 		{
 			InputStreamReader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream(script_path));
@@ -87,7 +87,9 @@ public class KarstSCImpl implements SCInterface{
 					System.out.println("Please enter the job");
 					job_name = input.nextLine();
 					line = line.replace("$job_name", job_name);
-				}				
+				}else if(line.contains("$job_name")){
+					line = line.replace("$job_name", job_name);
+				}
 				pw.println(line);
 				pw.flush();
 			}
@@ -107,22 +109,22 @@ public class KarstSCImpl implements SCInterface{
 		try{
 			// create the job script file
 			createJobScript();
-			
+
 			// copy the job script
 			String tempJobScript = properties.getProperty("tempJobScript");
 			String destJobScript = properties.getProperty("destJobScript");
 			this.copyFiles(tempJobScript, destJobScript);
-			
+
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
 			String destFileEmail = properties.getProperty("destFileEmail");
 			this.copyFiles(srcFileEmail, destFileEmail);
-			
+
 			// Copy Email Properties Script.
 			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
 			String destFileEmailProp = properties.getProperty("destFileEmailProp");
 			this.copyFiles(srcFileEmailProp, destFileEmailProp);
-			
+
 			// submit the job
 			SSHRequestBean bean = new SSHRequestBean();
 			bean.setHostName(properties.getProperty("hostName"));
@@ -132,7 +134,7 @@ public class KarstSCImpl implements SCInterface{
 			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
 			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
 			bean.setCommands("qsub temp.script");
-			
+
 			SSHUtil util = new SSHUtil(bean);
 			util.executeCommands();
 			return "Job submitted successfully";
@@ -166,12 +168,12 @@ public class KarstSCImpl implements SCInterface{
 
 			SFTPUtil util = new SFTPUtil(bean);
 			util.sendToServer();
+			return "File copied successfully";
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
+			return "Failed to copy file";
 		}
-
-		return null;
 
 	}
 

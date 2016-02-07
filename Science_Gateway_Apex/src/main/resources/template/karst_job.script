@@ -1,10 +1,12 @@
-  #!/bin/bash 
-  #PBS -k o 
-  #PBS -l nodes=$nodes:ppn=$processors_per_node,walltime=30:00
-  #PBS -M $emailId
-  #PBS -m abe 
-  #PBS -N $job_name 
-  #PBS -j oe 
-  #PBS -o $job_name.out
+#!/bin/bash 
+#PBS -k o 
+#PBS -l nodes=$nodes:ppn=$processors_per_node,walltime=30:00
+#PBS -M $emailId
+#PBS -m abe 
+#PBS -N $job_name 
+#PBS -j oe 
+#PBS -o $job_name.out
 
-  mpiexec -np 12 -machinefile $PBS_NODEFILE ~/bin/binaryname
+mpiexec -np 12 -machinefile $PBS_NODEFILE ~/bin/binaryname
+
+sh ~/sendEmail.sh $job_name
