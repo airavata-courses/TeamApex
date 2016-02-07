@@ -30,7 +30,7 @@ public interface SCInterface {
 	 * @param jobId
 	 * @return
 	 */
-	public String monitorJob(String jobId);
+	public String monitorJob(String jobName);
 	
 	
 }

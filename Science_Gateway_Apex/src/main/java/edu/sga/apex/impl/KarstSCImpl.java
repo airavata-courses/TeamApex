@@ -176,7 +176,9 @@ public class KarstSCImpl implements SCInterface{
 	}
 
 	@Override
-	public String monitorJob(String jobId) {
+	public String monitorJob(String jobName) {
+
+		String loginUser = properties.getProperty("loginUser");
 
 		// Copy Email send script.
 		String srcFileEmail = properties.getProperty("srcFileEmail");
@@ -191,10 +193,8 @@ public class KarstSCImpl implements SCInterface{
 		this.copyFiles(srcFileEmailProp, destFileEmailProp);
 
 		// Calling the email send
+		String sendEmailcommand = "source " + destFileEmail + " "+ jobName + " " + loginUser;
 
-		String sendEmailcommand = "source " + destFileEmail + " " + jobId;
-
-		String loginUser = properties.getProperty("loginUser");
 		String loginKey = properties.getProperty("loginKey");
 		String knownHosts = properties.getProperty("knownHosts");
 		String hostName = properties.getProperty("hostName");
@@ -213,10 +213,5 @@ public class KarstSCImpl implements SCInterface{
 		util.executeCommands();
 		System.out.println("Command Executed: " + sendEmailcommand);
 		return null;
-	}
-	
-	public static void main(String[] args) {
-		KarstSCImpl karst = new KarstSCImpl();
-		karst.submitJob();
 	}
 }
