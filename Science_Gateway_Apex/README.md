@@ -13,7 +13,7 @@ There are 2 ways to install and use this application:
 
 ### Method-1: Installing from source
 
-__Step 1:__ Clone the repository from github
+__Step 1:__ Clone the repository from GitHub
 ```cmd
 git clone <xyz>
 ```
