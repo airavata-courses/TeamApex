@@ -3,13 +3,21 @@ package edu.sga.apex.impl;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
+import sun.misc.Launcher;
 import edu.sga.apex.bean.SCPRequestBean;
 import edu.sga.apex.bean.SSHRequestBean;
 import edu.sga.apex.interfaces.SCInterface;
@@ -118,12 +126,14 @@ public class KarstSCImpl implements SCInterface{
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
 			String destFileEmail = properties.getProperty("destFileEmail");
-			this.copyFiles(srcFileEmail, destFileEmail);
+			String srcFileEmailPath = this.createTempFile(srcFileEmail, "sendEmail", ".sh");
+			this.copyFiles(srcFileEmailPath, destFileEmail);
 
 			// Copy Email Properties Script.
 			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
 			String destFileEmailProp = properties.getProperty("destFileEmailProp");
-			this.copyFiles(srcFileEmailProp, destFileEmailProp);
+			String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
+			this.copyFiles(srcFileEmailPropPath, destFileEmailProp);
 
 			// submit the job
 			SSHRequestBean bean = new SSHRequestBean();
@@ -185,14 +195,16 @@ public class KarstSCImpl implements SCInterface{
 		// Copy Email send script.
 		String srcFileEmail = properties.getProperty("srcFileEmail");
 		String destFileEmail = properties.getProperty("destFileEmail");
-
-		this.copyFiles(srcFileEmail, destFileEmail);
+		String srcFileEmailPath = this.createTempFile(srcFileEmail, "sendEmail", ".sh");
+		this.copyFiles(srcFileEmailPath, destFileEmail);
+		//this.copyFiles(srcFileEmail, destFileEmail);
 
 		// Copy Email Properties Script.
 		String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
 		String destFileEmailProp = properties.getProperty("destFileEmailProp");
-
-		this.copyFiles(srcFileEmailProp, destFileEmailProp);
+		String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
+		this.copyFiles(srcFileEmailPropPath, destFileEmailProp);
+//		this.copyFiles(srcFileEmailProp, destFileEmailProp);
 
 		// Calling the email send
 		String sendEmailcommand = "source " + destFileEmail + " "+ jobName + " " + loginUser;
@@ -235,6 +247,28 @@ public class KarstSCImpl implements SCInterface{
 		}catch(Exception ex){
 			return "Failed to request delete job";
 		}
+	}
+	
+	private String createTempFile(String path, String prefix, String suffix) {
+		try {
+			InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
+			File file = File.createTempFile(prefix, suffix);
+			
+			OutputStream out = new FileOutputStream(file);
+            int read;
+            byte[] bytes = new byte[1024];
+
+            while ((read = is.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            
+            return file.getAbsolutePath();
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 }
