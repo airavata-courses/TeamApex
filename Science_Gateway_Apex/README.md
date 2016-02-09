@@ -27,7 +27,7 @@ __Step 2:__ Update the properties file
 
 * Update the _config.properties_ file with the following details:
 	
-	__NOTE:__ For Windows, the directory path separator is double-backslash ('\\').
+	__NOTE:__ For Windows, the directory path separator is double-backslash ('\\\\').
 	
 	* loginUser - Username to login to remote machine (Karst).
 	* loginKey - Path to private key file on local machine.
