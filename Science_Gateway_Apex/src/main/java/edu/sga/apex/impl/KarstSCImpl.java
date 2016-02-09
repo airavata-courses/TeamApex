@@ -21,14 +21,21 @@ import edu.sga.apex.util.SSHUtil;
 
 
 /**
+ * The Class KarstSCImpl.
  * 
+ * @author Gourav Shenoy
  */
 public class KarstSCImpl implements SCInterface{
 
+	/** The Constant script_path. */
 	private static final String script_path = "template/karst_job.script";
 
+	/** The properties. */
 	private Properties properties;
 
+	/**
+	 * Instantiates a new karst sc impl.
+	 */
 	public KarstSCImpl() {
 		try
 		{
@@ -50,6 +57,9 @@ public class KarstSCImpl implements SCInterface{
 		}
 	}
 
+	/**
+	 * Creates the job script.
+	 */
 	public void createJobScript(){
 		Scanner input = new Scanner(System.in);
 
@@ -106,6 +116,9 @@ public class KarstSCImpl implements SCInterface{
 		input.close();
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.interfaces.SCInterface#submitJob()
+	 */
 	@Override
 	public String submitJob() {
 		try{
@@ -148,6 +161,9 @@ public class KarstSCImpl implements SCInterface{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.interfaces.SCInterface#copyFiles(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public String copyFiles(String srcFile, String destFile) {
 
@@ -181,6 +197,9 @@ public class KarstSCImpl implements SCInterface{
 
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.interfaces.SCInterface#monitorJob(java.lang.String)
+	 */
 	@Override
 	public String monitorJob(String jobName) {
 
@@ -223,6 +242,9 @@ public class KarstSCImpl implements SCInterface{
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.interfaces.SCInterface#deleteJob(java.lang.String)
+	 */
 	@Override
 	public String deleteJob(String jobId) {
 		try{
@@ -243,6 +265,14 @@ public class KarstSCImpl implements SCInterface{
 		}
 	}
 
+	/**
+	 * Creates the temp file.
+	 *
+	 * @param path the path
+	 * @param prefix the prefix
+	 * @param suffix the suffix
+	 * @return the string
+	 */
 	private String createTempFile(String path, String prefix, String suffix) {
 		try {
 			InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
@@ -256,6 +286,7 @@ public class KarstSCImpl implements SCInterface{
 				out.write(bytes, 0, read);
 			}
 
+			out.close();
 			return file.getAbsolutePath();
 		}
 		catch(Exception ex) {

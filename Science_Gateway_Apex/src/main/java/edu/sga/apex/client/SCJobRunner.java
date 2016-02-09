@@ -3,8 +3,18 @@ package edu.sga.apex.client;
 import edu.sga.apex.impl.KarstSCImpl;
 import edu.sga.apex.util.Constants;
 
+/**
+ * The Class SCJobRunner.
+ * 
+ * @author Gourav Shenoy
+ */
 public class SCJobRunner {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 
 		if ( args.length < 1 ) {
