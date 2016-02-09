@@ -7,6 +7,10 @@ _Team Members:_
 ## Instructions Manual
 The application has been programmed to submit jobs on any remote machine (eg: Karst), and monitor them. Below you will find a complete step-by-step guide to install the application and to get up and running.
 
+### Prerequisites
+* Oracle J2SE 1.7
+* Apache Maven 3.3.9
+
 ### Installation Method: Installing from Source
 
 __Step 1:__ Clone the repository from GitHub
