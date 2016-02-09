@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.sga.apex</groupId>
     <artifactId>ScienceGatewayApex</artifactId>
-    <packaging>jar</packaging>
-    <version>0.1.0</version>
+    <packaging>war</packaging>
+    <version>0.1.1</version>
     
     <properties>
 
@@ -18,7 +18,14 @@
 	</properties>
 	
    	<dependencies>
-   		
+   	
+   		<!-- Apache WINK -->
+   		<dependency>
+            <groupId>org.apache.wink</groupId>
+            <artifactId>wink-server</artifactId>
+            <version>1.4</version>
+        </dependency>
+        
    		<!-- SLF4J Logging -->
 		<dependency>
 			<groupId>log4j</groupId>
