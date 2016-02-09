@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.sga.apex</groupId>
     <artifactId>ScienceGatewayApex</artifactId>
-    <packaging>war</packaging>
-    <version>0.1.1</version>
+    <packaging>jar</packaging>
+    <version>0.1.0</version>
     
     <properties>
 
@@ -74,5 +74,30 @@
 	      <directory>src/test/resources</directory>
 	    </testResource>
 	  </testResources>
+	  <plugins>
+		  <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-shade-plugin</artifactId>
+	        <version>2.4.3</version>
+	        <executions>
+	          <execution>
+	            <phase>package</phase>
+	            <goals>
+	              <goal>shade</goal>
+	            </goals>
+	            <configuration>
+	              <transformers>
+	                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+	                  <manifestEntries>
+	                    <Main-Class>edu.sga.apex.client.SCJobRunner</Main-Class>
+	                    <Build-Number>${version}</Build-Number>
+	                  </manifestEntries>
+	                </transformer>
+	              </transformers>
+	            </configuration>
+	          </execution>
+	        </executions>
+	      </plugin>
+	  </plugins>
 	</build>
 </project>

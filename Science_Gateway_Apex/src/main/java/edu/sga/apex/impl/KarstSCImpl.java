@@ -9,15 +9,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Scanner;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
-import sun.misc.Launcher;
 import edu.sga.apex.bean.SCPRequestBean;
 import edu.sga.apex.bean.SSHRequestBean;
 import edu.sga.apex.interfaces.SCInterface;
@@ -76,23 +70,23 @@ public class KarstSCImpl implements SCInterface{
 			String line = null, job_name = null;
 			while((line = br.readLine()) != null){
 				if(line.contains("$nodes")){
-					System.out.println("Please enter the number of nodes");
+					System.out.print("Please enter the number of nodes: ");
 					String nodes = input.nextLine();
 					line = line.replace("$nodes", nodes);
 				}
 				if(line.contains("$processors_per_node")){
-					System.out.println("Please enter the processors per node");
+					System.out.print("Please enter the processors per node: ");
 					String ppn = input.nextLine();
 					line = line.replace("$processors_per_node", ppn);
 
 				}
 				if(line.contains("$emailId")){
-					System.out.println("Please enter the email id");
+					System.out.print("Please enter the email id: ");
 					String emailId = input.nextLine();
 					line = line.replace("$emailId", emailId);
 				}
 				if(line.contains("$job_name") && job_name == null){
-					System.out.println("Please enter the job");
+					System.out.print("Please enter the job name: ");
 					job_name = input.nextLine();
 					line = line.replace("$job_name", job_name);
 				}else if(line.contains("$job_name")){
@@ -204,7 +198,7 @@ public class KarstSCImpl implements SCInterface{
 		String destFileEmailProp = properties.getProperty("destFileEmailProp");
 		String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
 		this.copyFiles(srcFileEmailPropPath, destFileEmailProp);
-//		this.copyFiles(srcFileEmailProp, destFileEmailProp);
+		//		this.copyFiles(srcFileEmailProp, destFileEmailProp);
 
 		// Calling the email send
 		String sendEmailcommand = "source " + destFileEmail + " "+ jobName + " " + loginUser;
@@ -248,27 +242,27 @@ public class KarstSCImpl implements SCInterface{
 			return "Failed to request delete job";
 		}
 	}
-	
+
 	private String createTempFile(String path, String prefix, String suffix) {
 		try {
 			InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
 			File file = File.createTempFile(prefix, suffix);
-			
-			OutputStream out = new FileOutputStream(file);
-            int read;
-            byte[] bytes = new byte[1024];
 
-            while ((read = is.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-            
-            return file.getAbsolutePath();
+			OutputStream out = new FileOutputStream(file);
+			int read;
+			byte[] bytes = new byte[1024];
+
+			while ((read = is.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+
+			return file.getAbsolutePath();
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
 			return null;
 		}
-		
+
 	}
-	
+
 }
