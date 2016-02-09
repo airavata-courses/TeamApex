@@ -216,4 +216,25 @@ public class KarstSCImpl implements SCInterface{
 		System.out.println("Command Executed: " + sendEmailcommand);
 		return null;
 	}
+
+	@Override
+	public String deleteJob(String jobId) {
+		try{
+			SSHRequestBean bean = new SSHRequestBean();
+			bean.setHostName(properties.getProperty("hostName"));
+			bean.setSshPort(Constants.SSH_PORT);
+			bean.setUserName(properties.getProperty("loginUser"));
+			bean.setPassPhrase(properties.getProperty("passPhrase"));
+			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
+			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+			bean.setCommands("qdel " + jobId);
+
+			SSHUtil util = new SSHUtil(bean);
+			util.executeCommands();
+			return "Request to delete job sent successfully";
+		}catch(Exception ex){
+			return "Failed to request delete job";
+		}
+	}
+	
 }

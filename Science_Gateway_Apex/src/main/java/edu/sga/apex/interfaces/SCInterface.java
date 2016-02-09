@@ -31,5 +31,7 @@ public interface SCInterface {
 	 */
 	public String monitorJob(String jobName);
 	
+	public String deleteJob(String jobId);
+	
 	
 }
