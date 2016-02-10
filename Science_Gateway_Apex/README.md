@@ -80,7 +80,7 @@ __Step 4:__ Run the executable jar
 	To monitor a job on the remote machine
 	
 	```cmd
-	$ java -jar ScienceGatewayApex-0.1.0.jar submit <name_of_job>
+	$ java -jar ScienceGatewayApex-0.1.0.jar monitor <name_of_job>
 	```
 	
 ### Sample Output
