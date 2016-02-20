@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <!-- <parent>
-	  <groupId>edu.sga.apex</groupId>
-	  <artifactId>SGA_Build</artifactId>
-	  <version>1</version>
-	</parent> -->
+	<!-- <parent> <groupId>edu.sga.apex</groupId> <artifactId>SGA_Build</artifactId> 
+		<version>1</version> </parent> -->
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>edu.sga.apex</groupId>
-    <artifactId>SGA_Apex_REST_API_WAR</artifactId>
-    <packaging>war</packaging>
-    <version>0.1.0</version>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>edu.sga.apex</groupId>
+	<artifactId>SGA_Apex_REST_API_WAR</artifactId>
+	<packaging>war</packaging>
+	<version>0.1.0</version>
 
-    <properties>
+	<properties>
 
 		<!-- Logging -->
 		<slf4j.version>1.7.5</slf4j.version>
-		
+
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
+
+		<!-- Jetty -->
+		<jettyVersion>9.2.11.v20150529</jettyVersion>
 		
+		<!-- Maven war plugin -->
+		<warPluginVersion>2.6</warPluginVersion>
 	</properties>
-	
-   	<dependencies>
-   	
-   		<!-- Apache WINK -->
-   		<dependency>
-            <groupId>org.apache.wink</groupId>
-            <artifactId>wink-server</artifactId>
-            <version>1.4</version>
-        </dependency>
-        
-   		<!-- SLF4J Logging -->
+
+	<dependencies>
+
+		<!-- Apache WINK -->
+		<dependency>
+			<groupId>org.apache.wink</groupId>
+			<artifactId>wink-server</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- SLF4J Logging -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -46,7 +48,7 @@
 			<version>${slf4j.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -54,28 +56,62 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-	
-   	</dependencies>
-   	
-	<build>
-	  <directory>target</directory>
-	  <outputDirectory>target/classes</outputDirectory>
-	  <finalName>${project.artifactId}-${project.version}</finalName>
-	  <testOutputDirectory>target/test-classes</testOutputDirectory>
-	  <sourceDirectory>src/main/java</sourceDirectory>
-	  <testSourceDirectory>src/test/java</testSourceDirectory>
-	  <resources>
-	    <resource>
-	      <directory>src/main/resources</directory>
-	    </resource>
-	  </resources>
-	  <testResources>
-	    <testResource>
-	      <directory>src/test/resources</directory>
-	    </testResource>
-	  </testResources>
-	  <plugins>
 
-	  </plugins>
+		<!-- Jetty server -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<directory>target</directory>
+		<outputDirectory>target/classes</outputDirectory>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<testOutputDirectory>target/test-classes</testOutputDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${warPluginVersion}</version>
+				<configuration>
+					<webXml>WebContent\WEB-INF\web.xml</webXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- Plugin for maven-jetty -->
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jettyVersion}</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<connectors>
+						<httpConnector>
+							<port>8080</port>
+						</httpConnector>
+					</connectors>
+					<webAppSourceDirectory>${project.basedir}/WebContent</webAppSourceDirectory>
+					<webApp>
+						<contextPath>/SGA_Apex</contextPath>
+					</webApp>
+				</configuration>
+			</plugin>
+		</plugins>
+
 	</build>
 </project>
