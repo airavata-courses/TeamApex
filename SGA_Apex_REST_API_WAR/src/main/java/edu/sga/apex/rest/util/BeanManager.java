@@ -2,7 +2,7 @@ package edu.sga.apex.rest.util;
 
 import org.json.JSONObject;
 
-import edu.sga.apex.rest.bean.SubmitJobRequestBean;
+import edu.sga.apex.bean.SubmitJobRequestBean;
 
 public class BeanManager {
 

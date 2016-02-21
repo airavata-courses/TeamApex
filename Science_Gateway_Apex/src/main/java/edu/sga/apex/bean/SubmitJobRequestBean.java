@@ -1,4 +1,4 @@
-package edu.sga.apex.rest.bean;
+package edu.sga.apex.bean;
 
 public class SubmitJobRequestBean {
 	
