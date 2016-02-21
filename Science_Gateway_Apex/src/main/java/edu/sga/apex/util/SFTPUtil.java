@@ -86,15 +86,12 @@ public class SFTPUtil {
 	public void sendToServer() {
 		sftpChannel = this.connectToChannel();
 		
-		System.out.println("Request Bean: " + this.requestBean);
+		System.out.println("[SFTP] Request Bean: " + this.requestBean);
 		
 		try {
 			System.out.println("Starting File Upload...");
 			sftpChannel.put(requestBean.getSourceFilePath(), requestBean.getDestFilePath());
 			System.out.println("File upload succeeded!");
-			
-			System.out.println("Retrieving Uploaded file...");
-			sftpChannel.get(requestBean.getDestFilePath(), "C:\\folder2");
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();

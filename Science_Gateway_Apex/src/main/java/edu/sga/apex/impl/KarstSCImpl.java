@@ -118,7 +118,7 @@ public class KarstSCImpl implements SCInterface{
 		input.close();
 	}
 	
-	private void createJobScript(SubmitJobRequestBean bean){
+	private String createJobScript(SubmitJobRequestBean bean){
 		try {
 			File file = File.createTempFile("temp", "script");
 			PrintWriter pw = new PrintWriter(file);
@@ -153,14 +153,18 @@ public class KarstSCImpl implements SCInterface{
 			pw.close();
 			br.close();
 			
+			return file.getAbsolutePath();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 
 	/* (non-Javadoc)
 	 * @see edu.sga.apex.interfaces.SCInterface#submitJob()
 	 */
+	@Deprecated
 	@Override
 	public String submitJob() {
 		try{
@@ -343,10 +347,53 @@ public class KarstSCImpl implements SCInterface{
 	 */
 	@Override
 	public String submitRemoteJob(SubmitJobRequestBean requestBean) {
-		// create the job script file
-		createJobScript(requestBean);
-		
-		return "123";
+		try{
+			// create the job script file
+			String pbsScriptPath = createJobScript(requestBean);
+			
+			if(pbsScriptPath == null) {
+				throw new RuntimeException("Failed to create pbs job script");
+			}
+
+			// copy the job script
+			String destJobScript = properties.getProperty("destJobScript");
+			this.copyFiles(pbsScriptPath, destJobScript);
+			
+			// handle dos2unix for script
+			SSHRequestBean bean = new SSHRequestBean();
+			bean.setHostName(properties.getProperty("hostName"));
+			bean.setSshPort(Constants.SSH_PORT);
+			bean.setUserName(properties.getProperty("loginUser"));
+			bean.setPassPhrase(properties.getProperty("passPhrase"));
+			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
+			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+			bean.setCommands("dos2unix " + destJobScript);
+
+			SSHUtil util = new SSHUtil(bean);
+			util.executeCommands();
+
+			// Copy Email send script.
+			String srcFileEmail = properties.getProperty("srcFileEmail");
+			String destFileEmail = properties.getProperty("destFileEmail");
+			String srcFileEmailPath = this.createTempFile(srcFileEmail, "sendEmail", ".sh");
+			this.copyFiles(srcFileEmailPath, destFileEmail);
+
+			// Copy Email Properties Script.
+			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
+			String destFileEmailProp = properties.getProperty("destFileEmailProp");
+			String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
+			this.copyFiles(srcFileEmailPropPath, destFileEmailProp);
+
+			// submit the job
+			bean.setCommands("qsub " + destJobScript);
+			util = new SSHUtil(bean);
+			String jobId = util.executeCommands();
+			
+			return jobId;
+		}catch(Exception e){
+			e.printStackTrace();
+			return "Job failed to submit";
+		}
 	}
 
 }
