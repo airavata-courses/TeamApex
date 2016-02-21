@@ -61,6 +61,7 @@ public class KarstSCImpl implements SCInterface{
 	/**
 	 * Creates the job script.
 	 */
+	@Deprecated
 	public void createJobScript(){
 		Scanner input = new Scanner(System.in);
 
@@ -115,6 +116,46 @@ public class KarstSCImpl implements SCInterface{
 			e.printStackTrace();
 		}
 		input.close();
+	}
+	
+	private void createJobScript(SubmitJobRequestBean bean){
+		try {
+			File file = File.createTempFile("temp", "script");
+			PrintWriter pw = new PrintWriter(file);
+			
+			InputStreamReader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream(script_path));
+			BufferedReader br = new BufferedReader(reader);
+			
+			String line = null;
+			while((line = br.readLine()) != null){
+				if(line.contains("$nodes")){
+					line = line.replace("$nodes", bean.getNumNodes().toString());
+				}
+				if(line.contains("$processors_per_node")){
+					line = line.replace("$processors_per_node", bean.getNumProcessors().toString());
+				}
+				if(line.contains("$walltime")){
+					line = line.replace("$walltime", bean.getWallTime());
+				}
+				if(line.contains("$emailId")){
+					line = line.replace("$emailId", bean.getEmailId());
+				}
+				if(line.contains("$job_name")){
+					line = line.replace("$job_name", bean.getJobName());
+				}
+				if(line.contains("$nodesProc")){
+					Integer nodesProc = bean.getNumNodes()*bean.getNumProcessors();
+					line = line.replace("$nodesProc", nodesProc.toString());
+				}
+				pw.println(line);
+				pw.flush();
+			}
+			pw.close();
+			br.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -302,7 +343,9 @@ public class KarstSCImpl implements SCInterface{
 	 */
 	@Override
 	public String submitRemoteJob(SubmitJobRequestBean requestBean) {
-		// TODO Auto-generated method stub
+		// create the job script file
+		createJobScript(requestBean);
+		
 		return "123";
 	}
 
