@@ -1,8 +1,9 @@
 package edu.sga.apex.bean;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SubmitJobRequestBean.
+ * 
+ * @author Gourav Shenoy
  */
 public class SubmitJobRequestBean {
 	
@@ -15,8 +16,8 @@ public class SubmitJobRequestBean {
 	/** The wall time. */
 	private String wallTime;
 	
-	/** The num cores. */
-	private Integer numCores;
+	/** The num nodes. */
+	private Integer numNodes;
 	
 	/** The num processors. */
 	private Integer numProcessors;
@@ -76,21 +77,21 @@ public class SubmitJobRequestBean {
 	}
 
 	/**
-	 * Gets the num cores.
+	 * Gets the num nodes.
 	 *
-	 * @return the num cores
+	 * @return the num nodes
 	 */
-	public Integer getNumCores() {
-		return numCores;
+	public Integer getNumNodes() {
+		return numNodes;
 	}
 
 	/**
-	 * Sets the num cores.
+	 * Sets the num nodes.
 	 *
-	 * @param numCores the new num cores
+	 * @param numNodes the new num nodes
 	 */
-	public void setNumCores(Integer numCores) {
-		this.numCores = numCores;
+	public void setNumNodes(Integer numNodes) {
+		this.numNodes = numNodes;
 	}
 
 	/**
@@ -117,7 +118,7 @@ public class SubmitJobRequestBean {
 	@Override
 	public String toString() {
 		return "SubmitJobRequestBean [jobName=" + jobName + ", emailId=" + emailId + ", wallTime=" + wallTime
-				+ ", numCores=" + numCores + ", numProcessors=" + numProcessors + "]";
+				+ ", numCores=" + numNodes + ", numProcessors=" + numProcessors + "]";
 	}
 
 }

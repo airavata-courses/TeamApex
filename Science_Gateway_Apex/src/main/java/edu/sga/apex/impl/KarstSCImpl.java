@@ -301,7 +301,7 @@ public class KarstSCImpl implements SCInterface{
 	 * @see edu.sga.apex.interfaces.SCInterface#submitRemoteJon(edu.sga.apex.bean.SubmitJobRequestBean)
 	 */
 	@Override
-	public String submitRemoteJon(SubmitJobRequestBean requestBean) {
+	public String submitRemoteJob(SubmitJobRequestBean requestBean) {
 		// TODO Auto-generated method stub
 		return "123";
 	}

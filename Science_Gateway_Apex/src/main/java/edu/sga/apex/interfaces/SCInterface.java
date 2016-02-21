@@ -50,6 +50,6 @@ public interface SCInterface {
 	 * @param requestBean the request bean
 	 * @return the string
 	 */
-	public String submitRemoteJon(SubmitJobRequestBean requestBean);
+	public String submitRemoteJob(SubmitJobRequestBean requestBean);
 	
 }

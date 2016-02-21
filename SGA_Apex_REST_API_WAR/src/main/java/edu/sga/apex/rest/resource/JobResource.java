@@ -3,7 +3,6 @@ package edu.sga.apex.rest.resource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -28,10 +27,7 @@ public class JobResource {
 	/**
 	 * Submit job.
 	 *
-	 * @param jobName
-	 *            the job name
-	 * @param inputObj
-	 *            the input obj
+	 * @param inputObj            the input obj
 	 * @return the response
 	 */
 	@POST
@@ -43,12 +39,12 @@ public class JobResource {
 		if (inputObj != null) {
 			SubmitJobRequestBean bean = BeanManager.getSubmitJobReqBean(inputObj);
 			SCInterface scInterface = new KarstSCImpl();
-			String jobId = scInterface.submitRemoteJon(bean);
+			String jobId = scInterface.submitRemoteJob(bean);
 			String response = "{\"jobId\": " + jobId + ", \"status\":\"Submitted\"}";
 			builder = Response.ok(response);
 		} else {
 			builder = Response.status(Status.BAD_REQUEST);
-			builder.entity("\"error\":\"Invalid JSON input\"");
+			builder.entity("{\"error\":\"Invalid JSON input\"}");
 		}
 		return builder.build();
 	}
