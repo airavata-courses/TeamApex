@@ -303,7 +303,7 @@ public class KarstSCImpl implements SCInterface{
 	@Override
 	public String submitRemoteJon(SubmitJobRequestBean requestBean) {
 		// TODO Auto-generated method stub
-		return null;
+		return "123";
 	}
 
 }
