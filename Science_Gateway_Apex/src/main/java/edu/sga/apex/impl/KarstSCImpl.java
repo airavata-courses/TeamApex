@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 import edu.sga.apex.bean.SCPRequestBean;
 import edu.sga.apex.bean.SSHRequestBean;
+import edu.sga.apex.bean.SubmitJobRequestBean;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.util.Constants;
 import edu.sga.apex.util.SFTPUtil;
@@ -294,6 +295,15 @@ public class KarstSCImpl implements SCInterface{
 			return null;
 		}
 
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.interfaces.SCInterface#submitRemoteJon(edu.sga.apex.bean.SubmitJobRequestBean)
+	 */
+	@Override
+	public String submitRemoteJon(SubmitJobRequestBean requestBean) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -11,9 +11,21 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.json.JSONObject;
 
+/**
+ * The Class JobResource.
+ * 
+ * @author Gourav Shenoy
+ */
 @Path("/job")
 public class JobResource {
 	
+	/**
+	 * Submit job.
+	 *
+	 * @param jobName the job name
+	 * @param inputObj the input obj
+	 * @return the response
+	 */
 	@POST
 	@Path("/submit/{jobName}")
 	@Produces(MediaType.APPLICATION_JSON)
