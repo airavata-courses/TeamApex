@@ -24,9 +24,18 @@
 
 		<!-- Maven war plugin -->
 		<warPluginVersion>2.6</warPluginVersion>
+		
+		<!-- SGA middleware version -->
+		<sgaJarVersion>0.1.0</sgaJarVersion>
 	</properties>
 
 	<dependencies>
+	
+		<dependency>
+			<groupId>edu.sga.apex</groupId>
+			<artifactId>ScienceGatewayApex</artifactId>
+			<version>${sgaJarVersion}</version>
+		</dependency>
 
 		<!-- Apache WINK -->
 		<dependency>
