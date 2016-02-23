@@ -1,5 +1,8 @@
 package edu.sga.apex.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The Class Constants.
  * 
@@ -16,9 +19,18 @@ public class Constants {
 	/** The Constant SSH_PORT. */
 	public static final int SSH_PORT = 22;
 
-	/** The Constant for command line submit **/
+	/**  The Constant for command line submit *. */
 	public static final String SUBMITJOB = "submit";
 
-	/** The Constant for command line monitor **/
+	/**  The Constant for command line monitor *. */
 	public static final String MONITOR = "monitor";
+	
+	/** The Constant JOB_STATUS. */
+	public static final Map<Character, String> JOB_STATUS;
+	
+	static {
+		JOB_STATUS = new HashMap<Character, String>();
+		JOB_STATUS.put('Q', "Queued");
+		JOB_STATUS.put('C', "Completed");
+	}
 }

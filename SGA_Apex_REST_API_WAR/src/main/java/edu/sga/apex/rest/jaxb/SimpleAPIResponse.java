@@ -14,17 +14,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for submitJobResponse complex type.
+ * <p>Java class for simpleAPIResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="submitJobResponse">
+ * &lt;complexType name="simpleAPIResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="jobId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,48 +34,24 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "submitJobResponse", propOrder = {
-    "jobId",
-    "status"
+@XmlType(name = "simpleAPIResponse", propOrder = {
+    "status",
+    "message"
 })
-public class SubmitJobResponse {
+public class SimpleAPIResponse {
 
-    protected String jobId;
-    protected String status;
-
-    /**
-     * Gets the value of the jobId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getJobId() {
-        return jobId;
-    }
-
-    /**
-     * Sets the value of the jobId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setJobId(String value) {
-        this.jobId = value;
-    }
+    protected Integer status;
+    protected String message;
 
     /**
      * Gets the value of the status property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Integer }
      *     
      */
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -84,11 +60,35 @@ public class SubmitJobResponse {
      * 
      * @param value
      *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setStatus(Integer value) {
+        this.status = value;
+    }
+
+    /**
+     * Gets the value of the message property.
+     * 
+     * @return
+     *     possible object is
      *     {@link String }
      *     
      */
-    public void setStatus(String value) {
-        this.status = value;
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * Sets the value of the message property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setMessage(String value) {
+        this.message = value;
     }
 
 }
