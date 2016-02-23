@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>edu.sga.apex</groupId>
-    <artifactId>ScienceGatewayApexClient</artifactId>
-    <packaging>jar</packaging>
-    <version>0.1.0</version>
-    
-    <properties>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>edu.sga.apex</groupId>
+	<artifactId>ScienceGatewayApexClient</artifactId>
+	<packaging>jar</packaging>
+	<version>0.1.0</version>
+
+	<properties>
 
 		<!-- Logging -->
 		<slf4j.version>1.7.5</slf4j.version>
-		
+
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
-		
+
 	</properties>
-	
-   	<dependencies>
-   	
-   		<!-- Apache WINK Client-->
-   		<dependency>
-            <groupId>org.apache.wink</groupId>
-            <artifactId>wink-client</artifactId>
-            <version>1.4</version>
-        </dependency>
-        
-   		<!-- SLF4J Logging -->
+
+	<dependencies>
+
+		<!-- Apache WINK Client -->
+		<dependency>
+			<groupId>org.apache.wink</groupId>
+			<artifactId>wink-client</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- SLF4J Logging -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -40,7 +40,14 @@
 			<version>${slf4j.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160212</version>
+		</dependency>
+
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -48,50 +55,51 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-	
-   	</dependencies>
-   	
+
+	</dependencies>
+
 	<build>
-	  <directory>target</directory>
-	  <outputDirectory>target/classes</outputDirectory>
-	  <finalName>${project.artifactId}-${project.version}</finalName>
-	  <testOutputDirectory>target/test-classes</testOutputDirectory>
-	  <sourceDirectory>src/main/java</sourceDirectory>
-	  <testSourceDirectory>src/test/java</testSourceDirectory>
-	  <resources>
-	    <resource>
-	      <directory>src/main/resources</directory>
-	    </resource>
-	  </resources>
-	  <testResources>
-	    <testResource>
-	      <directory>src/test/resources</directory>
-	    </testResource>
-	  </testResources>
-	  <plugins>
-		  <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-shade-plugin</artifactId>
-	        <version>2.4.3</version>
-	        <executions>
-	          <execution>
-	            <phase>package</phase>
-	            <goals>
-	              <goal>shade</goal>
-	            </goals>
-	            <configuration>
-	              <transformers>
-	                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-	                  <manifestEntries>
-	                    <Main-Class>edu.sga.apex.rest.client.SGAApexClient</Main-Class>
-	                    <Build-Number>${version}</Build-Number>
-	                  </manifestEntries>
-	                </transformer>
-	              </transformers>
-	            </configuration>
-	          </execution>
-	        </executions>
-	      </plugin>
-	  </plugins>
+		<directory>target</directory>
+		<outputDirectory>target/classes</outputDirectory>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<testOutputDirectory>target/test-classes</testOutputDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>edu.sga.apex.rest.client.SGAApexClient</Main-Class>
+										<Build-Number>${version}</Build-Number>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>
