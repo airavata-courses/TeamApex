@@ -25,10 +25,10 @@ public class Constants {
 	/**  The Constant for command line monitor *. */
 	public static final String MONITOR = "monitor";
 	
-	public static final String QSTAT_FLATWORM_XML = "scripts/karst/config.xml";
-	
+	/** The Constant QSTAT_BEAN. */
 	public static final String QSTAT_BEAN = "QstatBean";
 	
+	/** The Constant QSTAT_RECORD. */
 	public static final String QSTAT_RECORD = "qstat";
 	
 	/** The Constant JOB_STATUS. */

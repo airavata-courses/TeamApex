@@ -29,6 +29,7 @@ public class JobBean {
 	/** The num processors. */
 	private String numProcessors;
 	
+	/** The required memory. */
 	private String requiredMemory;
 	
 	/** The required time. */
@@ -37,6 +38,7 @@ public class JobBean {
 	/** The status. */
 	private String status;
 	
+	/** The elapsed time. */
 	private String elapsedTime;
 
 	/**
@@ -153,42 +155,85 @@ public class JobBean {
 		this.numProcessors = numProcessors;
 	}
 
+	/**
+	 * Gets the required memory.
+	 *
+	 * @return the required memory
+	 */
 	@Field(offset = 83, length = 7)
 	public String getRequiredMemory() {
 		return requiredMemory;
 	}
 
+	/**
+	 * Sets the required memory.
+	 *
+	 * @param requiredMemory the new required memory
+	 */
 	public void setRequiredMemory(String requiredMemory) {
 		this.requiredMemory = requiredMemory;
 	}
 
+	/**
+	 * Gets the required time.
+	 *
+	 * @return the required time
+	 */
 	@Field(offset = 90, length = 10)
 	public String getRequiredTime() {
 		return requiredTime;
 	}
 
+	/**
+	 * Sets the required time.
+	 *
+	 * @param requiredTime the new required time
+	 */
 	public void setRequiredTime(String requiredTime) {
 		this.requiredTime = requiredTime;
 	}
 
+	/**
+	 * Gets the status.
+	 *
+	 * @return the status
+	 */
 	@Field(offset = 100, length = 2)
 	public String getStatus() {
 		return status;
 	}
 
+	/**
+	 * Sets the status.
+	 *
+	 * @param status the new status
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+	/**
+	 * Gets the elapsed time.
+	 *
+	 * @return the elapsed time
+	 */
 	@Field(offset = 102, length = 9)
 	public String getElapsedTime() {
 		return elapsedTime;
 	}
 
+	/**
+	 * Sets the elapsed time.
+	 *
+	 * @param elapsedTime the new elapsed time
+	 */
 	public void setElapsedTime(String elapsedTime) {
 		this.elapsedTime = elapsedTime;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "JobBean [jobId=" + jobId + ", jobName=" + jobName
