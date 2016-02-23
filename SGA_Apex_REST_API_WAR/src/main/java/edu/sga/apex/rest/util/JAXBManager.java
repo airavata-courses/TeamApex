@@ -1,22 +1,27 @@
 package edu.sga.apex.rest.util;
 
+import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
+import edu.sga.apex.rest.jaxb.JobResponse;
+import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 
 /**
- * The Class BeanManager.
+ * The Class JAXBManager.
  * 
  * @author Gourav Shenoy
  */
-public class BeanManager {
+public class JAXBManager {
 
+	/** The factory. */
+	private static ObjectFactory factory = new ObjectFactory();
+	
 	/**
 	 * Gets the submit job request bean.
-	 * 
-	 * @param request
-	 *            the request
+	 *
+	 * @param request            the request
 	 * @return the submit job request bean
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 	public static SubmitJobRequestBean getSubmitJobRequestBean(
 			SubmitJobRequest request) throws Exception {
@@ -61,5 +66,34 @@ public class BeanManager {
 			}
 		}
 		return bean;
+	}
+	
+	/**
+	 * Gets the job response.
+	 *
+	 * @param bean the bean
+	 * @return the job response
+	 * @throws Exception the exception
+	 */
+	public static JobResponse getJobResponse(JobBean bean) throws Exception {
+		JobResponse response = factory.createJobResponse();
+		
+		/* check if bean is valid */
+		if(bean != null) {
+			response.setJobId(bean.getJobId());
+			response.setJobName(bean.getJobName());
+			response.setUserName(bean.getUserName());
+			response.setStatus(bean.getStatus());
+			response.setElapsedTime(bean.getElapsedTime());
+			response.setNumNodes(bean.getNumNodes());
+			response.setNumProcessors(bean.getNumProcessors());
+			response.setRequiredMemory(bean.getRequiredMemory());
+			response.setRequiredTime(bean.getRequiredTime());
+			response.setQueue(bean.getQueue());
+		}
+		else {
+			throw new Exception("Empty JobBean received. Cannot construct the response object.");
+		}
+		return response;
 	}
 }

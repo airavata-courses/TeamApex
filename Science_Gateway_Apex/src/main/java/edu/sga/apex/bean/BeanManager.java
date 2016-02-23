@@ -37,6 +37,13 @@ public class BeanManager {
 				if(Constants.JOB_STATUS.containsKey(bean.getStatus())) {
 					bean.setStatus(Constants.JOB_STATUS.get(bean.getStatus()));
 				}
+				
+				/* trim few fields */
+				bean.setNumNodes(bean.getNumNodes().trim());
+				bean.setNumProcessors(bean.getNumProcessors().trim());
+				bean.setRequiredMemory(bean.getRequiredMemory().trim());
+				bean.setRequiredTime(bean.getRequiredTime().trim());
+				bean.setElapsedTime(bean.getElapsedTime().trim());
 			} catch (Exception ex) {
 				throw ex;
 			}

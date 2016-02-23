@@ -417,7 +417,7 @@ public class KarstSCImpl implements SCInterface{
 			String loginUser = properties.getProperty("loginUser");
 			 
 			// Calling the qstat command
-			String qStatCommand = "qstat -u " + "sabauman" + " | grep "+ "1235244.m2";
+			String qStatCommand = "qstat -u " + loginUser + " | grep "+ jobId;
 
 			String loginKey = properties.getProperty("loginKey");
 			String knownHosts = properties.getProperty("knownHosts");

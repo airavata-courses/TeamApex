@@ -16,11 +16,12 @@ import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
 import edu.sga.apex.impl.KarstSCImpl;
 import edu.sga.apex.interfaces.SCInterface;
+import edu.sga.apex.rest.jaxb.JobResponse;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SimpleAPIResponse;
 import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 import edu.sga.apex.rest.jaxb.SubmitJobResponse;
-import edu.sga.apex.rest.util.BeanManager;
+import edu.sga.apex.rest.util.JAXBManager;
 import edu.sga.apex.rest.util.Constants;
 import edu.sga.apex.rest.util.ExceptionUtil;
 
@@ -62,7 +63,7 @@ public class JobResource {
 		try {
 			if (request != null) {
 				/* Convert request jaxb to middleware req bean */
-				SubmitJobRequestBean bean = BeanManager
+				SubmitJobRequestBean bean = JAXBManager
 						.getSubmitJobRequestBean(request);
 				
 				/* Get Karst impl */
@@ -172,22 +173,17 @@ public class JobResource {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response getJobStatus(@PathParam("jobId") String jobId) {
 		ResponseBuilder builder = null;
-		ObjectFactory factory = new ObjectFactory();
 		try {
 			/* Get Karst impl */
 			SCInterface scInterface = new KarstSCImpl();
-			/* Delete job oo Karst */
+			/* Get job status from Karst */
 			JobBean bean = scInterface.getJobStatus(jobId);
 			
 			/* Construct response jaxb entity */
-			SimpleAPIResponse response = factory.createSimpleAPIResponse();
-			response.setMessage("Submitted request to monitor job [" + jobId + "]. "
-					+ "You should now receive emails providing you more information about the status of your submitted job.");
-			response.setStatus(Status.ACCEPTED.getStatusCode());
+			JobResponse response = JAXBManager.getJobResponse(bean);
 			
 			/* Build the response */
 			builder = Response.ok(response);
-			builder.status(Status.ACCEPTED);
 		} catch (Exception ex) {
 			/* handle exception and return response */
 			return ExceptionUtil.handleException(ex);
