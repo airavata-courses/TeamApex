@@ -7,17 +7,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
 
 import edu.sga.apex.bean.SubmitJobRequestBean;
 import edu.sga.apex.impl.KarstSCImpl;
 import edu.sga.apex.interfaces.SCInterface;
-import edu.sga.apex.rest.jaxb.ApiErrorResponse;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 import edu.sga.apex.rest.jaxb.SubmitJobResponse;
 import edu.sga.apex.rest.util.BeanManager;
 import edu.sga.apex.rest.util.Constants;
+import edu.sga.apex.rest.util.ExceptionUtil;
 
 /**
  * The Class JobResource.
@@ -56,28 +55,31 @@ public class JobResource {
 		ObjectFactory factory = new ObjectFactory();
 		try {
 			if (request != null) {
+				/* Convert request jaxb to middleware req bean */
 				SubmitJobRequestBean bean = BeanManager
 						.getSubmitJobRequestBean(request);
+				
+				/* Get Karst impl */
 				SCInterface scInterface = new KarstSCImpl();
+				/* Submit job to Karst */
 				String jobId = scInterface.submitRemoteJob(bean);
-
+				
+				/* Construct response jaxb entity */
 				SubmitJobResponse response = factory.createSubmitJobResponse();
 				response.setJobId(jobId);
 				response.setStatus(Constants.STATUS_SUBMITTED);
+				
+				/* Build the response */
 				builder = Response.ok(response);
 			} else {
 				throw new Exception("Invalid API Request (Empty)");
 			}
 		} catch (Exception ex) {
-			System.out.println(request);
-			ApiErrorResponse errResponse = factory.createApiErrorResponse();
-			errResponse.setMessage(ex.getMessage());
-			errResponse.setStatus(Status.BAD_REQUEST.getStatusCode());
-
-			builder = Response.status(Response.Status.BAD_REQUEST)
-					.entity(errResponse);
+			/* handle exception and return response */
+			return ExceptionUtil.handleException(ex);
 		}
 
+		/* Return the response */
 		return builder.build();
 	}
 }
