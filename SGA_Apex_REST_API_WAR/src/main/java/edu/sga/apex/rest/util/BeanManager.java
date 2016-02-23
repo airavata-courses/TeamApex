@@ -1,44 +1,43 @@
 package edu.sga.apex.rest.util;
 
-import org.json.JSONObject;
-
 import edu.sga.apex.bean.SubmitJobRequestBean;
+import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BeanManager.
+ * 
+ * @author Gourav Shenoy
  */
 public class BeanManager {
-
-	/**
-	 * Gets the submit job req bean.
-	 *
-	 * @param json the json
-	 * @return the submit job req bean
-	 */
-	public static SubmitJobRequestBean getSubmitJobReqBean(JSONObject json) {
+	
+	public static SubmitJobRequestBean getSubmitJobRequestBean(SubmitJobRequest request) {
 		SubmitJobRequestBean bean = new SubmitJobRequestBean();
-		if (json != null) {
-			bean.setJobName(json.getString("jobName"));
+		if (request != null) {
+			bean.setJobName(request.getJobName());
+			bean.setEmailId(request.getEmailId());
 			
-			bean.setEmailId(json.getString("emailId"));
+			/* if walltime not provided, use default */
+			if(bean.getWallTime() == null) {
+				bean.setWallTime(Constants.DEFAULT_WALLTIME);
+			}
+			else {
+				bean.setWallTime(request.getWallTime());
+			}
 			
-			if(json.has("numNodes")){
-				bean.setNumNodes(json.getInt("numNodes"));
-			}else{
+			/* if num of nodes not provided, use default */
+			if(request.getNumNodes() == null) {
 				bean.setNumNodes(Constants.DEFAULT_NUM_NODES);
 			}
+			else {
+				bean.setNumNodes(request.getNumNodes());
+			}
 			
-			if(json.has("numProcessors")){
-				bean.setNumProcessors(json.getInt("numProcessors"));
-			}else{
+			/* if num of processors not provided, use default */
+			if(request.getNumProcessors() == null) {
 				bean.setNumProcessors(Constants.DEFAULT_NUM_PROCESSORS);
 			}
-
-			if(json.has("wallTime")){
-				bean.setWallTime(json.getString("wallTime"));
-			}else{
-				bean.setWallTime(Constants.DEFAULT_WALLTIME);
+			else {
+				bean.setNumProcessors(request.getNumProcessors());
 			}
 		}
 		return bean;
