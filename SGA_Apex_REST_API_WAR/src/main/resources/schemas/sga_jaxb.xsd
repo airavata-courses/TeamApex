@@ -5,6 +5,7 @@
 	<xs:element name="submitJobRequest" type="submitJobRequest" />
 	<xs:element name="submitJobResponse" type="submitJobResponse" />
 	<xs:element name="simpleAPIResponse" type="simpleAPIResponse" />
+	<xs:element name="jobResponse" type="jobResponse" />
 
 	<xs:complexType name="submitJobRequest">
 		<xs:sequence>
@@ -27,6 +28,21 @@
 		<xs:sequence>
 			<xs:element name="status" type="xs:int" minOccurs="0" />
 			<xs:element name="message" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="jobResponse">
+		<xs:sequence>
+			<xs:element name="jobId" type="xs:string" minOccurs="0" />
+			<xs:element name="jobName" type="xs:string" minOccurs="0" />
+			<xs:element name="userName" type="xs:string" minOccurs="0" />
+			<xs:element name="status" type="xs:string" minOccurs="0" />
+			<xs:element name="requiredTime" type="xs:string" minOccurs="0" />
+			<xs:element name="elapsedTime" type="xs:string" minOccurs="0" />
+			<xs:element name="queue" type="xs:string" minOccurs="0" />
+			<xs:element name="numNodes" type="xs:string" minOccurs="0" />
+			<xs:element name="numProcessors" type="xs:string" minOccurs="0" />
+			<xs:element name="requiredMemory" type="xs:string" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
 	
