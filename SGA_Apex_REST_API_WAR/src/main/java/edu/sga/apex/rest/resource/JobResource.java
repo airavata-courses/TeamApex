@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
+import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
 import edu.sga.apex.impl.KarstSCImpl;
 import edu.sga.apex.interfaces.SCInterface;
@@ -176,7 +177,7 @@ public class JobResource {
 			/* Get Karst impl */
 			SCInterface scInterface = new KarstSCImpl();
 			/* Delete job oo Karst */
-			scInterface.getJobStatus(jobId);
+			JobBean bean = scInterface.getJobStatus(jobId);
 			
 			/* Construct response jaxb entity */
 			SimpleAPIResponse response = factory.createSimpleAPIResponse();

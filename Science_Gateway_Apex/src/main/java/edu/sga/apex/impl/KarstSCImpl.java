@@ -415,9 +415,9 @@ public class KarstSCImpl implements SCInterface{
 	public JobBean getJobStatus(String jobId) throws Exception {
 		try {
 			String loginUser = properties.getProperty("loginUser");
-
+			 
 			// Calling the qstat command
-			String qStatCommand = "qstat -u " + loginUser + " | grep "+ jobId;
+			String qStatCommand = "qstat -u " + "sabauman" + " | grep "+ "1235244.m2";
 
 			String loginKey = properties.getProperty("loginKey");
 			String knownHosts = properties.getProperty("knownHosts");
@@ -436,6 +436,7 @@ public class KarstSCImpl implements SCInterface{
 			SSHUtil util = new SSHUtil(bean);
 			String response = util.executeCommands();
 			System.out.println("Command Executed: " + qStatCommand);
+			System.out.println("Response: " + response);
 			JobBean job = BeanManager.createJobBean(response);
 			
 			return job;

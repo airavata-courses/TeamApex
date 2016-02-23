@@ -25,12 +25,18 @@ public class Constants {
 	/**  The Constant for command line monitor *. */
 	public static final String MONITOR = "monitor";
 	
+	public static final String QSTAT_FLATWORM_XML = "scripts/karst/config.xml";
+	
+	public static final String QSTAT_BEAN = "QstatBean";
+	
+	public static final String QSTAT_RECORD = "qstat";
+	
 	/** The Constant JOB_STATUS. */
-	public static final Map<Character, String> JOB_STATUS;
+	public static final Map<String, String> JOB_STATUS;
 	
 	static {
-		JOB_STATUS = new HashMap<Character, String>();
-		JOB_STATUS.put('Q', "Queued");
-		JOB_STATUS.put('C', "Completed");
+		JOB_STATUS = new HashMap<String, String>();
+		JOB_STATUS.put("Q", "Queued");
+		JOB_STATUS.put("C", "Completed");
 	}
 }
