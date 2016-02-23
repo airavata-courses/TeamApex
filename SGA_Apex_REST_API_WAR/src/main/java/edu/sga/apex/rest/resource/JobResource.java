@@ -41,6 +41,12 @@ public class JobResource {
 	    }
 	 * 
 	 * */
+	/**
+	 * Submit remote job.
+	 *
+	 * @param request the request
+	 * @return the response
+	 */
 	@POST
 	@Path("/submit")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })

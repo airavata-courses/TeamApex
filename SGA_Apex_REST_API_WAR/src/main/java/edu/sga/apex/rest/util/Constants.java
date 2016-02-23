@@ -16,5 +16,6 @@ public class Constants {
 	/** The Constant DEFAULT_NUM_NODES. */
 	public static final int DEFAULT_NUM_NODES = 2;
 	
+	/** The Constant STATUS_SUBMITTED. */
 	public static final String STATUS_SUBMITTED = "Submitted";
 }

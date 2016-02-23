@@ -10,6 +10,12 @@ import edu.sga.apex.rest.jaxb.SubmitJobRequest;
  */
 public class BeanManager {
 	
+	/**
+	 * Gets the submit job request bean.
+	 *
+	 * @param request the request
+	 * @return the submit job request bean
+	 */
 	public static SubmitJobRequestBean getSubmitJobRequestBean(SubmitJobRequest request) {
 		SubmitJobRequestBean bean = new SubmitJobRequestBean();
 		if (request != null) {
