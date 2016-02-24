@@ -5,8 +5,17 @@ import java.util.Scanner;
 import org.apache.wink.client.ClientResponse;
 import org.json.JSONObject;
 
+/**
+ * The Class SGAApexClient.
+ */
 public class SGAApexClient {
 	
+	/**
+	 * Submit job.
+	 *
+	 * @param input the input
+	 * @return the client response
+	 */
 	public static ClientResponse submitJob(Scanner input){
 		JSONObject obj = new JSONObject();
 		JSONObject request = new JSONObject();
@@ -45,24 +54,47 @@ public class SGAApexClient {
 		return APIUtil.doPost(request);
 	}
 	
+	/**
+	 * Monitor job.
+	 *
+	 * @param input the input
+	 * @return the client response
+	 */
 	public static ClientResponse monitorJob(Scanner input){
 		System.out.println("Please enter the job id");
 		String jobId = input.next();
 		return APIUtil.doMonitor(jobId);
 	}
 	
+	/**
+	 * Delete job.
+	 *
+	 * @param input the input
+	 * @return the client response
+	 */
 	public static ClientResponse deleteJob(Scanner input){
 		System.out.println("Please enter the job id");
 		String jobId = input.next();
 		return APIUtil.doDelete(jobId);
 	}
 	
+	/**
+	 * Gets the status.
+	 *
+	 * @param input the input
+	 * @return the status
+	 */
 	public static ClientResponse getStatus(Scanner input){
 		System.out.println("Please enter the job id");
 		String jobId = input.next();
 		return APIUtil.doGetStatus(jobId);	
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		int choice;
 		ClientResponse response;
