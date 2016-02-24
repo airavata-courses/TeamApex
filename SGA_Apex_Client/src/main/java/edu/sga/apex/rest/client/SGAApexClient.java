@@ -45,14 +45,22 @@ public class SGAApexClient {
 		return APIUtil.doPost(request);
 	}
 	
-	public static void monitorJob(){
-		
+	public static ClientResponse monitorJob(Scanner input){
+		System.out.println("Please enter the job id");
+		String jobId = input.next();
+		return APIUtil.doMonitor(jobId);
 	}
 	
 	public static ClientResponse deleteJob(Scanner input){
 		System.out.println("Please enter the job id");
 		String jobId = input.next();
 		return APIUtil.doDelete(jobId);
+	}
+	
+	public static ClientResponse getStatus(Scanner input){
+		System.out.println("Please enter the job id");
+		String jobId = input.next();
+		return APIUtil.doGetStatus(jobId);	
 	}
 
 	public static void main(String[] args) {
@@ -61,7 +69,7 @@ public class SGAApexClient {
 		Scanner input = new Scanner(System.in);
 		do
 		{	
-			System.out.println("Please enter your choice: \n 1 - Submit job \n 2 - Monitor job \n 3 - Cancel job \n 4 - exit");
+			System.out.println("Please enter your choice: \n 1 - Submit job \n 2 - Monitor job \n 3 - Cancel job \n 4 - Get job status\n 5 - exit\n");
 			choice = input.nextInt();
 			switch(choice){
 			case 1:
@@ -70,7 +78,9 @@ public class SGAApexClient {
 				System.out.println(response.getEntity(String.class));
 				break;
 			case 2:
-				SGAApexClient.monitorJob();
+				response = SGAApexClient.monitorJob(input);
+				System.out.println("Status code "+response.getStatusCode());
+				System.out.println(response.getEntity(String.class));
 				break;
 			case 3:
 				response = SGAApexClient.deleteJob(input);
@@ -78,12 +88,17 @@ public class SGAApexClient {
 				System.out.println(response.getEntity(String.class));
 				break;
 			case 4:
+				response = SGAApexClient.getStatus(input);
+				System.out.println("Status code "+response.getStatusCode());
+				System.out.println(response.getEntity(String.class));
+				break;
+			case 5:
 				break;
 			default:
 				System.out.println("Incorrect input - Must enter 1 - Submit job, 2 - Monitor job, 3 - Cancel job and 4 - exit");
 				break;
 			}	
-		}while(choice != 4);
+		}while(choice != 5);
 		input.close();
 	}
 

@@ -32,11 +32,21 @@ public class APIUtil {
 	}
 
 	public static ClientResponse doDelete(String jobId) {
-		org.apache.wink.client.Resource resource = client
+		Resource resource = client
 				.resource(URL + jobId);
 		ClientResponse response = resource.accept(MediaType.APPLICATION_JSON).delete();
 		return response;
-
 	}
-
+	
+	public static ClientResponse doGetStatus(String jobId){
+		Resource resource = client.resource(URL + jobId + "/status");
+		ClientResponse response = resource.accept(MediaType.APPLICATION_JSON).get();
+		return response;
+	}
+	
+	public static ClientResponse doMonitor(String jobId){
+		Resource resource = client.resource(URL + jobId + "/monitor");
+		ClientResponse response = resource.accept(MediaType.APPLICATION_JSON).get();
+		return response;
+	}
 }
