@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import org.apache.commons.validator.routines.InetAddressValidator;
 import org.apache.wink.client.ClientResponse;
+import org.apache.wink.client.ClientRuntimeException;
 import org.json.JSONObject;
 
 /**
@@ -120,39 +121,52 @@ public class SGAApexClient {
 		}
 		
 		Scanner input = new Scanner(System.in);
-		do
-		{	
-			System.out.println("Please enter your choice: \n 1 - Submit job \n 2 - Monitor job \n 3 - Cancel job \n 4 - Get job status\n 5 - exit\n");
-			choice = input.nextInt();
-			switch(choice){
-			case 1:
-				response = SGAApexClient.submitJob(input);
-				System.out.println("Status code "+ response.getStatusCode());
-				System.out.println(response.getEntity(String.class));
-				break;
-			case 2:
-				response = SGAApexClient.monitorJob(input);
-				System.out.println("Status code "+response.getStatusCode());
-				System.out.println(response.getEntity(String.class));
-				break;
-			case 3:
-				response = SGAApexClient.deleteJob(input);
-				System.out.println("Status code "+response.getStatusCode());
-				System.out.println(response.getEntity(String.class));
-				break;
-			case 4:
-				response = SGAApexClient.getStatus(input);
-				System.out.println("Status code "+response.getStatusCode());
-				System.out.println(response.getEntity(String.class));
-				break;
-			case 5:
-				break;
-			default:
-				System.out.println("Incorrect input - Must enter 1 - Submit job, 2 - Monitor job, 3 - Cancel job and 4 - exit");
-				break;
-			}	
-		}while(choice != 5);
-		input.close();
+		try {
+			do
+			{	
+				System.out.println("Please enter your choice: \n 1 - Submit job \n 2 - Monitor job \n 3 - Cancel job \n 4 - Get job status\n 5 - exit\n");
+				choice = input.nextInt();
+				switch(choice){
+				case 1:
+					response = SGAApexClient.submitJob(input);
+					System.out.println("Status code "+ response.getStatusCode());
+					System.out.println(response.getEntity(String.class));
+					break;
+				case 2:
+					response = SGAApexClient.monitorJob(input);
+					System.out.println("Status code "+response.getStatusCode());
+					System.out.println(response.getEntity(String.class));
+					break;
+				case 3:
+					response = SGAApexClient.deleteJob(input);
+					System.out.println("Status code "+response.getStatusCode());
+					System.out.println(response.getEntity(String.class));
+					break;
+				case 4:
+					response = SGAApexClient.getStatus(input);
+					System.out.println("Status code "+response.getStatusCode());
+					System.out.println(response.getEntity(String.class));
+					break;
+				case 5:
+					break;
+				default:
+					System.out.println("Incorrect input - Must enter 1 - Submit job, 2 - Monitor job, 3 - Cancel job and 4 - exit");
+					break;
+				}	
+			}
+			while(choice != 5);
+		}
+		catch(Exception ex) {
+			if (ex instanceof ClientRuntimeException) {
+				System.err.println("Failed to connect to the service. Please check your network connection!");
+			}
+			else {
+				System.err.println("Exception occured, reason: " + ex);
+			}
+		}
+		finally {
+			input.close();
+		}
 	}
 
 }
