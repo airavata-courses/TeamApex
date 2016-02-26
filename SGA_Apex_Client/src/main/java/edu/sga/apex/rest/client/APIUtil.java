@@ -20,7 +20,7 @@ public class APIUtil {
 	private static ClientConfig clientConfig;
 	
 	/** The Constant URL. */
-	private static final String URL = "http://localhost:8080/SGA_Apex/sga/rest/job/";
+	public static String URL = "http://%s:8080/SGA_Apex/sga/rest/job/";
 
 	static {
 		// client config

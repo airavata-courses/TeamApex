@@ -2,6 +2,7 @@ package edu.sga.apex.rest.client;
 
 import java.util.Scanner;
 
+import org.apache.commons.validator.routines.InetAddressValidator;
 import org.apache.wink.client.ClientResponse;
 import org.json.JSONObject;
 
@@ -98,6 +99,26 @@ public class SGAApexClient {
 	public static void main(String[] args) {
 		int choice;
 		ClientResponse response;
+		
+		if(args.length == 0) {
+			System.err.println("Please provide IP Address of the server as an argument "
+					+ "[java -jar <app.jar> <ip_add>]. Exiting!");
+			System.exit(1);
+		}
+		else {
+			String IP_ADDR = args[0];
+			InetAddressValidator validator = InetAddressValidator.getInstance();
+			if(IP_ADDR != null && 
+					(IP_ADDR.equals("localhost") || 
+							validator.isValid(IP_ADDR))) {
+				APIUtil.URL = String.format(APIUtil.URL, IP_ADDR);
+			}
+			else {
+				System.err.println("Please enter a valid IP address. Exiting!");
+				System.exit(1);
+			}
+		}
+		
 		Scanner input = new Scanner(System.in);
 		do
 		{	
