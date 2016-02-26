@@ -176,20 +176,13 @@ public class KarstSCImpl implements SCInterface{
 	public String copyFiles(String srcFile, String destFile) {
 
 		try {
-			String loginUser = properties.getProperty("loginUser");
-			String loginKey = properties.getProperty("loginKey");
-			String knownHosts = properties.getProperty("knownHosts");
-			String hostName = properties.getProperty("hostName");
-			Integer portName = Constants.SSH_PORT;
-			String passPhrase = properties.getProperty("passPhrase");
-
 			SCPRequestBean bean = new SCPRequestBean();
-			bean.setHostName(hostName);
-			bean.setSshPort(portName);
-			bean.setUserName(loginUser);
-			bean.setPassPhrase(passPhrase);
-			bean.setPrivateKeyFilePath(loginKey);
-			bean.setKnownHostsFilePath(knownHosts);
+			bean.setHostName(properties.getProperty("hostName"));
+			bean.setSshPort(Constants.SSH_PORT);
+			bean.setUserName(properties.getProperty("loginUser"));
+			bean.setPassPhrase(properties.getProperty("passPhrase"));
+			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
+			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
 
 			bean.setSourceFilePath(srcFile);
 			bean.setDestFilePath(destFile);
@@ -202,7 +195,25 @@ public class KarstSCImpl implements SCInterface{
 			ex.printStackTrace();
 			return "Failed to copy file";
 		}
-
+	}
+	
+	public void makeDir(String directory) {
+		System.out.println("Making directory on remote: " + directory);
+		try {
+			SCPRequestBean bean = new SCPRequestBean();
+			bean.setHostName(properties.getProperty("hostName"));
+			bean.setSshPort(Constants.SSH_PORT);
+			bean.setUserName(properties.getProperty("loginUser"));
+			bean.setPassPhrase(properties.getProperty("passPhrase"));
+			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
+			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+			
+			SFTPUtil util = new SFTPUtil(bean);
+			util.mkDir(directory);
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -384,6 +395,26 @@ public class KarstSCImpl implements SCInterface{
 			SSHUtil util = new SSHUtil(bean);
 			util.executeCommands();
 
+			// Copy binary
+			String srcScript = properties.getProperty("srcScript");
+			String destScriptPath = String.format(properties.getProperty("destScript"), 
+													properties.getProperty("loginUser"));
+			String srcScriptPath = this.createTempFile(srcScript, "hello", ".sh");
+			
+			// Make dest directory & copy binary
+			this.makeDir("apex_scripts");
+			this.copyFiles(srcScriptPath, destScriptPath);
+			
+			// handle dos2unix
+			bean.setCommands("dos2unix " + destScriptPath);
+			util = new SSHUtil(bean);
+			util.executeCommands();
+			
+			// give it exe permissions
+			bean.setCommands("chmod +x " + destScriptPath);
+			util = new SSHUtil(bean);
+			util.executeCommands();
+			
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
 			String destFileEmail = properties.getProperty("destFileEmail");
@@ -446,5 +477,4 @@ public class KarstSCImpl implements SCInterface{
 					+ "reason: " + ex);
 		}
 	}
-
 }

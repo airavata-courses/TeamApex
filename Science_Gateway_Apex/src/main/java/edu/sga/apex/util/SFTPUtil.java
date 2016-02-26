@@ -1,6 +1,10 @@
 package edu.sga.apex.util;
 
-import com.jcraft.jsch.*;
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 
 import edu.sga.apex.bean.SCPRequestBean;
 
@@ -101,6 +105,46 @@ public class SFTPUtil {
 		}
 	}
 	
+	/**
+	 * Mk dir.
+	 *
+	 * @param path the path
+	 */
+	public void mkDir(String path) {
+		sftpChannel = this.connectToChannel();
+		
+		System.out.println("[SFTP] Request Bean: " + this.requestBean);
+		
+		try {
+			String[] folders = path.split("/");
+			for (String folder : folders) {
+			    if (folder.length() > 0) {
+			        try {
+			            sftpChannel.cd(folder);
+			        }
+			        catch ( SftpException e ) {
+						System.out.println("Making dir: " + folder);
+			        	sftpChannel.mkdir(folder);
+			        	sftpChannel.cd(folder);
+			        }
+			    }
+			}
+			
+			System.out.println("MkDir succeeded!");
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		finally {
+			disconnect();
+		}
+	}
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		SCPRequestBean bean = new SCPRequestBean();
 		bean.setDestFilePath("/N/u/goshenoy/Karst/sftp_test/file.txt");
