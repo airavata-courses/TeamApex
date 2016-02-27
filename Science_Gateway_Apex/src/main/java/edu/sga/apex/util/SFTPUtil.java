@@ -1,5 +1,9 @@
 package edu.sga.apex.util;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
@@ -106,6 +110,49 @@ public class SFTPUtil {
 	}
 	
 	/**
+	 * Gets the file from server.
+	 *
+	 * @param filePath the file path
+	 * @return the from server
+	 */
+	public String getFromServer(String filePath) {
+		sftpChannel = this.connectToChannel();
+		String tempDir = System.getProperty(Constants.TEMP_DIR_PROP);
+		
+		System.out.println("[SFTP] Request Bean: " + this.requestBean);
+		
+		try {
+			System.out.println("Starting File Download...");
+			
+			// check if output file exists
+			sftpChannel.ls(filePath);
+			
+			// copy the file to temp directory
+			sftpChannel.get(filePath, tempDir);
+			
+			Path path = Paths.get(filePath);
+			String fileName = path.getFileName().toString();
+			tempDir += "\\" + fileName;
+		}
+		catch(Exception ex) {
+			if(ex.getMessage().contains("No such file")) {
+				System.err.println("Output file does not exist!");
+			}
+			else {
+				ex.printStackTrace();
+			}
+			
+			return null;
+		}
+		finally {
+			disconnect();
+		}
+		
+		// return path to file downloaded
+		return tempDir;
+	}
+	
+	/**
 	 * Mk dir.
 	 *
 	 * @param path the path
@@ -147,7 +194,7 @@ public class SFTPUtil {
 	 */
 	public static void main(String[] args) {
 		SCPRequestBean bean = new SCPRequestBean();
-		bean.setDestFilePath("/N/u/goshenoy/Karst/sftp_test/file.txt");
+		bean.setDestFilePath("goshenoy01.out");
 		bean.setSourceFilePath("C:\\folder1\\ex1.txt");
 		bean.setHostName("karst.uits.iu.edu");
 		bean.setSshPort(Constants.SSH_PORT);
@@ -157,6 +204,9 @@ public class SFTPUtil {
 		bean.setKnownHostsFilePath("C:\\Users\\Gaurav-PC\\.ssh\\known_hosts");
 		
 		SFTPUtil util = new SFTPUtil(bean);
-		util.sendToServer();
+		String filePath = util.getFromServer("goshenoy01.out");
+		System.out.println(filePath);
+		File file = new File(filePath);
+		System.out.println(file.getAbsolutePath());
 	}
 }
