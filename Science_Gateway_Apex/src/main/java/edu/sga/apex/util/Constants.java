@@ -31,6 +31,9 @@ public class Constants {
 	/** The Constant QSTAT_RECORD. */
 	public static final String QSTAT_RECORD = "qstat";
 	
+	/** The Constant TEMP_DIR_PROP. */
+	public static final String TEMP_DIR_PROP = "java.io.tmpdir";
+	
 	/** The Constant JOB_STATUS. */
 	public static final Map<String, String> JOB_STATUS;
 	
