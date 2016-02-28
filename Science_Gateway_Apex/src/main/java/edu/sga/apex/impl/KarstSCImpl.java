@@ -501,6 +501,9 @@ public class KarstSCImpl implements SCInterface {
 
 			SFTPUtil util = new SFTPUtil(bean);
 			downloadedFile = util.getFromServer(jobName + ".out");
+			if(downloadedFile == null) {
+				throw new FileNotFoundException("Output file does not exist on remote machine!");
+			}
 		}
 		catch(Exception ex) {
 			System.err.println("Failed to download job output file, reason: " + ex);

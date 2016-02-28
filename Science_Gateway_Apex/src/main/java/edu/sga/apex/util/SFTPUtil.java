@@ -132,7 +132,7 @@ public class SFTPUtil {
 			
 			Path path = Paths.get(filePath);
 			String fileName = path.getFileName().toString();
-			tempDir += "\\" + fileName;
+			tempDir += File.separator + fileName;
 			
 			System.out.println("File download complete. File at: " + tempDir);
 		}
