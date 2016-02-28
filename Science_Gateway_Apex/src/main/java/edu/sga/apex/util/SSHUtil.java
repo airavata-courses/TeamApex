@@ -87,7 +87,7 @@ public class SSHUtil {
 	/**
 	 * Execute commands.
 	 */
-	public void executeCommands() {
+	public String executeCommands() {
 		execChannel = this.openChannel();
 		execChannel.setErrStream(System.err);
 		
@@ -103,6 +103,7 @@ public class SSHUtil {
 		    String line;
 		    while ((line = reader.readLine()) != null) {
 		      System.out.println(line);
+		      return line;
 		    }
 		}
 		catch(Exception ex) {
@@ -111,6 +112,8 @@ public class SSHUtil {
 		finally {
 			disconnect();
 		}
+		
+		return null;
 	}
 	
 	/**

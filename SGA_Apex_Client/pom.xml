@@ -2,12 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<!-- <parent> <groupId>edu.sga.apex</groupId> <artifactId>SGA_Build</artifactId> 
-		<version>1</version> </parent> -->
-
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.sga.apex</groupId>
-	<artifactId>ScienceGatewayApex</artifactId>
+	<artifactId>ScienceGatewayApexClient</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1.0</version>
 
@@ -23,11 +20,18 @@
 
 	<dependencies>
 
-		<!-- Apache WINK -->
+		<!-- Apache WINK Client -->
 		<dependency>
 			<groupId>org.apache.wink</groupId>
-			<artifactId>wink-server</artifactId>
+			<artifactId>wink-client</artifactId>
 			<version>1.4</version>
+		</dependency>
+
+		<!-- Commons Validator -->
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.4.0</version>
 		</dependency>
 
 		<!-- SLF4J Logging -->
@@ -44,12 +48,12 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- Jcraft -->
 		<dependency>
-			<groupId>com.jcraft</groupId>
-			<artifactId>jsch</artifactId>
-			<version>0.1.53</version>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160212</version>
 		</dependency>
+
 
 		<!-- Testing -->
 		<dependency>
@@ -57,19 +61,6 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>1.9.2</version>
-		</dependency>
-
-		<!-- fixedformat4j -->
-		<dependency>
-			<groupId>com.ancientprogramming.fixedformat4j</groupId>
-			<artifactId>fixedformat4j</artifactId>
-			<version>1.2.2</version>
 		</dependency>
 
 	</dependencies>
@@ -107,7 +98,7 @@
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
-										<Main-Class>edu.sga.apex.client.SCJobRunner</Main-Class>
+										<Main-Class>edu.sga.apex.rest.client.SGAApexClient</Main-Class>
 										<Build-Number>${version}</Build-Number>
 									</manifestEntries>
 								</transformer>

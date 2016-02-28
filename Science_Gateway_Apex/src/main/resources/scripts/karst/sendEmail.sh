@@ -16,6 +16,8 @@ if [ -z $1 ];then
         exit 1
 fi
 
+mail_boundary="ZZ_/asdfasf34.34t3refSDFG34534fdfgefokosdf"
+
 # Clear Mail File.
 cat /dev/null > $mailFile
 
@@ -23,10 +25,20 @@ cat /dev/null > $mailFile
 /bin/echo "From: $mailfrom" >> $mailFile
 /bin/echo "To: $mailto" >> $mailFile
 /bin/echo "Subject: Job Name: $jobName $subject" >> $mailFile
+/bin/echo "Mime-Version: 1.0" >> $mailFile
+/bin/echo "Content-Type: multipart/mixed; boundary=\"$mail_boundary\"" >> $mailFile
+
+echo "--$mail_boundary" >> $mailFile
+
+# Email Text Headers and body
+
+/bin/echo "Content-Type: text/plain; charset=\"US-ASCII\"" >> $mailFile
+/bin/echo "Content-Transfer-Encoding: 7bit" >> $mailFile
+/bin/echo "Content-Disposition: inline" >> $mailFile
 
 user=""
 
-if [ ! -z $2  ];then
+if [ ! -z $2 ];then
         user=$2
 else
         user=`whoami`
@@ -42,6 +54,26 @@ fi
 /bin/echo "----------------------- ----------- -------- ---------------- ------ ----- ------ ------ --------- - ---------" >> $mailFile
 
 qstat -u $user | grep $jobName >> $mailFile
+
+echo "--$mail_boundary" >> $mailFile
+
+
+if [ -f "${jobName}.out" ];then
+	# Attachment Headers and embedding
+	
+	mimetype=`file --mime-type "${jobName}.out" | sed 's/.*: //'`
+	encoded_file=$(base64 < ${jobName}.out)
+	/bin/echo "Content-Type: $mimetype" >> $mailFile
+	/bin/echo "Content-Transfer-Encoding: base64" >> $mailFile
+	/bin/echo "Content-Disposition: attachment; filename=\"${jobName}.out\"" >> $mailFile
+
+	# Adding a new line
+	/bin/echo "" >> $mailFile
+
+	/bin/echo $encoded_file >> $mailFile
+	
+	/bin/echo "--$mail_boundary" >> $mailFile
+fi
 
 #/bin/echo $jobDetails
 

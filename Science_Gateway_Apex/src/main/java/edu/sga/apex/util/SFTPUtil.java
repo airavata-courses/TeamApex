@@ -1,6 +1,14 @@
 package edu.sga.apex.util;
 
-import com.jcraft.jsch.*;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 
 import edu.sga.apex.bean.SCPRequestBean;
 
@@ -86,15 +94,12 @@ public class SFTPUtil {
 	public void sendToServer() {
 		sftpChannel = this.connectToChannel();
 		
-		System.out.println("Request Bean: " + this.requestBean);
+		System.out.println("[SFTP] Request Bean: " + this.requestBean);
 		
 		try {
 			System.out.println("Starting File Upload...");
 			sftpChannel.put(requestBean.getSourceFilePath(), requestBean.getDestFilePath());
 			System.out.println("File upload succeeded!");
-			
-			System.out.println("Retrieving Uploaded file...");
-			sftpChannel.get(requestBean.getDestFilePath(), "C:\\folder2");
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
@@ -104,9 +109,94 @@ public class SFTPUtil {
 		}
 	}
 	
+	/**
+	 * Gets the file from server.
+	 *
+	 * @param filePath the file path
+	 * @return the from server
+	 */
+	public String getFromServer(String filePath) {
+		sftpChannel = this.connectToChannel();
+		String tempDir = System.getProperty(Constants.TEMP_DIR_PROP);
+		
+		System.out.println("[SFTP] Request Bean: " + this.requestBean);
+		
+		try {
+			System.out.println("Starting File Download...");
+			
+			// check if output file exists
+			sftpChannel.ls(filePath);
+			
+			// copy the file to temp directory
+			sftpChannel.get(filePath, tempDir);
+			
+			Path path = Paths.get(filePath);
+			String fileName = path.getFileName().toString();
+			tempDir += File.separator + fileName;
+			
+			System.out.println("File download complete. File at: " + tempDir);
+		}
+		catch(Exception ex) {
+			if(ex.getMessage().contains("No such file")) {
+				System.err.println("Output file does not exist!");
+			}
+			else {
+				ex.printStackTrace();
+			}
+			
+			return null;
+		}
+		finally {
+			disconnect();
+		}
+		
+		// return path to file downloaded
+		return tempDir;
+	}
+	
+	/**
+	 * Mk dir.
+	 *
+	 * @param path the path
+	 */
+	public void mkDir(String path) {
+		sftpChannel = this.connectToChannel();
+		
+		System.out.println("[SFTP] Request Bean: " + this.requestBean);
+		
+		try {
+			String[] folders = path.split("/");
+			for (String folder : folders) {
+			    if (folder.length() > 0) {
+			        try {
+			            sftpChannel.cd(folder);
+			        }
+			        catch ( SftpException e ) {
+						System.out.println("Making dir: " + folder);
+			        	sftpChannel.mkdir(folder);
+			        	sftpChannel.cd(folder);
+			        }
+			    }
+			}
+			
+			System.out.println("MkDir succeeded!");
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		finally {
+			disconnect();
+		}
+	}
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		SCPRequestBean bean = new SCPRequestBean();
-		bean.setDestFilePath("/N/u/goshenoy/Karst/sftp_test/file.txt");
+		bean.setDestFilePath("goshenoy01.out");
 		bean.setSourceFilePath("C:\\folder1\\ex1.txt");
 		bean.setHostName("karst.uits.iu.edu");
 		bean.setSshPort(Constants.SSH_PORT);
@@ -116,6 +206,9 @@ public class SFTPUtil {
 		bean.setKnownHostsFilePath("C:\\Users\\Gaurav-PC\\.ssh\\known_hosts");
 		
 		SFTPUtil util = new SFTPUtil(bean);
-		util.sendToServer();
+		String filePath = util.getFromServer("goshenoy01.out");
+		System.out.println(filePath);
+		File file = new File(filePath);
+		System.out.println(file.getAbsolutePath());
 	}
 }
