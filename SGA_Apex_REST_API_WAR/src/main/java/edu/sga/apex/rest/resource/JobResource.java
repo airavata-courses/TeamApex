@@ -1,4 +1,7 @@
+
 package edu.sga.apex.rest.resource;
+
+import java.io.File;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -184,6 +187,36 @@ public class JobResource {
 			
 			/* Build the response */
 			builder = Response.ok(response);
+		} catch (Exception ex) {
+			/* handle exception and return response */
+			return ExceptionUtil.handleException(ex);
+		}
+
+		/* Return the response */
+		return builder.build();
+	}
+	
+	/**
+	 * Gets the job output file.
+	 *
+	 * @param jobName the job name
+	 * @return the job output file
+	 */
+	@GET
+	@Path("{jobName}/output")
+	public Response getJobOutputFile(@PathParam("jobName") String jobName) {
+		ResponseBuilder builder = null;
+		try {
+			/* Get Karst impl */
+			SCInterface scInterface = new KarstSCImpl();
+			/* Get job output file path */
+			String filePath = scInterface.downloadJobOutputFile(jobName);
+			
+			/* Create a file object */
+			File response = new File(filePath);
+			
+			/* Build the response */
+			builder = Response.ok(response).header("Content-Disposition", "attachment; filename=" + response.getName());
 		} catch (Exception ex) {
 			/* handle exception and return response */
 			return ExceptionUtil.handleException(ex);

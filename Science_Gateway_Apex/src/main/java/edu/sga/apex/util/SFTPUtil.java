@@ -133,6 +133,8 @@ public class SFTPUtil {
 			Path path = Paths.get(filePath);
 			String fileName = path.getFileName().toString();
 			tempDir += "\\" + fileName;
+			
+			System.out.println("File download complete. File at: " + tempDir);
 		}
 		catch(Exception ex) {
 			if(ex.getMessage().contains("No such file")) {

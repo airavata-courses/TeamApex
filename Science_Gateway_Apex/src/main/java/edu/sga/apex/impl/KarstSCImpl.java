@@ -28,7 +28,7 @@ import edu.sga.apex.util.SSHUtil;
  * 
  * @author Gourav Shenoy
  */
-public class KarstSCImpl implements SCInterface{
+public class KarstSCImpl implements SCInterface {
 
 	/** The Constant script_path. */
 	private static final String script_path = "template/karst_job.script";
@@ -197,6 +197,11 @@ public class KarstSCImpl implements SCInterface{
 		}
 	}
 	
+	/**
+	 * Make dir.
+	 *
+	 * @param directory the directory
+	 */
 	public void makeDir(String directory) {
 		System.out.println("Making directory on remote: " + directory);
 		try {
@@ -476,5 +481,32 @@ public class KarstSCImpl implements SCInterface{
 			throw new Exception("Something went wrong while executing qstat command, "
 					+ "reason: " + ex);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.interfaces.SCInterface#downloadJobOutputFile(java.lang.String)
+	 */
+	@Override
+	public String downloadJobOutputFile(String jobName) throws Exception {
+		String downloadedFile = null;
+		
+		try {
+			SCPRequestBean bean = new SCPRequestBean();
+			bean.setHostName(properties.getProperty("hostName"));
+			bean.setSshPort(Constants.SSH_PORT);
+			bean.setUserName(properties.getProperty("loginUser"));
+			bean.setPassPhrase(properties.getProperty("passPhrase"));
+			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
+			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+
+			SFTPUtil util = new SFTPUtil(bean);
+			downloadedFile = util.getFromServer(jobName + ".out");
+		}
+		catch(Exception ex) {
+			System.err.println("Failed to download job output file, reason: " + ex);
+		}
+		
+		// return the path
+		return downloadedFile;
 	}
 }

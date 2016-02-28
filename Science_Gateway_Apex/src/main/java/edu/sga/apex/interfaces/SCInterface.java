@@ -55,6 +55,15 @@ public interface SCInterface {
 	public JobBean getJobStatus(String jobId) throws Exception;
 	
 	/**
+	 * Download job output file.
+	 *
+	 * @param jobName the job name
+	 * @return the string
+	 * @throws Exception the exception
+	 */
+	public String downloadJobOutputFile(String jobName) throws Exception;
+	
+	/**
 	 * Submit job.
 	 *
 	 * @return the string
