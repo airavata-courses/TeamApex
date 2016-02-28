@@ -71,6 +71,18 @@ public class APIUtil {
 	}
 	
 	/**
+	 * Do get job output.
+	 *
+	 * @param jobName the job name
+	 * @return the client response
+	 */
+	public static ClientResponse doGetJobOutput(String jobName){
+		Resource resource = client.resource(URL + jobName + "/output");
+		ClientResponse response = resource.get();
+		return response;
+	}
+	
+	/**
 	 * Do monitor.
 	 *
 	 * @param jobId the job id

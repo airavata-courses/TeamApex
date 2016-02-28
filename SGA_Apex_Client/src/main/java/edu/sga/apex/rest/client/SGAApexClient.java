@@ -91,6 +91,18 @@ public class SGAApexClient {
 		String jobId = input.next();
 		return APIUtil.doGetStatus(jobId);	
 	}
+	
+	/**
+	 * Gets the job output.
+	 *
+	 * @param input the input
+	 * @return the job output
+	 */
+	public static ClientResponse getJobOutput(Scanner input) {
+		System.out.println("Please enter the job name");
+		String jobName = input.next();
+		return APIUtil.doGetJobOutput(jobName);
+	}
 
 	/**
 	 * The main method.
@@ -124,7 +136,8 @@ public class SGAApexClient {
 		try {
 			do
 			{	
-				System.out.println("Please enter your choice: \n 1 - Submit job \n 2 - Monitor job \n 3 - Cancel job \n 4 - Get job status\n 5 - exit\n");
+				System.out.println("Please enter your choice: \n 1 - Submit job \n 2 - Monitor job \n 3 - "
+						+ "Cancel job \n 4 - Get job status \n 5 - Get job output file \n 6 - exit\n");
 				choice = input.nextInt();
 				switch(choice){
 				case 1:
@@ -148,13 +161,18 @@ public class SGAApexClient {
 					System.out.println(response.getEntity(String.class));
 					break;
 				case 5:
+					response = SGAApexClient.getJobOutput(input);
+					System.out.println("Status code "+response.getStatusCode());
+					System.out.println(response.getEntity(String.class));
+					break;
+				case 6:
 					break;
 				default:
 					System.out.println("Incorrect input - Must enter 1 - Submit job, 2 - Monitor job, 3 - Cancel job and 4 - exit");
 					break;
 				}	
 			}
-			while(choice != 5);
+			while(choice != 6);
 		}
 		catch(Exception ex) {
 			if (ex instanceof ClientRuntimeException) {
