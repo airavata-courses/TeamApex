@@ -111,11 +111,11 @@ function submitJob(procnum, email, nodenum, walltime, jobname) {
 		headers: {
 			'Content-type': "application/json"
 		},
-		data: "{submitJobRequest:{numProcessors: "+ procnum 
-		+ ", emailId: " + email
-		+ ", numNodes: " + nodenum
-		+ ", wallTime: " + walltime
-		+ ", jobName: " + jobname + "}}",
+		data: "{\"submitJobRequest\": {\"numProcessors\": "+ procnum 
+		+ ", \"emailId\": \"" + email + "\""
+		+ ", \"numNodes\": \"" + nodenum + "\""
+		+ ", \"wallTime\": \"" + walltime + "\""
+		+ ", \"jobName\": \"" + jobname + "\"}}",
 		success: jobSubmitSuccess,
 		dataType: "json"
 	});
