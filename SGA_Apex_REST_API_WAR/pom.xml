@@ -24,13 +24,13 @@
 
 		<!-- Maven war plugin -->
 		<warPluginVersion>2.6</warPluginVersion>
-		
+
 		<!-- SGA middleware version -->
 		<sgaJarVersion>0.1.0</sgaJarVersion>
 	</properties>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>edu.sga.apex</groupId>
 			<artifactId>ScienceGatewayApex</artifactId>
@@ -43,7 +43,7 @@
 			<artifactId>wink-server</artifactId>
 			<version>1.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.wink</groupId>
 			<artifactId>wink-json-provider</artifactId>
@@ -84,6 +84,12 @@
 			<artifactId>jetty-server</artifactId>
 			<version>${jettyVersion}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency>
+
 
 	</dependencies>
 

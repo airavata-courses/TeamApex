@@ -14,4 +14,13 @@
         <servlet-name>sga-apex-rest-ws</servlet-name>
         <url-pattern>/sga/rest/*</url-pattern>
     </servlet-mapping>
+    
+    <filter>
+        <filter-name>cross-origin</filter-name>
+        <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>cross-origin</filter-name>
+        <url-pattern>/sga/rest/*</url-pattern>
+    </filter-mapping>
 </web-app>
