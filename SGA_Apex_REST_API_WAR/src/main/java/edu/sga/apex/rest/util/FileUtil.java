@@ -25,7 +25,7 @@ public class FileUtil {
 	public static String createTempFile(InputStream inputStream, String fileName)
 			throws Exception {
 		OutputStream outputStream = null;
-		String outfilePath = null;
+		String outFileName = null;
 
 		try {
 			/* read inputstream & write to temp file */
@@ -39,8 +39,8 @@ public class FileUtil {
 				outputStream.write(bytes, 0, read);
 			}
 
-			/* get path of temp file */
-			outfilePath = file.getAbsolutePath();
+			/* get name of temp file */
+			outFileName = file.getName();
 		} 
 		catch (IOException ex) {
 			System.err.println("Error creating temp file: " + ex);
@@ -67,6 +67,6 @@ public class FileUtil {
 		}
 
 		/* return path of temp file */
-		return outfilePath;
+		return outFileName;
 	}
 }

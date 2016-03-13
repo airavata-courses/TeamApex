@@ -52,7 +52,7 @@
 	<xs:complexType name="inputFile">
 		<xs:sequence>
 			<xs:element name="fileType" type="xs:string" minOccurs="0" />
-			<xs:element name="filePath" type="xs:string" minOccurs="0" />
+			<xs:element name="fileName" type="xs:string" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
 	
