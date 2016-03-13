@@ -4,6 +4,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+
 import edu.sga.apex.rest.jaxb.ApiErrorResponse;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 
@@ -27,6 +29,7 @@ public class ExceptionUtil {
 		/* Construct error response jaxb */
 		ApiErrorResponse errResponse = factory.createApiErrorResponse();
 		errResponse.setMessage(exception.getMessage());
+		errResponse.setTrace(ExceptionUtils.getStackTrace(exception));
 		errResponse.setStatus(Status.INTERNAL_SERVER_ERROR.getStatusCode());
 
 		/* Build the error response */
