@@ -14,17 +14,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for submitJobResponse complex type.
+ * <p>Java class for inputFile complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="submitJobResponse">
+ * &lt;complexType name="inputFile">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="jobId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="fileType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="filePath" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,61 +34,61 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "submitJobResponse", propOrder = {
-    "jobId",
-    "status"
+@XmlType(name = "inputFile", propOrder = {
+    "fileType",
+    "filePath"
 })
-public class SubmitJobResponse {
+public class InputFile {
 
-    protected String jobId;
-    protected String status;
+    protected String fileType;
+    protected String filePath;
 
     /**
-     * Gets the value of the jobId property.
+     * Gets the value of the fileType property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getJobId() {
-        return jobId;
+    public String getFileType() {
+        return fileType;
     }
 
     /**
-     * Sets the value of the jobId property.
+     * Sets the value of the fileType property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setJobId(String value) {
-        this.jobId = value;
+    public void setFileType(String value) {
+        this.fileType = value;
     }
 
     /**
-     * Gets the value of the status property.
+     * Gets the value of the filePath property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getStatus() {
-        return status;
+    public String getFilePath() {
+        return filePath;
     }
 
     /**
-     * Sets the value of the status property.
+     * Sets the value of the filePath property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setStatus(String value) {
-        this.status = value;
+    public void setFilePath(String value) {
+        this.filePath = value;
     }
 
 }

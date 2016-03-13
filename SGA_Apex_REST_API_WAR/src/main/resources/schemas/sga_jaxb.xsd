@@ -6,6 +6,7 @@
 	<xs:element name="submitJobResponse" type="submitJobResponse" />
 	<xs:element name="simpleAPIResponse" type="simpleAPIResponse" />
 	<xs:element name="jobResponse" type="jobResponse" />
+	<xs:element name="inputFile" type="inputFile" />
 
 	<xs:complexType name="submitJobRequest">
 		<xs:sequence>
@@ -14,6 +15,7 @@
 			<xs:element name="numNodes" type="xs:int" minOccurs="0" />
 			<xs:element name="numProcessors" type="xs:int" minOccurs="0" />
 			<xs:element name="wallTime" type="xs:string" minOccurs="0" />
+			<xs:element name="inputFiles" type="inputFile" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 
@@ -44,6 +46,13 @@
 			<xs:element name="numNodes" type="xs:string" minOccurs="0" />
 			<xs:element name="numProcessors" type="xs:string" minOccurs="0" />
 			<xs:element name="requiredMemory" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="inputFile">
+		<xs:sequence>
+			<xs:element name="fileType" type="xs:string" minOccurs="0" />
+			<xs:element name="filePath" type="xs:string" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
 	
