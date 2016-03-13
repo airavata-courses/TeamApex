@@ -45,7 +45,17 @@ public class JobResource {
 	            "emailId": "goshenoy@indiana.edu",
 	            "numNodes": 2,
 	            "wallTime": "30:00",
-	            "jobName": "goshenoy-01"
+	            "jobName": "goshenoy-01",
+	            "inputFiles": [
+	    			{
+						"fileType": "T1",
+						"fileName": "test.in"
+	    			},
+	    			{
+						"fileType": "T2",
+						"fileName": "test2.in"
+	    			}
+  				],
 	        }
 	    }
 	 * 

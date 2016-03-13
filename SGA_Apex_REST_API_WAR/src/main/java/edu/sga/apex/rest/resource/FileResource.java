@@ -40,7 +40,7 @@ public class FileResource {
 	public Response uploadFile(InMultiPart inMultiPart) {
 		ResponseBuilder builder = null;
 		ObjectFactory factory = new ObjectFactory();
-		String tempFilePath = null;
+		String tempFileName = null;
 		
 		try {
 			/* read each part from multipart */
@@ -61,18 +61,18 @@ public class FileResource {
 				}
 
 				/* save uploaded file in temp */
-				tempFilePath = FileUtil.createTempFile(part.getInputStream(),
+				tempFileName = FileUtil.createTempFile(part.getInputStream(),
 						fileName);
 				
 				/* temp-file null check */
-				if(tempFilePath == null) {
+				if(tempFileName == null) {
 					throw new IOException("Failed to create temp file!");
 				}
 				
 				/* Construct response jaxb entity */
 				SimpleAPIResponse response = factory.createSimpleAPIResponse();
-				response.setMessage("File Upload Succeeded. Path returned in ContentUrl.");
-				response.setContentUrl(tempFilePath);
+				response.setMessage("File Upload Succeeded!");
+				response.setContentUrl(tempFileName);
 				response.setStatus(Status.ACCEPTED.getStatusCode());
 				
 				/* Build the response */
