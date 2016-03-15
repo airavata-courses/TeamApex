@@ -1,26 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
- 	<display-name>SGA_Apex_REST_API_WAR</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>SGA_Apex_REST_API_WAR</display-name>
 	<servlet>
-        <servlet-name>sga-apex-rest-ws</servlet-name>
-        <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
-        <init-param>
-            <param-name>javax.ws.rs.Application</param-name>
-            <param-value>edu.sga.apex.rest.application.Apex_REST_Application</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
+		<servlet-name>sga-apex-rest-ws</servlet-name>
+		<servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>edu.sga.apex.rest.application.Apex_REST_Application</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
-    <servlet-mapping>
-        <servlet-name>sga-apex-rest-ws</servlet-name>
-        <url-pattern>/sga/rest/*</url-pattern>
-    </servlet-mapping>
-    
-    <filter>
-        <filter-name>cross-origin</filter-name>
-        <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>cross-origin</filter-name>
-        <url-pattern>/sga/rest/*</url-pattern>
-    </filter-mapping>
+	<servlet-mapping>
+		<servlet-name>sga-apex-rest-ws</servlet-name>
+		<url-pattern>/sga/rest/*</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>cross-origin</filter-name>
+		<filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>cross-origin</filter-name>
+		<url-pattern>/sga/rest/*</url-pattern>
+	</filter-mapping>
+
+	<login-config>
+	  <auth-method>FORM</auth-method>
+	  <realm-name>ApexRealm</realm-name>
+	  <form-login-config>
+	     <form-login-page>/login.html</form-login-page>
+	     <form-error-page>/login-error.html</form-error-page>
+	  </form-login-config>
+	</login-config>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Secure resources</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
 </web-app>

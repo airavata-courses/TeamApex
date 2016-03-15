@@ -89,6 +89,11 @@
 			<artifactId>jetty-servlets</artifactId>
 			<version>${jettyVersion}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-webapp</artifactId>
+		    <version>${jettyVersion}</version>
+		</dependency>
 
 
 	</dependencies>
@@ -136,6 +141,13 @@
 					<webApp>
 						<contextPath>/SGA_Apex</contextPath>
 					</webApp>
+					<loginServices>
+				      <loginService implementation="org.eclipse.jetty.security.HashLoginService">
+				        <name>ApexRealm</name>
+				        <config>${project.basedir}/jetty-config.properties</config>
+				      </loginService>
+				    </loginServices>
+					<!-- <jettyXml>jetty.xml</jettyXml> -->
 				</configuration>
 			</plugin>
 		</plugins>
