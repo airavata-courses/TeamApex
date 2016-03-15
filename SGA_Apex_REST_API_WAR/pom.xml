@@ -147,7 +147,7 @@
 				        <config>${project.basedir}/jetty-config.properties</config>
 				      </loginService>
 				    </loginServices>
-					<!-- <jettyXml>jetty.xml</jettyXml> -->
+					<jettyXml>jetty.xml</jettyXml>
 				</configuration>
 			</plugin>
 		</plugins>

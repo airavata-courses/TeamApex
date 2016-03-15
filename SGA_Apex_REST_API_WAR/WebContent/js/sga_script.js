@@ -3,7 +3,7 @@
  * @author: Mangirish Wagle
  */
 
-var baseURL = "sga/rest"
+var baseURL = "http://localhost:8080/SGA_Apex/sga/rest"
 
 /*
  * Function to render Success message.
