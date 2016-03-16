@@ -31,7 +31,7 @@ import edu.sga.apex.util.SSHUtil;
 public class KarstSCImpl implements SCInterface {
 
 	/** The Constant script_path. */
-	private static final String script_path = "template/karst_job.script";
+	private static final String script_path = "template/karst_grommacs.script";
 
 	/** The properties. */
 	private Properties properties;
