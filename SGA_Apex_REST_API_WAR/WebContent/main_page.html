@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SGA | Team Apex | Dashboard</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!-- Custom styles for this template -->
+<link rel="stylesheet" href="https://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+				</button>
+				<a class="navbar-brand" href="#">SGA Team-Apex</a>
+			</div>
+			<!-- /navbar-header -->
+			
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/SGA_Apex">Home</a></li>
+					<li><a href="#about">Our Team</a></li>
+					<li><a target="_blank"	href="https://github.com/airavata-courses/TeamApex/wiki">Project Wiki</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="#">Logout <span	class="sr-only">(current)</span></a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Submit A Job (On KARST)</h3>
+					</div>
+					<div class="panel-body">
+						<form action="">
+							<div class="form-group row col-xs-8">
+								<label for="jobName">Job Name</label>								
+								<input type="jobName" class="form-control" id="jobName" placeholder="Enter Job Name (eg: goshenoy-01)">
+							</div>
+							<!-- /form-group -->
+							
+							<div class="form-group row col-xs-8">
+								<label for="numProc">Number of Processors</label>
+								<input type="numProc" class="form-control" id="numProc" placeholder="Enter Number of Processors (eg: 16)">
+							</div>
+							<!-- /form-group -->
+							
+							<div class="form-group row col-xs-8">
+								<label for="numNodes">Number of Nodes</label>
+								<input type="numNodes" class="form-control" id="numNodes" placeholder="Enter Number of Nodes (eg: 2)">
+							</div>
+							<!-- /form-group -->
+							
+							<div class="form-group row col-xs-8">
+								<label for="email">Email ID</label>
+								<input type="email" class="form-control" id="email" placeholder="Enter Email ID (eg: abc@indiana.edu)">
+							</div>
+							<!-- /form-group -->
+							
+							<div class="form-group row col-xs-8">
+								<label for="wallTime">Wall Time (hh:mm:ss)</label>
+								<input type="wallTime" class="form-control" id="wallTime" placeholder="Enter Wall-Time (eg: 30:00)">
+							</div>
+							<!-- /form-group -->
+							
+							<div class="form-group row col-xs-8">
+								<label for="inputFile1">Input File 1</label>
+								<input type="file" id="inputFile1">
+								<p class="help-block">Input File 1 for GROMACS</p>
+							
+								<label for="inputFile2">Input File 2</label>
+								<input type="file" id="inputFile2">
+								<p class="help-block">Input File 2 for GROMACS</p>
+							</div>
+							<!-- /form-group -->
+							
+							<!-- buttons -->
+							<div class="form-group row col-xs-8">
+								<button type="submit" class="btn btn-success">Submit Job</button>
+								<button type="reset" class="btn btn-warning">Clear Form</button>
+							</div>
+						</form>
+						<!-- /form -->
+					</div>
+					<!-- /panel-body -->
+				</div>
+				<!-- panel -->
+			</div>
+			<!-- /col-md-8 -->
+			
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Monitor A Job</h3>
+					</div>
+					<div class="panel-body">
+						<form action="">
+							<div class="form-group row col-xs-12">
+								<label for="jobID">Job ID</label>								
+								<input type="jobID" class="form-control" id="jobID" placeholder="Enter Job ID (eg: 1245132.m2)">
+							</div>
+							<!-- /form-group -->
+							
+							<!-- buttons -->
+							<div class="form-group row col-xs-8">
+								<button type="submit" class="btn btn-success">Monitor Job</button>
+								<button type="reset" class="btn btn-warning">Clear Box</button>
+							</div>
+						</form>
+						<!-- /form -->
+					</div>
+					<!-- /panel-body -->
+				</div>
+				<!-- panel-1 -->
+				
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Download Output Files</h3>
+					</div>
+					<div class="panel-body">
+						<form action="">
+							<div class="form-group row col-xs-12">
+								<label for="jobName">Job ID</label>								
+								<input type="jobName" class="form-control" id="jobName" placeholder="Enter Job Name (eg: goshenoy-01)">
+							</div>
+							<!-- /form-group -->
+							
+							<!-- buttons -->
+							<div class="form-group row col-xs-8">
+								<button type="submit" class="btn btn-success">Download Output</button>
+								<button type="reset" class="btn btn-warning">Clear Box</button>
+							</div>
+						</form>
+						<!-- /form -->
+					</div>
+					<!-- /panel-body -->
+				</div>
+				<!-- panel-2 -->
+				
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Cancel A Job</h3>
+					</div>
+					<div class="panel-body">
+						<form action="">
+							<div class="form-group row col-xs-12">
+								<label for="jobID">Job ID</label>								
+								<input type="jobID" class="form-control" id="jobID" placeholder="Enter Job ID (eg: 1245132.m2)">
+							</div>
+							<!-- /form-group -->
+							
+							<!-- buttons -->
+							<div class="form-group row col-xs-8">
+								<button type="submit" class="btn btn-success">Cancel Job</button>
+								<button type="reset" class="btn btn-warning">Clear Box</button>
+							</div>
+						</form>
+						<!-- /form -->
+					</div>
+					<!-- /panel-body -->
+				</div>
+				<!-- panel-3 -->
+			</div>
+			<!-- /col-md-4 -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+
+
+	<!-- Core JavaScript -->
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</body>
+</html>
