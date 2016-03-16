@@ -17,6 +17,19 @@ $(document).ready(function() {
 		
 		event.preventDefault();
 	});
+	
+	$("#cancelJob").submit(function(event) {
+		cancelJob($('#jobIDC').val());
+		$("#cancelJob button[type='reset']").click();
+		event.preventDefault();
+	});
+	
+	$("#downloadOP").submit(function(event) {
+		downloadOutput($('#jobNameD').val());
+		$("#downloadOP button[type='reset']").click();
+		event.preventDefault();
+	});
+	
 
 });
 

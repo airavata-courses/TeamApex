@@ -12,16 +12,19 @@ var fileTypes = ["Coordinate-File", "Portable-Input-Binary-File"];
  * Function to render Success message.
  */
 function displayMessageOnSuccess(htmlString) {
-	$( "#responseDiv" ).css( "color", "#0000FF" );
-	$( "#responseDiv" ).html( htmlString );
+	$( "#submitJobResp" ).css( "color", "#0000FF" );
+	$( "#submitJobResp" ).html( htmlString );
+	
+	$("#submitJobResp").show();
+	setTimeout(function() { $("#submitJobResp").hide(); }, 10000);
 }
 
 /*
  * Function to render Error message.
  */
 function displayOnError(htmlString) {
-	$( "#responseDiv" ).css( "color", "#FF0000" );
-	$( "#responseDiv" ).html( htmlString );
+	$( "#submitJobResp" ).css( "color", "#FF0000" );
+	$( "#submitJobResp" ).html( htmlString );
 }
 
 ////////////SUCCESS Functions////////////
@@ -86,7 +89,12 @@ function jobGetStatusSuccess(response) {
 function jobCancelSuccess(response) {
 	var htmlString = "<p>" + response.simpleAPIResponse.message + "</p>";
 	//alert(htmlString)
-	displayMessageOnSuccess( htmlString );
+	// displayMessageOnSuccess( htmlString );
+	
+	$("#cancelJobResp").css( "color", "#0000FF");
+	$("#cancelJobResp").html(htmlString);
+	$("#cancelJobResp").show();
+	setTimeout(function() { $("#cancelJobResp").hide(); }, 5000);
 
 	// Hide Loading overlay
 	$("#overlay").css("visibility", "hidden");
@@ -97,9 +105,13 @@ function jobCancelSuccess(response) {
  * FIXME: This may not be really required.
  */
 function outputDownloadSuccess(response) {
-	var htmlString = "<p>" + response + "</p>";
+	var htmlString = "<p>Output File Download Should Begin Shortly</p>";
 	//alert(htmlString)
-	displayMessageOnSuccess( htmlString );
+	//displayMessageOnSuccess( htmlString );
+	
+	$("#downloadResp").html(htmlString);
+	$("#downloadResp").show();
+	setTimeout(function() { $("#downloadResp").hide(); }, 5000);
 }
 
 ////////////ERROR Functions////////////
@@ -113,6 +125,7 @@ function submitJob(procnum, email, nodenum, walltime, jobname) {
 	// Show loading overlay
 	$("#overlay").css("visibility", "visible");
 	
+	// Construct JSON
 	var jsonData = new Object();
 	var jobRequest = new Object();
 	jobRequest.numProcessors = procnum;

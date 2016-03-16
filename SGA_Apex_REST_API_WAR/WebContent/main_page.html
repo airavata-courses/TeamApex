@@ -97,17 +97,13 @@
 							</div>
 						</form>
 						<!-- /form -->
-						
-						<div class="form-group row col-xs-4" id="responseDiv">
-						</div>
-						<!-- /responseDiv -->
-						
+										
 						<!-- Overlay Div -->
 						<div class="form-group row col-xs-4" id=overlay style="visibility: hidden">
-							<table width=100% height=100%> 
+							<table width=100%> 
 							    <tr>
 							        <td style="text-align: center; vertical-align: middle;">
-							            <img src="images/loading_image.gif"></img>
+							            
 							        </td>
 							    </tr>
 							</table>
@@ -115,6 +111,9 @@
 						
 					</div>
 					<!-- /panel-body -->
+					
+					<div id="submitJobResp" class="panel-footer" style="display:none;"></div>
+					<!-- /panel-footer -->
 				</div>
 				<!-- panel -->
 			</div>
@@ -128,8 +127,8 @@
 					<div class="panel-body">
 						<form action="">
 							<div class="form-group row col-xs-12">
-								<label for="jobID">Job ID</label>								
-								<input type="jobID" class="form-control" id="jobID" placeholder="Enter Job ID (eg: 1245132.m2)">
+								<label for="jobIDM">Job ID</label>								
+								<input type="text" class="form-control" id="jobIDM" placeholder="Enter Job ID (eg: 1245132.m2)">
 							</div>
 							<!-- /form-group -->
 							
@@ -150,10 +149,10 @@
 						<h3 class="panel-title">Download Output Files</h3>
 					</div>
 					<div class="panel-body">
-						<form action="">
+						<form id="downloadOP" action="">
 							<div class="form-group row col-xs-12">
-								<label for="jobName">Job ID</label>								
-								<input type="jobName" class="form-control" id="jobName" placeholder="Enter Job Name (eg: goshenoy-01)">
+								<label for="jobNameD">Job Name</label>								
+								<input type="text" class="form-control" id="jobNameD" placeholder="Enter Job Name (eg: goshenoy-01)">
 							</div>
 							<!-- /form-group -->
 							
@@ -166,6 +165,9 @@
 						<!-- /form -->
 					</div>
 					<!-- /panel-body -->
+					
+					<div id="downloadResp" class="panel-footer" style="display:none;"></div>
+					<!-- /panel-footer -->
 				</div>
 				<!-- panel-2 -->
 				
@@ -174,10 +176,10 @@
 						<h3 class="panel-title">Cancel A Job</h3>
 					</div>
 					<div class="panel-body">
-						<form action="">
+						<form id="cancelJob" action="">
 							<div class="form-group row col-xs-12">
-								<label for="jobID">Job ID</label>								
-								<input type="jobID" class="form-control" id="jobID" placeholder="Enter Job ID (eg: 1245132.m2)">
+								<label for="jobIDC">Job ID</label>								
+								<input type="text" class="form-control" id="jobIDC" placeholder="Enter Job ID (eg: 1245132.m2)">
 							</div>
 							<!-- /form-group -->
 							
@@ -187,9 +189,12 @@
 								<button type="reset" class="btn btn-warning">Clear Box</button>
 							</div>
 						</form>
-						<!-- /form -->
+						<!-- /form -->					
 					</div>
 					<!-- /panel-body -->
+					
+					<div id="cancelJobResp" class="panel-footer" style="display:none;"></div>
+					<!-- /panel-footer -->
 				</div>
 				<!-- panel-3 -->
 			</div>
