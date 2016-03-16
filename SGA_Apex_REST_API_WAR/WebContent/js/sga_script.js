@@ -3,7 +3,10 @@
  * @author: Mangirish Wagle
  */
 
-var baseURL = "http://localhost:8080/SGA_Apex/sga/rest"
+var baseURL = "http://localhost:8080/SGA_Apex/sga/rest";
+var fileUploadCount = 0;
+var fileContentURLs = [];
+var fileTypes = ["Coordinate-File", "Portable-Input-Binary-File"];
 
 /*
  * Function to render Success message.
@@ -28,19 +31,24 @@ function displayOnError(htmlString) {
  */
 function jobSubmitSuccess(response) {
 	var htmlString = "<p>Job ID: " + response.submitJobResponse.jobId + "<br>Status: "
-						+ response.submitJobResponse.status + "</p>"
+						+ response.submitJobResponse.status + "</p>";
 	//alert(htmlString)
 	displayMessageOnSuccess( htmlString );
 
 	// Hide Loading overlay
 	$("#overlay").css("visibility", "hidden");
+	
+	// Clear the array and form
+	fileContentURLs = [];
+	$("button[type='reset']").click();
 }
 
 /*
  * Monitor Job Success Function.
  */
 function jobMonitorSuccess(response) {
-	var htmlString = "<p>" + response.simpleAPIResponse.message + "</p>"
+	var htmlString = "<p>" + response.simpleAPIResponse.message + "</p>";
+	
 	//alert(htmlString)
 	displayMessageOnSuccess( htmlString );
 
@@ -63,7 +71,7 @@ function jobGetStatusSuccess(response) {
 						+ "User Name: " + response.jobResponse.userName + "<br>"
 						+ "Job Name: " + response.jobResponse.jobName + "<br>"
 						+ "Elapsed Time: " + response.jobResponse.elapsedTime + "<br>"
-					 + "</p>"
+					 + "</p>";
 
 	//alert(htmlString)
 	displayMessageOnSuccess(htmlString);
@@ -76,7 +84,7 @@ function jobGetStatusSuccess(response) {
  * Cancel Job Success Function.
  */
 function jobCancelSuccess(response) {
-	var htmlString = "<p>" + response.simpleAPIResponse.message + "</p>"
+	var htmlString = "<p>" + response.simpleAPIResponse.message + "</p>";
 	//alert(htmlString)
 	displayMessageOnSuccess( htmlString );
 
@@ -89,7 +97,7 @@ function jobCancelSuccess(response) {
  * FIXME: This may not be really required.
  */
 function outputDownloadSuccess(response) {
-	var htmlString = "<p>" + response + "</p>"
+	var htmlString = "<p>" + response + "</p>";
 	//alert(htmlString)
 	displayMessageOnSuccess( htmlString );
 }
@@ -104,18 +112,34 @@ function submitJob(procnum, email, nodenum, walltime, jobname) {
 
 	// Show loading overlay
 	$("#overlay").css("visibility", "visible");
-
+	
+	var jsonData = new Object();
+	var jobRequest = new Object();
+	jobRequest.numProcessors = procnum;
+	jobRequest.emailId = email;
+	jobRequest.numNodes = nodenum;
+	jobRequest.wallTime = walltime;
+	jobRequest.jobName = jobname;
+	
+	var inputFiles = [];
+	$.each(fileContentURLs, function(i, contentURL) {
+		var inputFile = new Object();
+		inputFile.fileType = fileTypes[i];
+		inputFile.fileName = fileContentURLs[i];
+		inputFiles.push(inputFile);
+	});
+	
+	jobRequest.inputFiles = inputFiles;
+	jsonData.submitJobRequest = jobRequest;
+	console.log(JSON.stringify(jsonData));
+	
 	$.ajax({
 		type: "POST",
 		url: baseURL + "/job/submit",
 		headers: {
 			'Content-type': "application/json"
 		},
-		data: "{\"submitJobRequest\": {\"numProcessors\": "+ procnum 
-		+ ", \"emailId\": \"" + email + "\""
-		+ ", \"numNodes\": \"" + nodenum + "\""
-		+ ", \"wallTime\": \"" + walltime + "\""
-		+ ", \"jobName\": \"" + jobname + "\"}}",
+		data: JSON.stringify(jsonData),
 		success: jobSubmitSuccess,
 		dataType: "json"
 	});

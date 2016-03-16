@@ -7,11 +7,8 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-<!-- Custom styles for this template -->
+<!-- Custom styles for Bootstrap -->
 <link rel="stylesheet" href="https://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -51,7 +48,7 @@
 						<h3 class="panel-title">Submit A Job (On KARST)</h3>
 					</div>
 					<div class="panel-body">
-						<form action="">
+						<form id="submitJob" action="">
 							<div class="form-group row col-xs-8">
 								<label for="jobName">Job Name</label>								
 								<input type="jobName" class="form-control" id="jobName" placeholder="Enter Job Name (eg: goshenoy-01)">
@@ -83,13 +80,13 @@
 							<!-- /form-group -->
 							
 							<div class="form-group row col-xs-8">
-								<label for="inputFile1">Input File 1</label>
+								<label for="inputFile1">Portable-Input-Binary-File (GROMACS)</label>
 								<input type="file" id="inputFile1">
-								<p class="help-block">Input File 1 for GROMACS</p>
+								<p class="help-block">Coordinates velocities, molecular topology and simulation parameters - pdb1y6l-EM-vacuum.tpr</p>
 							
-								<label for="inputFile2">Input File 2</label>
+								<label for="inputFile2">Coordinate-File (GROMACS)</label>
 								<input type="file" id="inputFile2">
-								<p class="help-block">Input File 2 for GROMACS</p>
+								<p class="help-block">Trajectory Coordinates Molecular Structure in Gromos87 format - pdb1y6l-EM-vacuum.gro</p>
 							</div>
 							<!-- /form-group -->
 							
@@ -100,6 +97,22 @@
 							</div>
 						</form>
 						<!-- /form -->
+						
+						<div class="form-group row col-xs-4" id="responseDiv">
+						</div>
+						<!-- /responseDiv -->
+						
+						<!-- Overlay Div -->
+						<div class="form-group row col-xs-4" id=overlay style="visibility: hidden">
+							<table width=100% height=100%> 
+							    <tr>
+							        <td style="text-align: center; vertical-align: middle;">
+							            <img src="images/loading_image.gif"></img>
+							        </td>
+							    </tr>
+							</table>
+						</div>
+						
 					</div>
 					<!-- /panel-body -->
 				</div>
@@ -187,8 +200,15 @@
 	<!-- /container -->
 
 
-	<!-- Core JavaScript -->
+	<!-- Jquery Plugin -->
 	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+	<!-- Bootstrap Javascript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<!-- Core logic scripts -->
+	<script src="js/sga_script.js"></script>
+	<script src="js/main_script.js"></script>
+	
 </body>
 </html>
