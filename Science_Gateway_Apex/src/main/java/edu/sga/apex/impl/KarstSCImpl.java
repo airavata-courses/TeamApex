@@ -9,10 +9,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
 import edu.sga.apex.bean.BeanManager;
+import edu.sga.apex.bean.InputFileBean;
 import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SCPRequestBean;
 import edu.sga.apex.bean.SSHRequestBean;
@@ -154,6 +156,19 @@ public class KarstSCImpl implements SCInterface {
 				if(line.contains("$nodesProc")){
 					Integer nodesProc = bean.getNumNodes()*bean.getNumProcessors();
 					line = line.replace("$nodesProc", nodesProc.toString());
+				}
+				if(line.contains("$tpr_file")){
+					List<InputFileBean> inputFiles = bean.getInputFiles();
+					String tpr_file = null, gro_file = null;
+					for(InputFileBean ifbean: inputFiles){
+						if(ifbean.getFileType().equals("Coordinate-File")){
+							tpr_file = ifbean.getFileName();
+						}else if(ifbean.getFileType().equals("Portable-Input-Binary-File")){
+							gro_file = ifbean.getFileName();
+						}
+					}
+					line = line.replace("$tpr_file", tpr_file);
+					line = line.replace("$gro_file", gro_file);
 				}
 				pw.println(line);
 				pw.flush();

@@ -9,4 +9,4 @@
 #PBS -e $job_name.log
 
 cd $PBS_O_WORKDIR
-mpirun -hostfile $PBS_NODEFILE -np 16 mdrun -nice 0 -v -deffnm pdb1y6l-EM-vacuum.tpr -c pdb1y6l-EM-vacuum.gro
+mpirun -hostfile $PBS_NODEFILE -np 16 mdrun -nice 0 -v -deffnm $tpr_file -c $gro_file
