@@ -417,7 +417,28 @@ public class KarstSCImpl implements SCInterface {
 			util.executeCommands();
 
 			// Copy binary
-			String srcScript = properties.getProperty("srcScript");
+			List<InputFileBean> inputFiles = requestBean.getInputFiles();
+			String tpr_file = null, gro_file = null;
+			for(InputFileBean ifbean: inputFiles){
+				if(ifbean.getFileType().equals("Coordinate-File")){
+					tpr_file = ifbean.getFileName();
+				}else if(ifbean.getFileType().equals("Portable-Input-Binary-File")){
+					gro_file = ifbean.getFileName();
+				}
+			}
+			
+			String destScriptPath = String.format(properties.getProperty("destScript"), 
+					properties.getProperty("loginUser"));
+			
+			// copy trp file
+			File file = new File(System.getProperty(Constants.TEMP_DIR_PROP), tpr_file);	
+			this.copyFiles(file.getAbsolutePath(), destScriptPath);
+			
+			// copy gro file
+			file = new File(System.getProperty(Constants.TEMP_DIR_PROP), gro_file);	
+			this.copyFiles(file.getAbsolutePath(), destScriptPath);
+			
+			/**String srcScript = properties.getProperty("srcScript");
 			String destScriptPath = String.format(properties.getProperty("destScript"), 
 													properties.getProperty("loginUser"));
 			String srcScriptPath = this.createTempFile(srcScript, "hello", ".sh");
@@ -434,7 +455,7 @@ public class KarstSCImpl implements SCInterface {
 			// give it exe permissions
 			bean.setCommands("chmod +x " + destScriptPath);
 			util = new SSHUtil(bean);
-			util.executeCommands();
+			util.executeCommands();**/
 			
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");

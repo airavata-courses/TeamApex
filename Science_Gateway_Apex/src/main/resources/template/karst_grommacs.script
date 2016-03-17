@@ -9,4 +9,6 @@
 #PBS -e $job_name.log
 
 cd $PBS_O_WORKDIR
-mpirun -hostfile $PBS_NODEFILE -np 16 mdrun -nice 0 -v -deffnm $tpr_file -c $gro_file
+mpirun -hostfile $PBS_NODEFILE -np 16 mdrun -nice 0 -v -deffnm $tpr_file -c $
+
+sh ~/sendEmail.sh $job_name
