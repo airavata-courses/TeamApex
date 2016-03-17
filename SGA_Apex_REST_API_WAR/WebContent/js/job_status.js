@@ -1,7 +1,24 @@
 $(document).ready(function() {
-	jobID = getParameterByName("jobID");
+	// hide buttons on load
+	$("#refreshBtn").hide();
+	$("#downloadBtn").hide();
+	$("#cancelBtn").hide();
 	
+	// get job status
+	jobID = getParameterByName("jobID");
 	$.get( baseURL + "/job/" + jobID + "/status", renderJobStatus);
+	
+	$("#cancelBtn").click(function() {
+		cancelJob(jobID);
+	});
+	
+	$("#downloadBtn").click(function() {
+		downloadOutput(jobID);
+	});
+	
+	$("#refreshBtn").click(function() {
+		location.reload();
+	});
 });
 
 
@@ -53,6 +70,15 @@ function renderJobStatus(response) {
 	
 	// Hide Loading overlay
 	$("#overlay").css("visibility", "hidden");
+	
+	// show buttons
+	$("#refreshBtn").show();
+	$("#cancelBtn").show();
+	
+	// show download buttong only if completed
+	if(response.jobResponse.status.toLowerCase() == "completed") {
+		$("#downloadBtn").show();
+	}
 }
 
 function getParameterByName(name, url) {

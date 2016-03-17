@@ -31,7 +31,7 @@ $(document).ready(function() {
 	});
 	
 	$("#myModal .modal-footer button").click(function() {
-		window.location.href = "/job_status.html?jobID=" + jobID;
+		window.location.href = "job_status.html?jobID=" + jobID;
 	});
 
 });
