@@ -30,6 +30,9 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 	
+	$("#myModal .modal-footer button").click(function() {
+		window.location.href = "/job_status.html?jobID=" + jobID;
+	});
 
 });
 

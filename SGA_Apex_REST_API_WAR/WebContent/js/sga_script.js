@@ -7,6 +7,7 @@ var baseURL = "http://localhost:8080/SGA_Apex/sga/rest";
 var fileUploadCount = 0;
 var fileContentURLs = [];
 var fileTypes = ["Coordinate-File", "Portable-Input-Binary-File"];
+var jobID;
 
 /*
  * Function to render Success message.
@@ -41,7 +42,8 @@ function displayOnError(htmlString) {
 function jobSubmitSuccess(response) {
 	var htmlString = "<p>Job ID: " + response.submitJobResponse.jobId + "<br>Status: "
 						+ response.submitJobResponse.status + "</p>";
-	//alert(htmlString)
+	
+	jobID = response.submitJobResponse.jobId;
 	displayMessageOnSuccess( htmlString );
 
 	// Hide Loading overlay
