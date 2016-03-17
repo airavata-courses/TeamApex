@@ -1,5 +1,8 @@
 package edu.sga.apex.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The Class SubmitJobRequestBean.
  * 
@@ -21,6 +24,9 @@ public class SubmitJobRequestBean {
 	
 	/** The num processors. */
 	private Integer numProcessors;
+	
+	/** The input files. */
+	private List<InputFileBean> inputFiles;
 
 	/**
 	 * Gets the job name.
@@ -112,13 +118,36 @@ public class SubmitJobRequestBean {
 		this.numProcessors = numProcessors;
 	}
 
+	/**
+	 * Gets the input files.
+	 *
+	 * @return the input files
+	 */
+	public List<InputFileBean> getInputFiles() {
+		if(inputFiles == null) {
+			inputFiles = new ArrayList<InputFileBean>();
+		}
+		return this.inputFiles;
+	}
+
+	/**
+	 * Sets the input files.
+	 *
+	 * @param inputFiles the new input files
+	 */
+	public void setInputFiles(List<InputFileBean> inputFiles) {
+		this.inputFiles = inputFiles;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "SubmitJobRequestBean [jobName=" + jobName + ", emailId=" + emailId + ", wallTime=" + wallTime
-				+ ", numCores=" + numNodes + ", numProcessors=" + numProcessors + "]";
+		return "SubmitJobRequestBean [jobName=" + jobName + ", emailId="
+				+ emailId + ", wallTime=" + wallTime + ", numNodes=" + numNodes
+				+ ", numProcessors=" + numProcessors + ", inputFiles="
+				+ inputFiles + "]";
 	}
 
 }

@@ -1,0 +1,80 @@
+<!-- HTML Home Page for Apex SGA -->
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/sga_script.js"></script>
+<link rel="stylesheet" type="text/css" href="css/sga_apex.css">
+</head>
+<body>
+	<h1>Team Apex Science Gateway</h1>
+
+	<!-- Div to populate responses. -->
+	<div id=responseDiv></div>
+
+	<!-- Div that contains the job submission form. -->
+	<div>
+		<form
+			onsubmit="submitJob($('#procnum').val(), $('#email').val(), $('#nodenum').val(), $('#walltime').val(), $('#jobname').val());return false;">
+			<table>
+				<tr>
+					<td>Number of Processors:</td>
+					<td><input type="text" id="procnum"></td>
+				</tr>
+				<tr>
+					<td>Email ID:</td>
+					<td><input type="text" id="email"></td>
+				</tr>
+				<tr>
+					<td>Number of Nodes:</td>
+					<td><input type="text" id="nodenum"></td>
+				</tr>
+				<tr>
+					<td>Wall Time:</td>
+					<td><input type="text" id="walltime"></td>
+				</tr>
+				<tr>
+					<td>Job Name:</td>
+					<td><input type="text" id="jobname"></td>
+				</tr>
+			</table>
+			<button type="submit">Submit Job</button>
+			<br />
+		</form>
+	</div>
+	<br />
+
+	<!-- Div that contains the monitoring and cancellation options. -->
+	<div>
+		Job ID: <input type="text" id="jobid"><br />
+		<button type="button" id="monitorjob"
+			onclick="monitorJob($('#jobid').val());">Monitor Job</button>
+		<button type="button" id="jobstatus"
+			onclick="getStatus($('#jobid').val());">Get Job Status</button>
+		<button type="button" id="canceljob"
+			onclick="cancelJob($('#jobid').val());">Cancel Job</button>
+		<br />
+	</div>
+	<br />
+
+	<!-- Div that contains the job output file download option. -->
+	<div>
+		Job Name: <input type="text" id="jobnamed"><br />
+		<button type="button" id="outputd"
+			onclick="downloadOutput($('#jobnamed').val());">Download
+			Output</button>
+	</div>
+	<br />
+
+	<!-- Overlay Div -->
+	<div id=overlay style="visibility: hidden">
+		<table width=100% height=100%> 
+		    <tr>
+		        <td style="text-align: center; vertical-align: middle;">
+		            <img src="images/loading_image.gif"></img>
+		        </td>
+		    </tr>
+		</table>
+	</div>
+
+</body>
+</html>

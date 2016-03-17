@@ -9,10 +9,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
+import org.apache.commons.io.FilenameUtils;
+
 import edu.sga.apex.bean.BeanManager;
+import edu.sga.apex.bean.InputFileBean;
 import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SCPRequestBean;
 import edu.sga.apex.bean.SSHRequestBean;
@@ -31,7 +35,7 @@ import edu.sga.apex.util.SSHUtil;
 public class KarstSCImpl implements SCInterface {
 
 	/** The Constant script_path. */
-	private static final String script_path = "template/karst_job.script";
+	private static final String script_path = "template/karst_grommacs.script";
 
 	/** The properties. */
 	private Properties properties;
@@ -154,6 +158,19 @@ public class KarstSCImpl implements SCInterface {
 				if(line.contains("$nodesProc")){
 					Integer nodesProc = bean.getNumNodes()*bean.getNumProcessors();
 					line = line.replace("$nodesProc", nodesProc.toString());
+				}
+				if(line.contains("$tpr_file")){
+					List<InputFileBean> inputFiles = bean.getInputFiles();
+					String tpr_file = null, gro_file = null;
+					for(InputFileBean ifbean: inputFiles){
+						if(ifbean.getFileType().equals("Coordinate-File")){
+							gro_file = ifbean.getFileName();
+						}else if(ifbean.getFileType().equals("Portable-Input-Binary-File")){
+							tpr_file = ifbean.getFileName();
+						}
+					}
+					line = line.replace("$tpr_file", FilenameUtils.getBaseName(tpr_file));
+					line = line.replace("$gro_file", FilenameUtils.getBaseName(gro_file));
 				}
 				pw.println(line);
 				pw.flush();
@@ -402,7 +419,28 @@ public class KarstSCImpl implements SCInterface {
 			util.executeCommands();
 
 			// Copy binary
-			String srcScript = properties.getProperty("srcScript");
+			List<InputFileBean> inputFiles = requestBean.getInputFiles();
+			String tpr_file = null, gro_file = null;
+			for(InputFileBean ifbean: inputFiles){
+				if(ifbean.getFileType().equals("Coordinate-File")){
+					gro_file = ifbean.getFileName();
+				}else if(ifbean.getFileType().equals("Portable-Input-Binary-File")){
+					tpr_file = ifbean.getFileName();
+				}
+			}
+			
+			String destScriptPath = String.format(properties.getProperty("destScript"), 
+					properties.getProperty("loginUser"));
+			
+			// copy trp file
+			File file = new File(System.getProperty(Constants.TEMP_DIR_PROP), tpr_file);	
+			this.copyFiles(file.getAbsolutePath(), destScriptPath);
+			
+			// copy gro file
+			file = new File(System.getProperty(Constants.TEMP_DIR_PROP), gro_file);	
+			this.copyFiles(file.getAbsolutePath(), destScriptPath);
+			
+			/**String srcScript = properties.getProperty("srcScript");
 			String destScriptPath = String.format(properties.getProperty("destScript"), 
 													properties.getProperty("loginUser"));
 			String srcScriptPath = this.createTempFile(srcScript, "hello", ".sh");
@@ -419,7 +457,7 @@ public class KarstSCImpl implements SCInterface {
 			// give it exe permissions
 			bean.setCommands("chmod +x " + destScriptPath);
 			util = new SSHUtil(bean);
-			util.executeCommands();
+			util.executeCommands();**/
 			
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");

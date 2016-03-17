@@ -1,7 +1,9 @@
 package edu.sga.apex.rest.util;
 
+import edu.sga.apex.bean.InputFileBean;
 import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
+import edu.sga.apex.rest.jaxb.InputFile;
 import edu.sga.apex.rest.jaxb.JobResponse;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SubmitJobRequest;
@@ -64,6 +66,18 @@ public class JAXBManager {
 			} else {
 				bean.setNumProcessors(request.getNumProcessors());
 			}
+			
+			/* set input file list */
+			if(request.getInputFiles() != null) {
+				for(InputFile file : request.getInputFiles()) {
+					InputFileBean ipFileBean = new InputFileBean();
+					ipFileBean.setFileName(file.getFileName());
+					ipFileBean.setFileType(file.getFileType());
+					
+					bean.getInputFiles().add(ipFileBean);
+				}
+			}
+			
 		}
 		return bean;
 	}
