@@ -40,6 +40,7 @@ public class Constants {
 	static {
 		JOB_STATUS = new HashMap<String, String>();
 		JOB_STATUS.put("Q", "Queued");
+		JOB_STATUS.put("R", "Running");
 		JOB_STATUS.put("C", "Completed");
 	}
 }
