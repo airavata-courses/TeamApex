@@ -54,48 +54,53 @@
 						<form id="submitJob" action="">
 							<div class="form-group row col-xs-8">
 								<label for="jobName">Job Name</label> 
-								<input type="jobName"
+								<input type="text"
 									class="form-control" id="jobName"
-									placeholder="Enter Job Name (eg: goshenoy-01)">
+									placeholder="Enter Job Name (eg: goshenoy-01)"
+									required>
 							</div>
 							<!-- /form-group -->
 
 							<div class="form-group row col-xs-8">
 								<label for="numProc">Number of Processors</label> 
-								<input type="numProc" class="form-control" id="numProc"
-									placeholder="Enter Number of Processors (eg: 16)">
+								<input type="number" class="form-control" id="numProc"
+									placeholder="Enter Number of Processors (eg: 16)"
+									required>
 							</div>
 							<!-- /form-group -->
 
 							<div class="form-group row col-xs-8">
 								<label for="numNodes">Number of Nodes</label> 
-								<input type="numNodes" class="form-control" id="numNodes"
-									placeholder="Enter Number of Nodes (eg: 2)">
+								<input type="number" class="form-control" id="numNodes"
+									placeholder="Enter Number of Nodes (eg: 2)"
+									required>
 							</div>
 							<!-- /form-group -->
 
 							<div class="form-group row col-xs-8">
 								<label for="email">Email ID</label> 
 								<input type="email" class="form-control" id="email"
-									placeholder="Enter Email ID (eg: abc@indiana.edu)">
+									placeholder="Enter Email ID (eg: abc@indiana.edu)"
+									required>
 							</div>
 							<!-- /form-group -->
 
 							<div class="form-group row col-xs-8">
 								<label for="wallTime">Wall Time (hh:mm:ss)</label>
-								<input type="wallTime" class="form-control" id="wallTime"
-									placeholder="Enter Wall-Time (eg: 30:00)">
+								<input type="text" class="form-control" id="wallTime"
+									placeholder="Enter Wall-Time (eg: 30:00)"
+									required>
 							</div>
 							<!-- /form-group -->
 
 							<div class="form-group row col-xs-8">
-								<label for="inputFile1">Portable-Input-Binary-File
-									(GROMACS)</label> <input type="file" id="inputFile1">
+								<label for="inputFile1">Portable-Input-Binary-File (GROMACS)</label>
+								<input type="file" id="inputFile1" required>
 								<p class="help-block">Coordinates velocities, molecular
 									topology and simulation parameters - pdb1y6l-EM-vacuum.tpr</p>
 
 								<label for="inputFile2">Coordinate-File (GROMACS)</label>
-								<input type="file" id="inputFile2">
+								<input type="file" id="inputFile2" required>
 								<p class="help-block">Trajectory Coordinates Molecular
 									Structure in Gromos87 format - pdb1y6l-EM-vacuum.gro</p>
 							</div>
@@ -161,9 +166,10 @@
 					<div class="panel-body">
 						<form id="monitorJob" action="">
 							<div class="form-group row col-xs-12">
-								<label for="jobIDM">Job ID</label> <input type="text"
-									class="form-control" id="jobIDM"
-									placeholder="Enter Job ID (eg: 1245132.m2)">
+								<label for="jobIDM">Job ID</label> 
+								<input type="text" class="form-control" id="jobIDM"
+									placeholder="Enter Job ID (eg: 1245132.m2)"
+									required>
 							</div>
 							<!-- /form-group -->
 
@@ -186,9 +192,10 @@
 					<div class="panel-body">
 						<form id="downloadOP" action="">
 							<div class="form-group row col-xs-12">
-								<label for="jobNameD">Job Name</label> <input type="text"
-									class="form-control" id="jobNameD"
-									placeholder="Enter Job Name (eg: goshenoy-01)">
+								<label for="jobNameD">Job Name</label>
+								<input type="text" class="form-control" id="jobNameD"
+									placeholder="Enter Job Name (eg: goshenoy-01)"
+									required>
 							</div>
 							<!-- /form-group -->
 
@@ -214,9 +221,10 @@
 					<div class="panel-body">
 						<form id="cancelJob" action="">
 							<div class="form-group row col-xs-12">
-								<label for="jobIDC">Job ID</label> <input type="text"
-									class="form-control" id="jobIDC"
-									placeholder="Enter Job ID (eg: 1245132.m2)">
+								<label for="jobIDC">Job ID</label> 
+								<input type="text" class="form-control" id="jobIDC"
+									placeholder="Enter Job ID (eg: 1245132.m2)"
+									required>
 							</div>
 							<!-- /form-group -->
 
