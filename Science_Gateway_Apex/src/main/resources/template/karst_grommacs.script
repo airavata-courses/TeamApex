@@ -8,7 +8,9 @@
 #PBS -o $job_name.log
 #PBS -e $job_name.log
 
+module load openmpi/intel/1.6.3 gromacs/intel/4.6.5
+
 cd $PBS_O_WORKDIR
-mpirun -hostfile $PBS_NODEFILE -np 16 mdrun -nice 0 -v -deffnm $tpr_file -c $
+mpirun -hostfile $PBS_NODEFILE -np 16 mdrun -nice 0 -v -deffnm $tpr_file -c $gro_file
 
 sh ~/sendEmail.sh $job_name
