@@ -5,8 +5,8 @@
 #PBS -m abe 
 #PBS -N $job_name
 #PBS -j oe
-#PBS -o $job_name.log
-#PBS -e $job_name.log
+#PBS -o $job_name.out
+#PBS -e $job_name.err
 
 module load openmpi/intel/1.6.3 gromacs/intel/4.6.5
 
