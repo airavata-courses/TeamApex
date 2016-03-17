@@ -12,19 +12,25 @@ var fileTypes = ["Coordinate-File", "Portable-Input-Binary-File"];
  * Function to render Success message.
  */
 function displayMessageOnSuccess(htmlString) {
-	$( "#submitJobResp" ).css( "color", "#0000FF" );
-	$( "#submitJobResp" ).html( htmlString );
+//	$( "#submitJobResp" ).css( "color", "#0000FF" );
+//	$( "#submitJobResp" ).html( htmlString );
+//	
+//	$("#submitJobResp").show();
+//	setTimeout(function() { $("#submitJobResp").hide(); }, 10000);
 	
-	$("#submitJobResp").show();
-	setTimeout(function() { $("#submitJobResp").hide(); }, 10000);
+	$("#myModal .modal-body").html(htmlString);
+	$('#myModal').modal('show');
 }
 
 /*
  * Function to render Error message.
  */
 function displayOnError(htmlString) {
-	$( "#submitJobResp" ).css( "color", "#FF0000" );
-	$( "#submitJobResp" ).html( htmlString );
+//	$( "#submitJobResp" ).css( "color", "#FF0000" );
+//	$( "#submitJobResp" ).html( htmlString );
+	
+	$("#myModal .modal-body").html(htmlString);
+	$('#myModal').modal('show');
 }
 
 ////////////SUCCESS Functions////////////
