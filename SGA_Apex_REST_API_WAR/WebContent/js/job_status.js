@@ -13,11 +13,16 @@ $(document).ready(function() {
 	});
 	
 	$("#downloadBtn").click(function() {
-		downloadOutput(jobID);
+		downloadOutput(jobName);
 	});
 	
 	$("#refreshBtn").click(function() {
 		location.reload();
+	});
+	
+	$("#monitorJob").submit(function(event) {
+		window.location.href = jobStatusURL + $('#jobIDM').val();
+		event.preventDefault();
 	});
 });
 
@@ -79,6 +84,9 @@ function renderJobStatus(response) {
 	if(response.jobResponse.status.toLowerCase() == "completed") {
 		$("#downloadBtn").show();
 	}
+	
+	// set the job name
+	jobName = response.jobResponse.jobName;
 }
 
 function getParameterByName(name, url) {

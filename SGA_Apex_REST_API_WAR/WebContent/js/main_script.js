@@ -30,8 +30,13 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 	
+	$("#monitorJob").submit(function(event) {
+		window.location.href = jobStatusURL + $('#jobIDM').val();
+		event.preventDefault();
+	});
+	
 	$("#myModal .modal-footer button").click(function() {
-		window.location.href = "job_status.html?jobID=" + jobID;
+		window.location.href = jobStatusURL + jobID;
 	});
 
 });
