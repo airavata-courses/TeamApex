@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.FileSystemException;
 
+import org.apache.commons.io.FilenameUtils;
+
 /**
  * The Class FileUtil.
  * 
@@ -28,9 +30,12 @@ public class FileUtil {
 		String outFileName = null;
 
 		try {
+			/* get file prefix and suffix */
+			String prefix = FilenameUtils.getBaseName(fileName);
+			String suffix = "." + FilenameUtils.getExtension(fileName);
+			
 			/* read inputstream & write to temp file */
-			File file = File.createTempFile(fileName,
-					String.valueOf(System.currentTimeMillis()));
+			File file = File.createTempFile(prefix, suffix);
 			outputStream = new FileOutputStream(file);
 
 			int read = 0;

@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
+import org.apache.commons.io.FilenameUtils;
+
 import edu.sga.apex.bean.BeanManager;
 import edu.sga.apex.bean.InputFileBean;
 import edu.sga.apex.bean.JobBean;
@@ -167,8 +169,8 @@ public class KarstSCImpl implements SCInterface {
 							tpr_file = ifbean.getFileName();
 						}
 					}
-					line = line.replace("$tpr_file", tpr_file);
-					line = line.replace("$gro_file", gro_file);
+					line = line.replace("$tpr_file", FilenameUtils.getBaseName(tpr_file));
+					line = line.replace("$gro_file", FilenameUtils.getBaseName(gro_file));
 				}
 				pw.println(line);
 				pw.flush();
