@@ -146,8 +146,17 @@ function submitJob(procnum, email, nodenum, walltime, jobname) {
 	var inputFiles = [];
 	$.each(fileContentURLs, function(i, contentURL) {
 		var inputFile = new Object();
-		inputFile.fileType = fileTypes[i];
 		inputFile.fileName = fileContentURLs[i];
+		
+		// file type to name mapping
+		if(fileContentURLs[i].includes('.gro')) {
+			inputFile.fileType = fileTypes[0];
+		}
+		else {
+			inputFile.fileType = fileTypes[1];
+		}
+		
+		// add to json data
 		inputFiles.push(inputFile);
 	});
 	

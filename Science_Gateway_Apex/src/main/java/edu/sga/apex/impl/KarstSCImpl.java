@@ -162,9 +162,9 @@ public class KarstSCImpl implements SCInterface {
 					String tpr_file = null, gro_file = null;
 					for(InputFileBean ifbean: inputFiles){
 						if(ifbean.getFileType().equals("Coordinate-File")){
-							tpr_file = ifbean.getFileName();
-						}else if(ifbean.getFileType().equals("Portable-Input-Binary-File")){
 							gro_file = ifbean.getFileName();
+						}else if(ifbean.getFileType().equals("Portable-Input-Binary-File")){
+							tpr_file = ifbean.getFileName();
 						}
 					}
 					line = line.replace("$tpr_file", tpr_file);
