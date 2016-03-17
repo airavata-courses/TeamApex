@@ -28,13 +28,18 @@
 	</filter-mapping>
 
 	<login-config>
-	  <auth-method>FORM</auth-method>
-	  <realm-name>ApexRealm</realm-name>
-	  <form-login-config>
-	     <form-login-page>/sga_login.html</form-login-page>
-	     <form-error-page>/login-error.html</form-error-page>
-	  </form-login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>ApexRealm</realm-name>
+		<form-login-config>
+			<form-login-page>/sga_login.html</form-login-page>
+			<form-error-page>/login-error.html</form-error-page>
+		</form-login-config>
 	</login-config>
+
+	<!-- Session Configuration -->
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
 
 	<security-constraint>
 		<web-resource-collection>
@@ -45,7 +50,7 @@
 			<role-name>admin</role-name>
 		</auth-constraint>
 	</security-constraint>
-	
+
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Open resources</web-resource-name>
