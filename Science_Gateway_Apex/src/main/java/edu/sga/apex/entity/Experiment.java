@@ -23,7 +23,12 @@ public class Experiment {
 	Machine machine;
 
 	String status;
-	String metaData;
+	
+	//Meta
+	Integer numOfNodes;
+	Integer procPerNode;
+	String wallTime;
+	String email;
 
 	@ManyToOne
 	Application application;
@@ -68,12 +73,36 @@ public class Experiment {
 		this.status = status;
 	}
 
-	public String getMetaData() {
-		return metaData;
+	public Integer getNumOfNodes() {
+		return numOfNodes;
 	}
 
-	public void setMetaData(String metaData) {
-		this.metaData = metaData;
+	public void setNumOfNodes(Integer numOfNodes) {
+		this.numOfNodes = numOfNodes;
+	}
+
+	public Integer getProcPerNode() {
+		return procPerNode;
+	}
+
+	public void setProcPerNode(Integer procPerNode) {
+		this.procPerNode = procPerNode;
+	}
+
+	public String getWallTime() {
+		return wallTime;
+	}
+
+	public void setWallTime(String wallTime) {
+		this.wallTime = wallTime;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Application getApplication() {
