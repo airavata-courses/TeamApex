@@ -1,12 +1,20 @@
 package edu.sga.apex.dao.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import edu.sga.apex.dao.EntityDAO;
+import edu.sga.apex.entity.Experiment;
 
+/**
+ * Entity Data Access Object Implementation.
+ * @author mangirish_wagle
+ *
+ */
 public class EntityDAOImpl implements EntityDAO {
 
 	public void saveEntity(Object entity) {
@@ -30,5 +38,23 @@ public class EntityDAOImpl implements EntityDAO {
 		// Closing connection.
 		em.close();
 		emf.close();
+	}
+
+	@Override
+	public void updateExperiment(Experiment expt) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public List<Experiment> getCompleteExperiments() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Experiment> getInProgressExperiments() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
