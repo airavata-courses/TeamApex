@@ -1,5 +1,6 @@
 package edu.sga.apex.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -13,9 +14,17 @@ public class Machine {
 
 	@Id
 	String machineId;
+
+	@Column
 	String machineName;
+
+	@Column
 	String hostname;
+
+	@Column
 	String portNum;
+
+	@Column
 	String working_dir;
 
 	public String getMachineId() {

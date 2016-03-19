@@ -1,5 +1,6 @@
 package edu.sga.apex.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -10,9 +11,11 @@ import javax.persistence.Id;
  */
 @Entity
 public class AppInput {
-	
+
 	@Id
 	String input;
+
+	@Column
 	String description;
 
 	public String getInput() {

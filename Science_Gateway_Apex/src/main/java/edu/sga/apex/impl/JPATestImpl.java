@@ -30,6 +30,8 @@ public class JPATestImpl {
 		machine.setPortNum("22");
 		machine.setWorking_dir("Karst");
 
+		//dao.saveEntity(machine);
+
 		Application app = new Application();
 		app.setAppId("gro01");
 		app.setAppName("GROMMACS");
@@ -50,11 +52,13 @@ public class JPATestImpl {
 		app.setInputList(inputList);
 
 		Experiment expt = new Experiment();
+
+		expt.setJobId("2222");
+		expt.setMachine(machine);
+
 		expt.setApplication(app);
 		expt.setEmail("sdf@sf.com");
-		expt.setJobId("2222");
 		expt.setJobName("dummy");
-		expt.setMachine(machine);
 		expt.setNumOfNodes(2);
 		expt.setProcPerNode(2);
 		expt.setStatus("");

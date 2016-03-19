@@ -3,6 +3,7 @@ package edu.sga.apex.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -18,7 +19,11 @@ public class Application {
 
 	@Id
 	String appId;
+
+	@Column
 	String appName;
+
+	@Column
 	String script_path;
 
 	@OneToMany( targetEntity=AppInput.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL )

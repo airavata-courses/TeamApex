@@ -1,5 +1,6 @@
 package edu.sga.apex.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -13,6 +14,8 @@ public class User {
 
 	@Id
 	public String username;
+
+	@Column
 	public String password;
 
 	public String getUsername() {

@@ -7,6 +7,7 @@
 		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 		<class>edu.sga.apex.entity.User</class>
 		<class>edu.sga.apex.entity.Experiment</class>
+		<class>edu.sga.apex.entity.ExperimentPK</class>
 		<class>edu.sga.apex.entity.Application</class>
 		<class>edu.sga.apex.entity.Machine</class>
 		<class>edu.sga.apex.entity.AppInput</class>

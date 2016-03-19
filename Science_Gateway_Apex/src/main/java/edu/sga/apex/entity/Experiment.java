@@ -1,9 +1,12 @@
 package edu.sga.apex.entity;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -12,28 +15,45 @@ import javax.persistence.ManyToOne;
  *
  */
 @Entity
+@IdClass(ExperimentPK.class)
 public class Experiment {
 
 	@Id
-	String jobId;
+	private String jobId;
+
+	@Id
+	@ManyToOne( fetch = FetchType.LAZY, cascade=CascadeType.ALL )
+	@JoinColumn(name="machineId")
+	private Machine machine;
+
 	String jobName;
 
 	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@JoinColumn(name="username")
 	User userName;
 
-	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
-	Machine machine;
-
+	@Column
 	String status;
-	
+
 	//Meta
+	@Column
 	Integer numOfNodes;
+
+	@Column
 	Integer procPerNode;
+
+	@Column
 	String wallTime;
+
+	@Column
 	String email;
 
 	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@JoinColumn(name="appId")
 	Application application;
+
+	//Empty Constructor
+	public Experiment() {}
 
 	public String getJobId() {
 		return jobId;
@@ -41,6 +61,14 @@ public class Experiment {
 
 	public void setJobId(String jobId) {
 		this.jobId = jobId;
+	}
+
+	public Machine getMachine() {
+		return machine;
+	}
+
+	public void setMachine(Machine machine) {
+		this.machine = machine;
 	}
 
 	public String getJobName() {
@@ -57,14 +85,6 @@ public class Experiment {
 
 	public void setUserName(User userName) {
 		this.userName = userName;
-	}
-
-	public Machine getMachine() {
-		return machine;
-	}
-
-	public void setMachine(Machine machine) {
-		this.machine = machine;
 	}
 
 	public String getStatus() {
