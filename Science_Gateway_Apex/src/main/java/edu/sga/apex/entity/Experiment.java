@@ -1,6 +1,8 @@
 package edu.sga.apex.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -16,10 +18,10 @@ public class Experiment {
 	String jobId;
 	String jobName;
 
-	@ManyToOne
+	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
 	User userName;
 
-	@ManyToOne
+	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
 	Machine machine;
 
 	String status;
@@ -30,7 +32,7 @@ public class Experiment {
 	String wallTime;
 	String email;
 
-	@ManyToOne
+	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
 	Application application;
 
 	public String getJobId() {

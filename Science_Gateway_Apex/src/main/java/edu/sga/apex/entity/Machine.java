@@ -18,6 +18,12 @@ public class Machine {
 	String portNum;
 	String working_dir;
 
+	public String getMachineId() {
+		return machineId;
+	}
+	public void setMachineId(String machineId) {
+		this.machineId = machineId;
+	}
 	public String getMachineName() {
 		return machineName;
 	}

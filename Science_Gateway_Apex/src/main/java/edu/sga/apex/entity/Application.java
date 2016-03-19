@@ -2,7 +2,9 @@ package edu.sga.apex.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -18,26 +20,39 @@ public class Application {
 	String appId;
 	String appName;
 	String script_path;
-	
-	@OneToMany( targetEntity=AppInput.class )
-    private List<AppInput> inputList;
+
+	@OneToMany( targetEntity=AppInput.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	private List<AppInput> inputList;
 
 	public String getAppId() {
 		return appId;
 	}
+
 	public void setAppId(String appId) {
 		this.appId = appId;
 	}
+
 	public String getAppName() {
 		return appName;
 	}
+
 	public void setAppName(String appName) {
 		this.appName = appName;
 	}
+
 	public String getScript_path() {
 		return script_path;
 	}
+
 	public void setScript_path(String script_path) {
 		this.script_path = script_path;
+	}
+
+	public List<AppInput> getInputList() {
+		return inputList;
+	}
+
+	public void setInputList(List<AppInput> inputList) {
+		this.inputList = inputList;
 	}
 }
