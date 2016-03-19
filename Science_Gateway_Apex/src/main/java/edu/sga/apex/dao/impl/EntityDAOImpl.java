@@ -30,7 +30,8 @@ public class EntityDAOImpl implements EntityDAO {
 		tx.begin();
 
 		// Persisting the entity object.
-		em.persist(entity);
+		//if( ! em.contains(entity) );
+		em.merge(entity);
 
 		// Committing transaction.
 		tx.commit();
