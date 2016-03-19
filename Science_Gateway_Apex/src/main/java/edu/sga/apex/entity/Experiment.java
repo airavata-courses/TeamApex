@@ -26,6 +26,7 @@ public class Experiment {
 	@JoinColumn(name="machineId")
 	private Machine machine;
 
+	@Column
 	String jobName;
 
 	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
