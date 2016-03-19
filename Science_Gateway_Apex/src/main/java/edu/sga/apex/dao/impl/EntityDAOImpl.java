@@ -12,7 +12,7 @@ public class EntityDAOImpl implements EntityDAO {
 	public void saveEntity(Object entity) {
 
 		// Connection details loaded from persistence.xml to create EntityManagerFactory.
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
 
 		EntityManager em = emf.createEntityManager();
 
