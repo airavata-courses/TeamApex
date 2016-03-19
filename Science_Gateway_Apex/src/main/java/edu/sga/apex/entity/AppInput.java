@@ -9,11 +9,10 @@ import javax.persistence.Id;
  *
  */
 @Entity
-public class AppInputs {
+public class AppInput {
 	
 	@Id
 	String input;
-	String application;
 	String description;
 
 	public String getInput() {
@@ -21,12 +20,6 @@ public class AppInputs {
 	}
 	public void setInput(String input) {
 		this.input = input;
-	}
-	public String getApplication() {
-		return application;
-	}
-	public void setApplication(String application) {
-		this.application = application;
 	}
 	public String getDescription() {
 		return description;

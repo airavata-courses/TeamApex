@@ -1,7 +1,10 @@
 package edu.sga.apex.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * JPA Entity class for Application.
@@ -15,6 +18,9 @@ public class Application {
 	String appId;
 	String appName;
 	String script_path;
+	
+	@OneToMany( targetEntity=AppInput.class )
+    private List<AppInput> inputList;
 
 	public String getAppId() {
 		return appId;
