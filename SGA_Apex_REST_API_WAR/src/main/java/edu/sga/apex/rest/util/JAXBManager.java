@@ -151,47 +151,66 @@ public class JAXBManager {
 		/* check if entity is valid */
 		if(experimentList != null) {
 			for(Experiment experiment : experimentList) {
-				edu.sga.apex.rest.jaxb.Experiment experimentJAXB = factory.createExperiment();
-				
-				/* set basic jaxb parameters */
-				experimentJAXB.setJobID(experiment.getJobId());
-				experimentJAXB.setJobName(experiment.getJobName());
-				experimentJAXB.setStatus(experiment.getStatus());
-				experimentJAXB.setUserName(experiment.getUserName().getUsername());
-				experimentJAXB.setWallTime(experiment.getWallTime());
-				experimentJAXB.setNumNodes(experiment.getNumOfNodes());
-				experimentJAXB.setNumProcPerNode(experiment.getProcPerNode());
-				
-				/* construct the application jaxb from dao */
-				if(experiment.getApplication() != null) {
-					Application applicationJAXB = factory.createApplication();
-					applicationJAXB.setAppID(experiment.getApplication().getAppId());
-					applicationJAXB.setAppName(experiment.getApplication().getAppName());
-					applicationJAXB.setScriptPath(experiment.getApplication().getScript_path());
-					
-					/* set the application jaxb */
-					experimentJAXB.setApplication(applicationJAXB);
-				}
-				
-				/* construct the machine jaxb from dao */
-				if(experiment.getMachine() != null) {
-					Machine machineJAXB = factory.createMachine();
-					machineJAXB.setHostName(experiment.getMachine().getHostname());
-					machineJAXB.setMachineID(experiment.getMachine().getMachineId());
-					machineJAXB.setMachineName(experiment.getMachine().getMachineName());
-					machineJAXB.setPortNumber(experiment.getMachine().getPortNum());
-					machineJAXB.setWorkingDir(experiment.getMachine().getWorking_dir());
-					
-					/* set the machine jaxb */
-					experimentJAXB.setMachine(machineJAXB);
-				}
+				/* get experiment jaxb from dao */
+				edu.sga.apex.rest.jaxb.Experiment experimentJAXB = getExperimentJAXB(experiment);
 				
 				/* add experiment jaxb to list response */
 				expListResponse.getExperimentList().add(experimentJAXB);
 			}
 		} else {
-			throw new Exception("Empty User JAXB received. Cannot construct the DAO entity.");
+			throw new Exception("Empty Experiment List DAO received. Cannot construct JAXB.");
 		}
 		return expListResponse;
+	}
+	
+	/**
+	 * Gets the experiment jaxb.
+	 *
+	 * @param experiment the experiment
+	 * @return the experiment jaxb
+	 * @throws Exception the exception
+	 */
+	public static edu.sga.apex.rest.jaxb.Experiment getExperimentJAXB(Experiment experiment) throws Exception {
+		/* check valid experiment dao */
+		if(experiment != null) {
+			edu.sga.apex.rest.jaxb.Experiment experimentJAXB = factory.createExperiment();
+			
+			/* set basic jaxb parameters */
+			experimentJAXB.setJobID(experiment.getJobId());
+			experimentJAXB.setJobName(experiment.getJobName());
+			experimentJAXB.setStatus(experiment.getStatus());
+			experimentJAXB.setUserName(experiment.getUserName().getUsername());
+			experimentJAXB.setWallTime(experiment.getWallTime());
+			experimentJAXB.setNumNodes(experiment.getNumOfNodes());
+			experimentJAXB.setNumProcPerNode(experiment.getProcPerNode());
+			
+			/* construct the application jaxb from dao */
+			if(experiment.getApplication() != null) {
+				Application applicationJAXB = factory.createApplication();
+				applicationJAXB.setAppID(experiment.getApplication().getAppId());
+				applicationJAXB.setAppName(experiment.getApplication().getAppName());
+				applicationJAXB.setScriptPath(experiment.getApplication().getScript_path());
+				
+				/* set the application jaxb */
+				experimentJAXB.setApplication(applicationJAXB);
+			}
+			
+			/* construct the machine jaxb from dao */
+			if(experiment.getMachine() != null) {
+				Machine machineJAXB = factory.createMachine();
+				machineJAXB.setHostName(experiment.getMachine().getHostname());
+				machineJAXB.setMachineID(experiment.getMachine().getMachineId());
+				machineJAXB.setMachineName(experiment.getMachine().getMachineName());
+				machineJAXB.setPortNumber(experiment.getMachine().getPortNum());
+				machineJAXB.setWorkingDir(experiment.getMachine().getWorking_dir());
+				
+				/* set the machine jaxb */
+				experimentJAXB.setMachine(machineJAXB);
+			}
+			
+			return experimentJAXB;
+		} else {
+			throw new Exception("Empty Experiment DAO received. Cannot construct JAXB.");
+		}
 	}
 }
