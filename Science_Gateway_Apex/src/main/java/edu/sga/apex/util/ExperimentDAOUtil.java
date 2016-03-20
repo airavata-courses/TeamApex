@@ -13,6 +13,9 @@ import edu.sga.apex.entity.Experiment;
  */
 public class ExperimentDAOUtil {
 	
+	/** The dao. */
+	private static EntityDAO dao = new EntityDAOImpl();
+	
 	/**
 	 * Gets the experiments for user.
 	 *
@@ -22,7 +25,6 @@ public class ExperimentDAOUtil {
 	 */
 	public static List<Experiment> getExperimentsForUser(String userName) throws Exception {
 		try {
-			EntityDAO dao = new EntityDAOImpl();
 			return dao.getExperiments(userName);
 		} catch(Exception ex) {
 			System.err.println("Exception in ExperimentDAOUtil: " + ex);
@@ -39,7 +41,6 @@ public class ExperimentDAOUtil {
 	 */
 	public static List<Experiment> getCompletedExperimentsForUser(String userName) throws Exception {
 		try {
-			EntityDAO dao = new EntityDAOImpl();
 			return dao.getCompleteExperiments(userName);
 		} catch(Exception ex) {
 			System.err.println("Exception in ExperimentDAOUtil: " + ex);

@@ -12,6 +12,9 @@ import edu.sga.apex.entity.User;
  * @author Gourav Shenoy
  */
 public class UserDAOUtil {
+	
+	/** The dao. */
+	private static EntityDAO dao = new EntityDAOImpl();
 
 	/**
 	 * Checks if is user exists.
@@ -22,8 +25,6 @@ public class UserDAOUtil {
 	public static boolean isUserExists(String userName) throws Exception {
 		boolean isExists = false;
 		try {
-			EntityDAO dao = new EntityDAOImpl();
-			
 			User user = dao.getUserByName(userName);
 			if(user != null) {
 				isExists = true;
@@ -42,7 +43,6 @@ public class UserDAOUtil {
 	 */
 	public static List<User> getUserList() throws Exception {
 		try {
-			EntityDAO dao = new EntityDAOImpl();
 			return dao.getUsers();
 		} catch(Exception ex) {
 			System.err.println("Exception in UserDAOUtil: " + ex);
@@ -59,7 +59,6 @@ public class UserDAOUtil {
 	public static boolean createUser(User user) throws Exception {
 		boolean success = false;
 		try {
-			EntityDAO dao = new EntityDAOImpl();
 			dao.saveEntity(user);
 			success = true;
 		} catch(Exception ex) {

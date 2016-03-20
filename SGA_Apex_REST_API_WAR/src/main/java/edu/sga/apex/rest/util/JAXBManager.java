@@ -5,8 +5,11 @@ import java.util.List;
 import edu.sga.apex.bean.InputFileBean;
 import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
+import edu.sga.apex.entity.AppInput;
 import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.rest.jaxb.Application;
+import edu.sga.apex.rest.jaxb.ApplicationInput;
+import edu.sga.apex.rest.jaxb.ApplicationListResponse;
 import edu.sga.apex.rest.jaxb.ExperimentListResponse;
 import edu.sga.apex.rest.jaxb.InputFile;
 import edu.sga.apex.rest.jaxb.JobResponse;
@@ -212,5 +215,47 @@ public class JAXBManager {
 		} else {
 			throw new Exception("Empty Experiment DAO received. Cannot construct JAXB.");
 		}
+	}
+	
+	/**
+	 * Gets the application list response.
+	 *
+	 * @param applicationList the application list
+	 * @return the application list response
+	 * @throws Exception the exception
+	 */
+	public static ApplicationListResponse getApplicationListResponse(List<edu.sga.apex.entity.Application> applicationList) throws Exception {
+		ApplicationListResponse appListResponse = factory.createApplicationListResponse();
+		
+		/* check valid dao entity */
+		if(applicationList != null) {
+			for(edu.sga.apex.entity.Application application : applicationList) {
+				/* construct application jaxb for each dao */
+				Application applicationJAXB = factory.createApplication();
+				applicationJAXB.setAppID(application.getAppId());
+				applicationJAXB.setAppName(application.getAppName());
+				applicationJAXB.setScriptPath(application.getScript_path());
+				
+				/* check valid application input */
+				if(application.getInputList() != null && !application.getInputList().isEmpty()) {
+					for(AppInput appInputDAO : application.getInputList()) {
+						/* construct app input jaxb */
+						ApplicationInput appInputJAXB = factory.createApplicationInput();
+						appInputJAXB.setInput(appInputDAO.getInput());
+						appInputJAXB.setDescription(appInputDAO.getDescription());
+						
+						/* add appInput jaxb to application jaxb */
+						applicationJAXB.getAppInputs().add(appInputJAXB);
+					}
+				}
+				
+				/* add application jaxb to list response */
+				appListResponse.getApplicationList().add(applicationJAXB);
+			}
+		} else {
+			throw new Exception("Empty Application List DAO received. Cannot construct JAXB.");
+		}
+		
+		return appListResponse;
 	}
 }
