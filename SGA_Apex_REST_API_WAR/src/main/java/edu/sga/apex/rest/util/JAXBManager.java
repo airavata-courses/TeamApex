@@ -48,6 +48,20 @@ public class JAXBManager {
 						"jobName parameter not specified. Please pass this field in the request JSON.");
 			}
 			bean.setJobName(request.getJobName());
+			
+			/* throw error if required field not specified */
+			if (request.getApplicationID() == null) {
+				throw new Exception(
+						"applicationID parameter not specified. Please pass this field in the request JSON.");
+			}
+			bean.setApplicationID(request.getApplicationID());
+			
+			/* throw error if required field not specified */
+			if (request.getMachineID() == null) {
+				throw new Exception(
+						"machineID parameter not specified. Please pass this field in the request JSON.");
+			}
+			bean.setMachineID(request.getMachineID());
 
 			/* throw error if required field not specified */
 			if (request.getEmailId() == null) {

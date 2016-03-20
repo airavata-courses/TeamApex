@@ -25,6 +25,12 @@ public class SubmitJobRequestBean {
 	/** The num processors. */
 	private Integer numProcessors;
 	
+	/** The application id. */
+	private String applicationID;
+	
+	/** The machine id. */
+	private String machineID;
+	
 	/** The input files. */
 	private List<InputFileBean> inputFiles;
 
@@ -117,6 +123,42 @@ public class SubmitJobRequestBean {
 	public void setNumProcessors(Integer numProcessors) {
 		this.numProcessors = numProcessors;
 	}
+	
+	/**
+	 * Gets the application id.
+	 *
+	 * @return the application id
+	 */
+	public String getApplicationID() {
+		return applicationID;
+	}
+
+	/**
+	 * Sets the application id.
+	 *
+	 * @param applicationID the new application id
+	 */
+	public void setApplicationID(String applicationID) {
+		this.applicationID = applicationID;
+	}
+
+	/**
+	 * Gets the machine id.
+	 *
+	 * @return the machine id
+	 */
+	public String getMachineID() {
+		return machineID;
+	}
+
+	/**
+	 * Sets the machine id.
+	 *
+	 * @param machineID the new machine id
+	 */
+	public void setMachineID(String machineID) {
+		this.machineID = machineID;
+	}
 
 	/**
 	 * Gets the input files.
@@ -146,7 +188,8 @@ public class SubmitJobRequestBean {
 	public String toString() {
 		return "SubmitJobRequestBean [jobName=" + jobName + ", emailId="
 				+ emailId + ", wallTime=" + wallTime + ", numNodes=" + numNodes
-				+ ", numProcessors=" + numProcessors + ", inputFiles="
+				+ ", numProcessors=" + numProcessors + ", applicationID="
+				+ applicationID + ", machineID=" + machineID + ", inputFiles="
 				+ inputFiles + "]";
 	}
 
