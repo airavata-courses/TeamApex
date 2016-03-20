@@ -63,8 +63,6 @@ public class EntityDAOImpl implements EntityDAO {
 
 		tx.begin();
 
-		// Persisting the entity object.
-		//if( ! em.contains(entity) );
 		Query query = em.createQuery("SELECT e FROM Experiment e "
 				+ "WHERE e.userName.username='" + username +"'");
 		List<Experiment> expts = query.getResultList();
@@ -92,8 +90,6 @@ public class EntityDAOImpl implements EntityDAO {
 
 		tx.begin();
 
-		// Persisting the entity object.
-		//if( ! em.contains(entity) );
 		Query query = em.createQuery("SELECT e FROM Experiment e "
 				+ "WHERE e.status='" + ExperimentStatus.COMPLETE.toString() + "'");
 		List<Experiment> expts = query.getResultList();
@@ -120,8 +116,6 @@ public class EntityDAOImpl implements EntityDAO {
 
 		tx.begin();
 
-		// Persisting the entity object.
-		//if( ! em.contains(entity) );
 		Query query = em.createQuery("SELECT e FROM Experiment e "
 				+ "WHERE e.status='" + ExperimentStatus.QUEUED.toString() + "'");
 		List<Experiment> expts = query.getResultList();
@@ -148,8 +142,6 @@ public class EntityDAOImpl implements EntityDAO {
 
 		tx.begin();
 
-		// Persisting the entity object.
-		//if( ! em.contains(entity) );
 		Query query = em.createQuery("SELECT a FROM Application a");
 		List<Application> apps = query.getResultList();
 
@@ -176,8 +168,6 @@ public class EntityDAOImpl implements EntityDAO {
 
 		tx.begin();
 
-		// Persisting the entity object.
-		//if( ! em.contains(entity) );
 		Application app = em.find(Application.class, appId);
 		List<AppInput> inputList = app.getInputList();
 
