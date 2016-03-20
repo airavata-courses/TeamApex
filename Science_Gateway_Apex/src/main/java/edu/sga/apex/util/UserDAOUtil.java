@@ -19,7 +19,7 @@ public class UserDAOUtil {
 	 * @param userName the user name
 	 * @return true, if is user exists
 	 */
-	public static boolean isUserExists(String userName) {
+	public static boolean isUserExists(String userName) throws Exception {
 		boolean isExists = false;
 		try {
 			EntityDAO dao = new EntityDAOImpl();
@@ -40,7 +40,7 @@ public class UserDAOUtil {
 	 *
 	 * @return the user list
 	 */
-	public static List<User> getUserList() {
+	public static List<User> getUserList() throws Exception {
 		try {
 			EntityDAO dao = new EntityDAOImpl();
 			return dao.getUsers();
@@ -56,7 +56,7 @@ public class UserDAOUtil {
 	 * @param user the user
 	 * @return true, if successful
 	 */
-	public static boolean createUser(User user) {
+	public static boolean createUser(User user) throws Exception {
 		boolean success = false;
 		try {
 			EntityDAO dao = new EntityDAOImpl();
