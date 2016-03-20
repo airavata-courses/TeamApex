@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for experimentListResponse complex type.
+ * <p>Java class for applicationListResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="experimentListResponse">
+ * &lt;complexType name="applicationListResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="experimentList" type="{}experiment" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="applicationList" type="{}application" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,40 +35,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "experimentListResponse", propOrder = {
-    "experimentList"
+@XmlType(name = "applicationListResponse", propOrder = {
+    "applicationList"
 })
-public class ExperimentListResponse {
+public class ApplicationListResponse {
 
-    protected List<Experiment> experimentList;
+    protected List<Application> applicationList;
 
     /**
-     * Gets the value of the experimentList property.
+     * Gets the value of the applicationList property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the experimentList property.
+     * This is why there is not a <CODE>set</CODE> method for the applicationList property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getExperimentList().add(newItem);
+     *    getApplicationList().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Experiment }
+     * {@link Application }
      * 
      * 
      */
-    public List<Experiment> getExperimentList() {
-        if (experimentList == null) {
-            experimentList = new ArrayList<Experiment>();
+    public List<Application> getApplicationList() {
+        if (applicationList == null) {
+            applicationList = new ArrayList<Application>();
         }
-        return this.experimentList;
+        return this.applicationList;
     }
 
 }
