@@ -12,8 +12,14 @@ import edu.sga.apex.entity.Machine;
 import edu.sga.apex.entity.User;
 import edu.sga.apex.util.ExperimentStatus;
 
+/**
+ * The Class JPATestImpl.
+ */
 public class JPATestImpl {
 	
+	/**
+	 * Test get application.
+	 */
 	public void testGetApplication(){
 		EntityDAO dao = new EntityDAOImpl();
 		
@@ -24,6 +30,9 @@ public class JPATestImpl {
 		}
 	}
 	
+	/**
+	 * Test get complete expts.
+	 */
 	public void testGetCompleteExpts(){
 		EntityDAO dao = new EntityDAOImpl();
 		
@@ -34,6 +43,9 @@ public class JPATestImpl {
 		}
 	}
 	
+	/**
+	 * Test get queued expts.
+	 */
 	public void testGetQueuedExpts(){
 		EntityDAO dao = new EntityDAOImpl();
 		
@@ -44,6 +56,9 @@ public class JPATestImpl {
 		}
 	}
 	
+	/**
+	 * Test get experiments.
+	 */
 	public void testGetExperiments(){
 		EntityDAO dao = new EntityDAOImpl();
 		
@@ -54,6 +69,9 @@ public class JPATestImpl {
 		}
 	}
 	
+	/**
+	 * Test get inputs for app.
+	 */
 	public void testGetInputsForApp(){
 		EntityDAO dao = new EntityDAOImpl();
 		
@@ -64,6 +82,38 @@ public class JPATestImpl {
 		}
 	}
 	
+	/**
+	 * Test get users.
+	 */
+	public void testGetUsers() {
+		EntityDAO dao = new EntityDAOImpl();
+		
+		List<User> users = dao.getUsers();
+		for(User user : users) {
+			System.out.println("Username: " + user.getUsername());
+		}
+	}
+	
+	/**
+	 * Test get user by name.
+	 *
+	 * @param userName the user name
+	 */
+	public void testGetUserByName(String userName) {
+		EntityDAO dao = new EntityDAOImpl();
+		
+		User user = dao.getUserByName(userName);
+		if(user != null) {
+			System.out.println("User found: " + user.getUsername());
+		}
+		else {
+			System.err.println("User [" + userName + "] not found!!");
+		}
+	}
+	
+	/**
+	 * Test save expt.
+	 */
 	public void testSaveExpt() {
 		
 		EntityDAO dao = new EntityDAOImpl();
@@ -138,6 +188,11 @@ public class JPATestImpl {
 		
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 
 		JPATestImpl jpatest = new JPATestImpl();
@@ -153,5 +208,10 @@ public class JPATestImpl {
 		jpatest.testGetQueuedExpts();
 		System.out.println("--------Testing Get App Inputs--------");
 		jpatest.testGetInputsForApp();
+		System.out.println("--------Testing Get Users--------");
+		jpatest.testGetUsers();
+		System.out.println("--------Testing Get User by Name--------");
+		jpatest.testGetUserByName("admin");
+		jpatest.testGetUserByName("nonUser");
 	}
 }

@@ -12,6 +12,7 @@ import edu.sga.apex.dao.EntityDAO;
 import edu.sga.apex.entity.AppInput;
 import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.entity.User;
 import edu.sga.apex.util.ExperimentStatus;
 
 /**
@@ -21,6 +22,9 @@ import edu.sga.apex.util.ExperimentStatus;
  */
 public class EntityDAOImpl implements EntityDAO {
 
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#saveEntity(java.lang.Object)
+	 */
 	public void saveEntity(Object entity) {
 
 		// Connection details loaded from persistence.xml to create EntityManagerFactory.
@@ -45,11 +49,18 @@ public class EntityDAOImpl implements EntityDAO {
 		emf.close();
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#updateExperiment(edu.sga.apex.entity.Experiment)
+	 */
 	@Override
 	public void updateExperiment(Experiment expt) {
 		this.saveEntity(expt);
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#getExperiments(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Experiment> getExperiments(String username) {
 		
@@ -77,6 +88,10 @@ public class EntityDAOImpl implements EntityDAO {
 		return expts;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#getCompleteExperiments(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Experiment> getCompleteExperiments(String username) {
 
@@ -104,6 +119,10 @@ public class EntityDAOImpl implements EntityDAO {
 		return expts;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#getInQueuedExperiments(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Experiment> getInQueuedExperiments(String username) {
 		// Connection details loaded from persistence.xml to create EntityManagerFactory.
@@ -130,6 +149,10 @@ public class EntityDAOImpl implements EntityDAO {
 		return expts;
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#getApplications()
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Application> getApplications() {
 		// Connection details loaded from persistence.xml to create EntityManagerFactory.
@@ -155,6 +178,9 @@ public class EntityDAOImpl implements EntityDAO {
 		return apps;
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#getInputsForApp(java.lang.String)
+	 */
 	@Override
 	public List<AppInput> getInputsForApp(String appId) {
 		
@@ -179,5 +205,61 @@ public class EntityDAOImpl implements EntityDAO {
 		emf.close();
 		
 		return inputList;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#getUsers()
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUsers() {
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+		
+		Query query = em.createQuery("SELECT u FROM User u");
+		List<User> users = query.getResultList();
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return users;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#getUserByName(java.lang.String)
+	 */
+	@Override
+	public User getUserByName(String userName) {
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		User user = em.find(User.class, userName);
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return user;
 	}
 }
