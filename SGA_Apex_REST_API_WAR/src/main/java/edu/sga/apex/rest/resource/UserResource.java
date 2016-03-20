@@ -18,9 +18,31 @@ import edu.sga.apex.rest.util.ExceptionUtil;
 import edu.sga.apex.rest.util.JAXBManager;
 import edu.sga.apex.util.UserDAOUtil;
 
+/**
+ * The Class UserResource.
+ * 
+ * @author Gourav Shenoy
+ */
 @Path("user")
 public class UserResource {
 
+	/* 
+	 * API Request JSON
+	    {
+	        "user":
+	        {
+	            "userName": "admin",
+	            "password": "apex123"
+	        }
+	    }
+	 * 
+	 * */
+	/**
+	 * Register user.
+	 *
+	 * @param user the user
+	 * @return the response
+	 */
 	@POST
 	@Path("register")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
