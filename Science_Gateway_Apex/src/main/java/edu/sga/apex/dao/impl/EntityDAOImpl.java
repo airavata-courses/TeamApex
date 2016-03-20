@@ -230,6 +230,31 @@ public class EntityDAOImpl implements EntityDAO {
 		return machines.get(0);
 	}
 
+	@Override
+	public Machine getMachineById(String machineId) {
+
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		Machine machine = em.find(Machine.class, machineId);
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+
+		return machine;
+	}
+
 	/* (non-Javadoc)
 	 * @see edu.sga.apex.dao.EntityDAO#getUsers()
 	 */
@@ -280,6 +305,31 @@ public class EntityDAOImpl implements EntityDAO {
 		return apps.get(0);
 	}
 
+	@Override
+	public Application getApplicationById(String appId) {
+
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		Application app = em.find(Application.class, appId);
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+
+		return app;
+	}
+
 	/* (non-Javadoc)
 	 * @see edu.sga.apex.dao.EntityDAO#getUserByName(java.lang.String)
 	 */
@@ -327,7 +377,7 @@ public class EntityDAOImpl implements EntityDAO {
 		ExperimentPK pk = new ExperimentPK();
 		pk.setJobId(jobID);
 		pk.setMachine(machineID);
-		
+
 		Experiment experiment = em.find(Experiment.class, pk);
 
 		// Committing transaction.
@@ -336,7 +386,7 @@ public class EntityDAOImpl implements EntityDAO {
 		// Closing connection.
 		em.close();
 		emf.close();
-		
+
 		return experiment;
 	}
 }

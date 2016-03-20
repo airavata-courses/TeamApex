@@ -15,7 +15,7 @@ public class ApplicationDAOUtil {
 
 	/** The dao. */
 	private static EntityDAO dao = new EntityDAOImpl();
-	
+
 	/**
 	 * Gets the applications.
 	 *
@@ -29,5 +29,16 @@ public class ApplicationDAOUtil {
 			System.err.println("Exception in ApplicationDAOUtil: " + ex);
 			throw ex;
 		}
+	}
+
+	/**
+	 * Gets the application name by querying on ID.
+	 * @param appId Application ID.
+	 * @return Application Name.
+	 */
+	public String getAppNameById(String appId) {
+
+		EntityDAO edao = new EntityDAOImpl();
+		return edao.getApplicationById(appId).getAppName();
 	}
 }

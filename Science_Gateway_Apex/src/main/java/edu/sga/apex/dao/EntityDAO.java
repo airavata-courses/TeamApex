@@ -36,7 +36,7 @@ public interface EntityDAO {
 	 * @return the experiments
 	 */
 	public List<Experiment> getExperiments(String username);
-	
+
 	/**
 	 * Gets the experiment by id.
 	 *
@@ -85,12 +85,27 @@ public interface EntityDAO {
 	public Machine getMachineByName(String machineName);
 
 	/**
+	 * Gets the machine object from DB by ID.
+	 *
+	 * @param machineId the machine ID.
+	 * @return Machine entity.
+	 */
+	public Machine getMachineById(String machineId);
+
+	/**
 	 * Gets the application object from DB by name.
 	 *
 	 * @param appName the app name
 	 * @return the application by name
 	 */
 	public Application getApplicationByName(String appName);
+
+	/**
+	 * Get Application by ID.
+	 * @param appId
+	 * @return Application entity.
+	 */
+	public Application getApplicationById(String appId);
 
 	/**
 	 * Gets the users.
