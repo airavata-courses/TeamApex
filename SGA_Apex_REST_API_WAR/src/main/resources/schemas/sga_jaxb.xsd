@@ -12,6 +12,7 @@
 	<xs:element name="simpleAPIResponse" type="simpleAPIResponse" />
 	<xs:element name="jobResponse" type="jobResponse" />
 	<xs:element name="experimentListResponse" type="experimentListResponse" />
+	<xs:element name="applicationListResponse" type="applicationListResponse" />
 	
 	<!-- Type wrappers -->
 	<xs:element name="user" type="user" />
@@ -66,6 +67,12 @@
 	<xs:complexType name="experimentListResponse">
 		<xs:sequence>
 			<xs:element name="experimentList" type="experiment" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="applicationListResponse">
+		<xs:sequence>
+			<xs:element name="applicationList" type="application" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	
