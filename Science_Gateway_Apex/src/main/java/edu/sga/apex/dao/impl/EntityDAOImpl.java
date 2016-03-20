@@ -12,6 +12,7 @@ import edu.sga.apex.dao.EntityDAO;
 import edu.sga.apex.entity.AppInput;
 import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.entity.Machine;
 import edu.sga.apex.util.ExperimentStatus;
 
 /**
@@ -179,5 +180,59 @@ public class EntityDAOImpl implements EntityDAO {
 		emf.close();
 		
 		return inputList;
+	}
+	
+	@Override
+	public Machine getMachineByName(String machineName) {
+		
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		Query query = em.createQuery("SELECT m FROM Machine m "
+				+ "WHERE m.machineName='" + machineName + "'");
+		List<Machine> machines = query.getResultList();
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return machines.get(0);
+	}
+	
+	@Override
+	public Application getApplicationByName(String appName) {
+
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		Query query = em.createQuery("SELECT a FROM Application a "
+				+ "WHERE a.appName='" + appName + "'");
+		List<Application> apps = query.getResultList();
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return apps.get(0);
 	}
 }

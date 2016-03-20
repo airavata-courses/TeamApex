@@ -5,6 +5,7 @@ import java.util.List;
 import edu.sga.apex.entity.AppInput;
 import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.entity.Machine;
 
 /**
  * Interface for Entity Data Access Object.
@@ -58,4 +59,18 @@ public interface EntityDAO {
 	 * @return List of applications.
 	 */
 	public List<Application> getApplications();
+
+	/**
+	 * Gets the machine object from DB by name.
+	 * @param macehineName
+	 * @return
+	 */
+	public Machine getMachineByName(String machineName);
+	
+	/**
+	 * Gets the application object from DB by name.
+	 * @param macehineName
+	 * @return
+	 */
+	public Application getApplicationByName(String appName);
 }

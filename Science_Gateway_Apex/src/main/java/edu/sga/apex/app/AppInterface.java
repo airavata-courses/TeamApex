@@ -15,5 +15,5 @@ public interface AppInterface {
 	 * @param machine
 	 * @return
 	 */
-	public String submitRemoteJob(SubmitJobRequestBean requestBean, String machine);
+	public String submitRemoteJob(SubmitJobRequestBean requestBean);
 }
