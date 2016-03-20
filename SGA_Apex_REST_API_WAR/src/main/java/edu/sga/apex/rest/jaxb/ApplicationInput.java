@@ -14,17 +14,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for submitJobResponse complex type.
+ * <p>Java class for applicationInput complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="submitJobResponse">
+ * &lt;complexType name="applicationInput">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="jobId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="input" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,61 +34,61 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "submitJobResponse", propOrder = {
-    "jobId",
-    "status"
+@XmlType(name = "applicationInput", propOrder = {
+    "input",
+    "description"
 })
-public class SubmitJobResponse {
+public class ApplicationInput {
 
-    protected String jobId;
-    protected String status;
+    protected String input;
+    protected String description;
 
     /**
-     * Gets the value of the jobId property.
+     * Gets the value of the input property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getJobId() {
-        return jobId;
+    public String getInput() {
+        return input;
     }
 
     /**
-     * Sets the value of the jobId property.
+     * Sets the value of the input property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setJobId(String value) {
-        this.jobId = value;
+    public void setInput(String value) {
+        this.input = value;
     }
 
     /**
-     * Gets the value of the status property.
+     * Gets the value of the description property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getStatus() {
-        return status;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Sets the value of the status property.
+     * Sets the value of the description property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setStatus(String value) {
-        this.status = value;
+    public void setDescription(String value) {
+        this.description = value;
     }
 
 }

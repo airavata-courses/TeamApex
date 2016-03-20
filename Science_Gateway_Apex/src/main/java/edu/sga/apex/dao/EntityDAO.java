@@ -6,6 +6,7 @@ import edu.sga.apex.entity.AppInput;
 import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.entity.Machine;
+import edu.sga.apex.entity.User;
 
 /**
  * Interface for Entity Data Access Object.
@@ -16,40 +17,46 @@ public interface EntityDAO {
 
 	/**
 	 * Persists entity object to DB.
-	 * @param entity
+	 *
+	 * @param entity the entity
 	 */
 	public void saveEntity(Object entity);
 
 	/**
 	 * Updates the experiment with the new data.
-	 * @param expt
+	 *
+	 * @param expt the expt
 	 */
 	public void updateExperiment(Experiment expt);
 
 	/**
 	 * Get list of all experiments for user.
-	 * @param username
-	 * @return
+	 *
+	 * @param username the username
+	 * @return the experiments
 	 */
 	public List<Experiment> getExperiments(String username);
 
 	/**
 	 * Get a list of completed experiments for user.
-	 * @param username
+	 *
+	 * @param username the username
 	 * @return List of Experiments.
 	 */
 	public List<Experiment> getCompleteExperiments(String username);
 
 	/**
 	 * Get a list of In Progress experiments for user.
-	 * @param username
-	 * @return
+	 *
+	 * @param username the username
+	 * @return the in queued experiments
 	 */
 	public List<Experiment> getInQueuedExperiments(String username);
 
 	/**
 	 * Get inputs for an application.
-	 * @param appId
+	 *
+	 * @param appId the app id
 	 * @return List of inputs.
 	 */
 	public List<AppInput> getInputsForApp(String appId);
@@ -66,11 +73,26 @@ public interface EntityDAO {
 	 * @return
 	 */
 	public Machine getMachineByName(String machineName);
-	
+
 	/**
 	 * Gets the application object from DB by name.
 	 * @param macehineName
 	 * @return
 	 */
 	public Application getApplicationByName(String appName);
+
+	/**
+	 * Gets the users.
+	 *
+	 * @return the users
+	 */
+	public List<User> getUsers();
+
+	/**
+	 * Gets the user by name.
+	 *
+	 * @param userName the user name
+	 * @return the user by name
+	 */
+	public User getUserByName(String userName);
 }
