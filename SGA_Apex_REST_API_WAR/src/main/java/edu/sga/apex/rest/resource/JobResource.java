@@ -15,6 +15,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
+import edu.sga.apex.app.AppInterface;
+import edu.sga.apex.app.impl.GrommacsImpl;
 import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
 import edu.sga.apex.impl.KarstSCImpl;
@@ -26,6 +28,7 @@ import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 import edu.sga.apex.rest.jaxb.SubmitJobResponse;
 import edu.sga.apex.rest.util.JAXBManager;
 import edu.sga.apex.util.AppRefNames;
+import edu.sga.apex.util.MachineRefNames;
 import edu.sga.apex.rest.util.Constants;
 import edu.sga.apex.rest.util.ExceptionUtil;
 
@@ -77,26 +80,39 @@ public class JobResource {
 		try {
 			if (request != null) {
 				
-				//TODO: Get this from the request
-				String application = AppRefNames.GROMMACS.toString();
-				
 				/* Convert request jaxb to middleware req bean */
 				SubmitJobRequestBean bean = JAXBManager
 						.getSubmitJobRequestBean(request);
 				
+				//TODO: Get this from the request bean
+				String application = AppRefNames.GROMMACS.toString();
+				
+				//TODO: Get this from the request bean
+				String machine = MachineRefNames.KARST.toString();
+				
 				/* Get Karst impl */
-				SCInterface scInterface = new KarstSCImpl(application);
-				/* Submit job to Karst */
-				String jobId = scInterface.submitRemoteJob(bean);
+				//SCInterface scInterface = new KarstSCImpl(application);
 				
-				/* Construct response jaxb entity */
-				SubmitJobResponse response = factory.createSubmitJobResponse();
-				response.setJobId(jobId);
-				response.setStatus(Constants.STATUS_SUBMITTED);
-				
-				/* Build the response */
-				builder = Response.ok(response);
-				builder.status(Status.ACCEPTED);
+				AppInterface appIntf = null;
+				if(application.equals(AppRefNames.GROMMACS.toString())) {
+					appIntf = new GrommacsImpl();
+				}
+				// else add cases for other apps here
+
+				if( appIntf != null ) {
+					/* Submit job to Karst */
+					String jobId = appIntf.submitRemoteJob(bean);
+					
+					/* Construct response jaxb entity */
+					SubmitJobResponse response = factory.createSubmitJobResponse();
+					response.setJobId(jobId);
+					response.setStatus(Constants.STATUS_SUBMITTED);
+					
+					/* Build the response */
+					builder = Response.ok(response);
+					builder.status(Status.ACCEPTED);
+					
+				}
 			} else {
 				throw new Exception("Invalid API Request (Empty)");
 			}
