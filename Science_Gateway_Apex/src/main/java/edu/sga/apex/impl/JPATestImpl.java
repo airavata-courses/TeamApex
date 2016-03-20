@@ -125,11 +125,13 @@ public class JPATestImpl {
 	public static void main(String[] args) {
 
 		JPATestImpl jpatest = new JPATestImpl();
-		//jpatest.testSaveExpt();
+		jpatest.testSaveExpt();
+		
+		/* Uncomment required methods to test. */
 		//jpatest.testGetApplication();
 		//jpatest.testGetCompleteExpts();
 		//jpatest.testGetExperiments();
 		//jpatest.testGetQueuedExpts();
-		jpatest.testGetInputsForApp();
+		//jpatest.testGetInputsForApp();
 	}
 }
