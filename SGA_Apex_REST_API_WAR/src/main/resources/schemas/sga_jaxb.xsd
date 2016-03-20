@@ -6,8 +6,14 @@
 	<xs:element name="submitJobResponse" type="submitJobResponse" />
 	<xs:element name="simpleAPIResponse" type="simpleAPIResponse" />
 	<xs:element name="jobResponse" type="jobResponse" />
+	
+	<!-- Type wrappers -->
+	<xs:element name="user" type="user" />
 	<xs:element name="inputFile" type="inputFile" />
+	<xs:element name="applicationInput" type="applicationInput" />
+	<xs:element name="application" type="application" />
 
+	<!-- Request/Response wrapper Definitions -->
 	<xs:complexType name="submitJobRequest">
 		<xs:sequence>
 			<xs:element name="jobName" type="xs:string" minOccurs="0" />
@@ -49,10 +55,34 @@
 		</xs:sequence>
 	</xs:complexType>
 	
+	<!-- Type wrapper schema definitions -->
 	<xs:complexType name="inputFile">
 		<xs:sequence>
 			<xs:element name="fileType" type="xs:string" minOccurs="0" />
 			<xs:element name="fileName" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="user">
+		<xs:sequence>
+			<xs:element name="userName" type="xs:string" minOccurs="0" />
+			<xs:element name="password" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="applicationInput">
+		<xs:sequence>
+			<xs:element name="input" type="xs:string" minOccurs="0" />
+			<xs:element name="description" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="application">
+		<xs:sequence>
+			<xs:element name="appID" type="xs:string" minOccurs="0" />
+			<xs:element name="appName" type="xs:string" minOccurs="0" />
+			<xs:element name="scriptPath" type="xs:string" minOccurs="0" />
+			<xs:element name="appInputs" type="applicationInput" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 	
