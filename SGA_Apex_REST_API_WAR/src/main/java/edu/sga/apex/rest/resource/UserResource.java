@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.rest.jaxb.ExperimentListResponse;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SimpleAPIResponse;
 import edu.sga.apex.rest.jaxb.User;
@@ -92,14 +93,26 @@ public class UserResource {
 		return builder.build();
 	}
 	
+	/**
+	 * Gets the experiments for user.
+	 *
+	 * @param userName the user name
+	 * @return the experiments for user
+	 */
 	@GET
 	@Path("{userName}/jobs")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response getExperimentsForUser(@PathParam("userName") String userName) {
 		ResponseBuilder builder = null;
-		ObjectFactory factory = new ObjectFactory();
 		try {
+			/* get experiment list from db */
 			List<Experiment> experimentList = ExperimentDAOUtil.getExperimentsForUser(userName);
+			
+			/* construct jaxb response */
+			ExperimentListResponse expListResponse = JAXBManager.getExperimentListResponse(experimentList);
+			
+			/* Build the response */
+			builder = Response.ok(expListResponse);
 		} catch (Exception ex) {
 			/* handle exception and return response */
 			return ExceptionUtil.handleException(ex);

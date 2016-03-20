@@ -1,10 +1,16 @@
 package edu.sga.apex.rest.util;
 
+import java.util.List;
+
 import edu.sga.apex.bean.InputFileBean;
 import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
+import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.rest.jaxb.Application;
+import edu.sga.apex.rest.jaxb.ExperimentListResponse;
 import edu.sga.apex.rest.jaxb.InputFile;
 import edu.sga.apex.rest.jaxb.JobResponse;
+import edu.sga.apex.rest.jaxb.Machine;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 import edu.sga.apex.rest.jaxb.User;
@@ -130,5 +136,62 @@ public class JAXBManager {
 		}
 		
 		return userEntity;
+	}
+	
+	/**
+	 * Gets the experiment list response.
+	 *
+	 * @param experimentList the experiment list
+	 * @return the experiment list response
+	 * @throws Exception the exception
+	 */
+	public static ExperimentListResponse getExperimentListResponse(List<Experiment> experimentList) throws Exception {
+		ExperimentListResponse expListResponse = factory.createExperimentListResponse();
+		
+		/* check if entity is valid */
+		if(experimentList != null) {
+			for(Experiment experiment : experimentList) {
+				edu.sga.apex.rest.jaxb.Experiment experimentJAXB = factory.createExperiment();
+				
+				/* set basic jaxb parameters */
+				experimentJAXB.setJobID(experiment.getJobId());
+				experimentJAXB.setJobName(experiment.getJobName());
+				experimentJAXB.setStatus(experiment.getStatus());
+				experimentJAXB.setUserName(experiment.getUserName().getUsername());
+				experimentJAXB.setWallTime(experiment.getWallTime());
+				experimentJAXB.setNumNodes(experiment.getNumOfNodes());
+				experimentJAXB.setNumProcPerNode(experiment.getProcPerNode());
+				
+				/* construct the application jaxb from dao */
+				if(experiment.getApplication() != null) {
+					Application applicationJAXB = factory.createApplication();
+					applicationJAXB.setAppID(experiment.getApplication().getAppId());
+					applicationJAXB.setAppName(experiment.getApplication().getAppName());
+					applicationJAXB.setScriptPath(experiment.getApplication().getScript_path());
+					
+					/* set the application jaxb */
+					experimentJAXB.setApplication(applicationJAXB);
+				}
+				
+				/* construct the machine jaxb from dao */
+				if(experiment.getMachine() != null) {
+					Machine machineJAXB = factory.createMachine();
+					machineJAXB.setHostName(experiment.getMachine().getHostname());
+					machineJAXB.setMachineID(experiment.getMachine().getMachineId());
+					machineJAXB.setMachineName(experiment.getMachine().getMachineName());
+					machineJAXB.setPortNumber(experiment.getMachine().getPortNum());
+					machineJAXB.setWorkingDir(experiment.getMachine().getWorking_dir());
+					
+					/* set the machine jaxb */
+					experimentJAXB.setMachine(machineJAXB);
+				}
+				
+				/* add experiment jaxb to list response */
+				expListResponse.getExperimentList().add(experimentJAXB);
+			}
+		} else {
+			throw new Exception("Empty User JAXB received. Cannot construct the DAO entity.");
+		}
+		return expListResponse;
 	}
 }
