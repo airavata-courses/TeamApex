@@ -24,52 +24,58 @@ public class GrommacsImpl implements AppInterface {
 	@Override
 	public String submitRemoteJob(SubmitJobRequestBean requestBean) {
 
-		//TODO: Get this from the request bean
-		String application = AppRefNames.GROMMACS.toString();
+		try {
+			//TODO: Get this from the request bean
+			String application = AppRefNames.GROMMACS.toString();
 
-		//TODO: Get this from the request bean
-		String machine = MachineRefNames.KARST.toString();
+			//TODO: Get this from the request bean
+			String machine = MachineRefNames.KARST.toString();
 
-		String jobId = "";
-		SCInterface scIntf = null;
+			String jobId = "";
+			SCInterface scIntf = null;
 
-		if( machine.equals(MachineRefNames.BIGRED2.toString()) ) {
-			scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
+			if( machine.equals(MachineRefNames.BIGRED2.toString()) ) {
+				scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
+			}
+			else if( machine.equals(MachineRefNames.KARST.toString()) ) {
+				scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
+			}
+
+			jobId = scIntf.submitRemoteJob(requestBean);
+
+			//Add DB entry.
+			EntityDAO dao = new EntityDAOImpl();
+
+			// TODO: Get Logged in user from context
+			User user =  new User();
+			user.setUsername("admin");
+			user.setPassword("apex123");
+
+			Machine machineObj = dao.getMachineByName(machine);
+
+			Application app = dao.getApplicationByName(application);
+
+			Experiment expt = new Experiment();
+
+			expt.setJobId(jobId);
+			expt.setMachine(machineObj);
+
+			expt.setApplication(app);
+			expt.setEmail(requestBean.getEmailId());
+			expt.setJobName(requestBean.getJobName());
+			expt.setNumOfNodes(requestBean.getNumNodes());
+			expt.setProcPerNode(requestBean.getNumProcessors());
+			expt.setStatus(ExperimentStatus.QUEUED.toString());
+			expt.setUserName(user);
+			expt.setWallTime(requestBean.getWallTime());
+
+			dao.saveEntity(expt);
+
+			return jobId;
 		}
-		else if( machine.equals(MachineRefNames.KARST.toString()) ) {
-			scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
+		catch(Exception ex) {
+			ex.printStackTrace();
+			return null;
 		}
-
-		jobId = scIntf.submitRemoteJob(requestBean);
-
-		//Add DB entry.
-		EntityDAO dao = new EntityDAOImpl();
-
-		// TODO: Get Logged in user from context
-		User user =  new User();
-		user.setUsername("admin");
-		user.setPassword("apex123");
-
-		Machine machineObj = dao.getMachineByName(machine);
-
-		Application app = dao.getApplicationByName(application);
-
-		Experiment expt = new Experiment();
-
-		expt.setJobId(jobId);
-		expt.setMachine(machineObj);
-
-		expt.setApplication(app);
-		expt.setEmail(requestBean.getEmailId());
-		expt.setJobName(requestBean.getJobName());
-		expt.setNumOfNodes(requestBean.getNumNodes());
-		expt.setProcPerNode(requestBean.getNumProcessors());
-		expt.setStatus(ExperimentStatus.QUEUED.toString());
-		expt.setUserName(user);
-		expt.setWallTime(requestBean.getWallTime());
-
-		dao.saveEntity(expt);
-
-		return jobId;
 	}
 }
