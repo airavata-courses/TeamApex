@@ -118,6 +118,22 @@ public class JPATestImpl {
 
 		dao.saveEntity(expt);
 		
+		Experiment expt2 = new Experiment();
+
+		expt2.setJobId("2222");
+		expt2.setMachine(machine);
+
+		expt2.setApplication(app);
+		expt2.setEmail("sdf@sf.com");
+		expt2.setJobName("dummy2");
+		expt2.setNumOfNodes(2);
+		expt2.setProcPerNode(2);
+		expt2.setStatus(ExperimentStatus.QUEUED.toString());
+		expt2.setUserName(user);
+		expt2.setWallTime("30");
+
+		dao.saveEntity(expt2);
+		
 		//System.out.println(ExperimentStatus.COMPLETE);
 		
 	}
@@ -126,12 +142,16 @@ public class JPATestImpl {
 
 		JPATestImpl jpatest = new JPATestImpl();
 		jpatest.testSaveExpt();
-		
-		/* Uncomment required methods to test. */
-		//jpatest.testGetApplication();
-		//jpatest.testGetCompleteExpts();
-		//jpatest.testGetExperiments();
-		//jpatest.testGetQueuedExpts();
-		//jpatest.testGetInputsForApp();
+
+		System.out.println("--------Testing Get Applications--------");
+		jpatest.testGetApplication();
+		System.out.println("--------Testing Get Complete Experiments--------");
+		jpatest.testGetCompleteExpts();
+		System.out.println("--------Testing Get Experiments--------");
+		jpatest.testGetExperiments();
+		System.out.println("--------Testing Get Queued Experiments--------");
+		jpatest.testGetQueuedExpts();
+		System.out.println("--------Testing Get App Inputs--------");
+		jpatest.testGetInputsForApp();
 	}
 }
