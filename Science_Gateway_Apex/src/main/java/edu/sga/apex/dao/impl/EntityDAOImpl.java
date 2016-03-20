@@ -12,6 +12,7 @@ import edu.sga.apex.dao.EntityDAO;
 import edu.sga.apex.entity.AppInput;
 import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.entity.ExperimentPK;
 import edu.sga.apex.entity.Machine;
 import edu.sga.apex.entity.User;
 import edu.sga.apex.util.ExperimentStatus;
@@ -208,6 +209,7 @@ public class EntityDAOImpl implements EntityDAO {
 		return inputList;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Machine getMachineByName(String machineName) {
 
@@ -257,6 +259,7 @@ public class EntityDAOImpl implements EntityDAO {
 		return users;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Application getApplicationByName(String appName) {
 
@@ -303,5 +306,37 @@ public class EntityDAOImpl implements EntityDAO {
 		emf.close();
 
 		return user;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#getExperimentByID(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Experiment getExperimentByID(String jobID, String machineID) {
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		// create primary key for experiment
+		ExperimentPK pk = new ExperimentPK();
+		pk.setJobId(jobID);
+		pk.setMachine(machineID);
+		
+		Experiment experiment = em.find(Experiment.class, pk);
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return experiment;
 	}
 }

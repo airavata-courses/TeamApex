@@ -107,7 +107,19 @@ public class JPATestImpl {
 			System.out.println("User found: " + user.getUsername());
 		}
 		else {
-			System.err.println("User [" + userName + "] not found!!");
+			System.err.println("User [" + userName + "] not found!");
+		}
+	}
+	
+	public void testGetExperimentByID(String jobID, String machineID) {
+		EntityDAO dao = new EntityDAOImpl();
+		
+		Experiment exp = dao.getExperimentByID(jobID, machineID);
+		if(exp != null) {
+			System.out.println("Experiment found: " + exp.getJobName());
+		}
+		else {
+			System.err.println("Experiment [" + jobID + "] not found!");
 		}
 	}
 	
@@ -213,5 +225,8 @@ public class JPATestImpl {
 		System.out.println("--------Testing Get User by Name--------");
 		jpatest.testGetUserByName("admin");
 		jpatest.testGetUserByName("nonUser");
+		System.out.println("--------Testing Get Experiment by ID--------");
+		jpatest.testGetExperimentByID("2222", "karst01");
+		jpatest.testGetExperimentByID("nonExistingID", "karst01");
 	}
 }
