@@ -10,11 +10,62 @@ import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.entity.Machine;
 import edu.sga.apex.entity.User;
+import edu.sga.apex.util.ExperimentStatus;
 
 public class JPATestImpl {
-
-	public static void main(String[] args) {
-
+	
+	public void testGetApplication(){
+		EntityDAO dao = new EntityDAOImpl();
+		
+		List<Application> apps = dao.getApplications();
+		
+		for(Application app : apps){
+			System.out.println(app.getAppName());
+		}
+	}
+	
+	public void testGetCompleteExpts(){
+		EntityDAO dao = new EntityDAOImpl();
+		
+		List<Experiment> expts = dao.getCompleteExperiments("admin");
+		
+		for(Experiment expt : expts){
+			System.out.println(expt.getJobId());
+		}
+	}
+	
+	public void testGetQueuedExpts(){
+		EntityDAO dao = new EntityDAOImpl();
+		
+		List<Experiment> expts = dao.getInQueuedExperiments("admin");
+		
+		for(Experiment expt : expts){
+			System.out.println(expt.getJobId());
+		}
+	}
+	
+	public void testGetExperiments(){
+		EntityDAO dao = new EntityDAOImpl();
+		
+		List<Experiment> expts = dao.getExperiments("admin");
+		
+		for(Experiment expt : expts){
+			System.out.println(expt.getJobId());
+		}
+	}
+	
+	public void testGetInputsForApp(){
+		EntityDAO dao = new EntityDAOImpl();
+		
+		List<AppInput> inputs = dao.getInputsForApp("gro01");
+		
+		for(AppInput input : inputs){
+			System.out.println(input.getInput());
+		}
+	}
+	
+	public void testSaveExpt() {
+		
 		EntityDAO dao = new EntityDAOImpl();
 
 		User user =  new User();
@@ -53,7 +104,7 @@ public class JPATestImpl {
 
 		Experiment expt = new Experiment();
 
-		expt.setJobId("2222");
+		expt.setJobId("1111");
 		expt.setMachine(machine);
 
 		expt.setApplication(app);
@@ -61,10 +112,24 @@ public class JPATestImpl {
 		expt.setJobName("dummy");
 		expt.setNumOfNodes(2);
 		expt.setProcPerNode(2);
-		expt.setStatus("");
+		expt.setStatus(ExperimentStatus.COMPLETE.toString());
 		expt.setUserName(user);
 		expt.setWallTime("30");
 
 		dao.saveEntity(expt);
+		
+		//System.out.println(ExperimentStatus.COMPLETE);
+		
+	}
+
+	public static void main(String[] args) {
+
+		JPATestImpl jpatest = new JPATestImpl();
+		//jpatest.testSaveExpt();
+		//jpatest.testGetApplication();
+		//jpatest.testGetCompleteExpts();
+		//jpatest.testGetExperiments();
+		//jpatest.testGetQueuedExpts();
+		jpatest.testGetInputsForApp();
 	}
 }

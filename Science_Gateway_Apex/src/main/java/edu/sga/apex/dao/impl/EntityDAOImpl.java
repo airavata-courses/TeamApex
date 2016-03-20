@@ -6,9 +6,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import edu.sga.apex.dao.EntityDAO;
+import edu.sga.apex.entity.AppInput;
+import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.util.ExperimentStatus;
 
 /**
  * Entity Data Access Object Implementation.
@@ -43,19 +47,147 @@ public class EntityDAOImpl implements EntityDAO {
 
 	@Override
 	public void updateExperiment(Experiment expt) {
-		// TODO Auto-generated method stub
-
+		this.saveEntity(expt);
 	}
 
 	@Override
-	public List<Experiment> getCompleteExperiments() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Experiment> getExperiments(String username) {
+		
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		// Persisting the entity object.
+		//if( ! em.contains(entity) );
+		Query query = em.createQuery("SELECT e FROM Experiment e "
+				+ "WHERE e.userName.username='" + username +"'");
+		List<Experiment> expts = query.getResultList();
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return expts;
 	}
 
 	@Override
-	public List<Experiment> getInProgressExperiments() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Experiment> getCompleteExperiments(String username) {
+
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		// Persisting the entity object.
+		//if( ! em.contains(entity) );
+		Query query = em.createQuery("SELECT e FROM Experiment e "
+				+ "WHERE e.status='" + ExperimentStatus.COMPLETE.toString() + "'");
+		List<Experiment> expts = query.getResultList();
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return expts;
+	}
+
+	@Override
+	public List<Experiment> getInQueuedExperiments(String username) {
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		// Persisting the entity object.
+		//if( ! em.contains(entity) );
+		Query query = em.createQuery("SELECT e FROM Experiment e "
+				+ "WHERE e.status='" + ExperimentStatus.QUEUED.toString() + "'");
+		List<Experiment> expts = query.getResultList();
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return expts;
+	}
+	
+	@Override
+	public List<Application> getApplications() {
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		// Persisting the entity object.
+		//if( ! em.contains(entity) );
+		Query query = em.createQuery("SELECT a FROM Application a");
+		List<Application> apps = query.getResultList();
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return apps;
+	}
+	
+	@Override
+	public List<AppInput> getInputsForApp(String appId) {
+		
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		// Persisting the entity object.
+		//if( ! em.contains(entity) );
+		Application app = em.find(Application.class, appId);
+		List<AppInput> inputList = app.getInputList();
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+		
+		return inputList;
 	}
 }
