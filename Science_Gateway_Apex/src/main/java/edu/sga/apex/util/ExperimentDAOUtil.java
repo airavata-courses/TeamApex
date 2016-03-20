@@ -47,5 +47,14 @@ public class ExperimentDAOUtil {
 			throw ex;
 		}
 	}
+	
+	public static Experiment getExperimentByJobIDAndMachineID(String jobID, String machineID) throws Exception {
+		try {
+			return dao.getExperimentByID(jobID, machineID);
+		} catch(Exception ex) {
+			System.err.println("Exception in ExperimentDAOUtil: " + ex);
+			throw ex;
+		}
+	}
 
 }

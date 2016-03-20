@@ -19,6 +19,7 @@ import edu.sga.apex.app.AppInterface;
 import edu.sga.apex.app.impl.GrommacsImpl;
 import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
+import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.impl.KarstSCImpl;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.rest.jaxb.JobResponse;
@@ -28,6 +29,7 @@ import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 import edu.sga.apex.rest.jaxb.SubmitJobResponse;
 import edu.sga.apex.rest.util.JAXBManager;
 import edu.sga.apex.util.AppRefNames;
+import edu.sga.apex.util.ExperimentDAOUtil;
 import edu.sga.apex.util.MachineRefNames;
 import edu.sga.apex.rest.util.Constants;
 import edu.sga.apex.rest.util.ExceptionUtil;
@@ -264,6 +266,41 @@ public class JobResource {
 			
 			/* Build the response */
 			builder = Response.ok(response).header("Content-Disposition", "attachment; filename=" + response.getName());
+		} catch (Exception ex) {
+			/* handle exception and return response */
+			return ExceptionUtil.handleException(ex);
+		}
+
+		/* Return the response */
+		return builder.build();
+	}
+	
+	/**
+	 * Gets the experiment by machine and job id.
+	 *
+	 * @param machineID the machine id
+	 * @param jobID the job id
+	 * @return the experiment by machine and job id
+	 */
+	@GET
+	@Path("{machineID}/{jobID}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response getExperimentByMachineAndJobID(@PathParam("machineID") String machineID, @PathParam("jobID") String jobID) {
+		ResponseBuilder builder = null;
+		try {
+			/* get experiment entity from db */
+			Experiment experimentDAO = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
+			
+			/* check if present in db */
+			if(experimentDAO == null) {
+				throw new Exception("Experiment with jobID: [" + jobID + "] on machine: [" + machineID + "] not found!");
+			}
+			
+			/* construct jaxb from dao */
+			edu.sga.apex.rest.jaxb.Experiment experimentResponse = JAXBManager.getExperimentJAXB(experimentDAO);
+			
+			/* constuct jaxb response */
+			builder = Response.ok(experimentResponse);
 		} catch (Exception ex) {
 			/* handle exception and return response */
 			return ExceptionUtil.handleException(ex);
