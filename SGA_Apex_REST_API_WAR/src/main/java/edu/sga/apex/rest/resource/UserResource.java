@@ -1,21 +1,27 @@
 package edu.sga.apex.rest.resource;
 
+import java.util.List;
+
 import javax.persistence.EntityExistsException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
+import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SimpleAPIResponse;
 import edu.sga.apex.rest.jaxb.User;
 import edu.sga.apex.rest.util.APIUtil;
 import edu.sga.apex.rest.util.ExceptionUtil;
 import edu.sga.apex.rest.util.JAXBManager;
+import edu.sga.apex.util.ExperimentDAOUtil;
 import edu.sga.apex.util.UserDAOUtil;
 
 /**
@@ -77,6 +83,23 @@ public class UserResource {
 					throw new Exception("Failed to create new user: [" + user.getUserName() + "].");
 				}
 			}
+		} catch (Exception ex) {
+			/* handle exception and return response */
+			return ExceptionUtil.handleException(ex);
+		}
+
+		/* Return the response */
+		return builder.build();
+	}
+	
+	@GET
+	@Path("{userName}/jobs")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response getExperimentsForUser(@PathParam("userName") String userName) {
+		ResponseBuilder builder = null;
+		ObjectFactory factory = new ObjectFactory();
+		try {
+			List<Experiment> experimentList = ExperimentDAOUtil.getExperimentsForUser(userName);
 		} catch (Exception ex) {
 			/* handle exception and return response */
 			return ExceptionUtil.handleException(ex);

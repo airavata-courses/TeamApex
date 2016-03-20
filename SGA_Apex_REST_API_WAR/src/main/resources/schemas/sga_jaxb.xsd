@@ -11,6 +11,7 @@
 	<xs:element name="submitJobResponse" type="submitJobResponse" />
 	<xs:element name="simpleAPIResponse" type="simpleAPIResponse" />
 	<xs:element name="jobResponse" type="jobResponse" />
+	<xs:element name="experimentListResponse" type="experimentListResponse" />
 	
 	<!-- Type wrappers -->
 	<xs:element name="user" type="user" />
@@ -59,6 +60,12 @@
 			<xs:element name="numNodes" type="xs:string" minOccurs="0" />
 			<xs:element name="numProcessors" type="xs:string" minOccurs="0" />
 			<xs:element name="requiredMemory" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="experimentListResponse">
+		<xs:sequence>
+			<xs:element name="experimentList" type="experiment" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	
