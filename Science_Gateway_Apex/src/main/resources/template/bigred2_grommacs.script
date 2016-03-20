@@ -1,0 +1,16 @@
+#!/bin/bash
+#PBS -k o
+#PBS -l nodes=$nodes:ppn=$processors_per_node,walltime=$walltime 
+#PBS -M $emailId
+#PBS -m abe 
+#PBS -N $job_name
+#PBS -j oe
+#PBS -o $job_name.out
+#PBS -e $job_name.err
+
+module load openmpi/intel/1.6.3 gromacs/intel/4.6.5
+
+cd $PBS_O_WORKDIR
+mpirun -hostfile $PBS_NODEFILE -np 16 mdrun_mpi -nice 0 -v -deffnm $tpr_file -c $gro_file
+
+sh ~/sendEmail.sh $job_name

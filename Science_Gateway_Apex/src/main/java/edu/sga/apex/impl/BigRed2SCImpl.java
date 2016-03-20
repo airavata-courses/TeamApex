@@ -28,17 +28,17 @@ import edu.sga.apex.util.SSHUtil;
 
 
 /**
- * The Class KarstSCImpl.
+ * The Class Big Red 2 Impl.
  * 
- * @author Gourav Shenoy
+ * @author mangirish_wagle
  */
-public class KarstSCImpl implements SCInterface {
+public class BigRed2SCImpl implements SCInterface {
 
 	/** The application name **/
 	private static String app_name = "gromacs";
 
 	/** The Static script_path. */
-	private static String script_path = "template/karst_grommacs.script";
+	private static String script_path = "template/bigred2_grommacs.script";
 
 	/** The properties. */
 	private Properties properties;
@@ -46,16 +46,16 @@ public class KarstSCImpl implements SCInterface {
 	/**
 	 * Instantiates a new karst sc impl.
 	 */
-	public KarstSCImpl(String application) {
+	public BigRed2SCImpl(String application) {
 		try
 		{
-			KarstSCImpl.app_name = application;
+			BigRed2SCImpl.app_name = application;
 
 			// Script name would be in format :- <machineRefName>_<application>.script
-			KarstSCImpl.script_path = "template/karst_" + KarstSCImpl.app_name + ".script";
+			BigRed2SCImpl.script_path = "template/bigred2_" + BigRed2SCImpl.app_name + ".script";
 
 			this.properties = new Properties();
-			String propFileName = "karst_config.properties";
+			String propFileName = "bigred2_config.properties";
 
 			InputStream inputStream = getClass().getClassLoader()
 					.getResourceAsStream(propFileName);
@@ -426,7 +426,6 @@ public class KarstSCImpl implements SCInterface {
 			SSHUtil util = new SSHUtil(bean);
 			util.executeCommands();
 
-			//TODO: Move this Grommacs specific file copy to Grommacs Impl.
 			// Copy binary
 			List<InputFileBean> inputFiles = requestBean.getInputFiles();
 			String tpr_file = null, gro_file = null;

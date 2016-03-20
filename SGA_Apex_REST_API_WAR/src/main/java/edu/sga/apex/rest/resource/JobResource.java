@@ -25,6 +25,7 @@ import edu.sga.apex.rest.jaxb.SimpleAPIResponse;
 import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 import edu.sga.apex.rest.jaxb.SubmitJobResponse;
 import edu.sga.apex.rest.util.JAXBManager;
+import edu.sga.apex.util.AppRefNames;
 import edu.sga.apex.rest.util.Constants;
 import edu.sga.apex.rest.util.ExceptionUtil;
 
@@ -75,12 +76,16 @@ public class JobResource {
 		ObjectFactory factory = new ObjectFactory();
 		try {
 			if (request != null) {
+				
+				//TODO: Get this from the request
+				String application = AppRefNames.GROMMACS.toString();
+				
 				/* Convert request jaxb to middleware req bean */
 				SubmitJobRequestBean bean = JAXBManager
 						.getSubmitJobRequestBean(request);
 				
 				/* Get Karst impl */
-				SCInterface scInterface = new KarstSCImpl();
+				SCInterface scInterface = new KarstSCImpl(application);
 				/* Submit job to Karst */
 				String jobId = scInterface.submitRemoteJob(bean);
 				
@@ -117,8 +122,12 @@ public class JobResource {
 		ResponseBuilder builder = null;
 		ObjectFactory factory = new ObjectFactory();
 		try {
+			
+			//TODO: Get this from the request
+			String application = AppRefNames.GROMMACS.toString();
+			
 			/* Get Karst impl */
-			SCInterface scInterface = new KarstSCImpl();
+			SCInterface scInterface = new KarstSCImpl(application);
 			/* Delete job oo Karst */
 			scInterface.deleteJob(jobId);
 			
@@ -152,8 +161,12 @@ public class JobResource {
 		ResponseBuilder builder = null;
 		ObjectFactory factory = new ObjectFactory();
 		try {
+			
+			//TODO: Get this from the request
+			String application = AppRefNames.GROMMACS.toString();
+			
 			/* Get Karst impl */
-			SCInterface scInterface = new KarstSCImpl();
+			SCInterface scInterface = new KarstSCImpl(application);
 			/* Delete job oo Karst */
 			scInterface.monitorJob(jobId);
 			
@@ -187,8 +200,12 @@ public class JobResource {
 	public Response getJobStatus(@PathParam("jobId") String jobId) {
 		ResponseBuilder builder = null;
 		try {
+			
+			//TODO: Get this from the request
+			String application = AppRefNames.GROMMACS.toString();
+			
 			/* Get Karst impl */
-			SCInterface scInterface = new KarstSCImpl();
+			SCInterface scInterface = new KarstSCImpl(application);
 			/* Get job status from Karst */
 			JobBean bean = scInterface.getJobStatus(jobId);
 			
@@ -217,8 +234,12 @@ public class JobResource {
 	public Response getJobOutputFile(@PathParam("jobName") String jobName) {
 		ResponseBuilder builder = null;
 		try {
+			
+			//TODO: Get this from the request
+			String application = AppRefNames.GROMMACS.toString();
+			
 			/* Get Karst impl */
-			SCInterface scInterface = new KarstSCImpl();
+			SCInterface scInterface = new KarstSCImpl(application);
 			/* Get job output file path */
 			String filePath = scInterface.downloadJobOutputFile(jobName);
 			
