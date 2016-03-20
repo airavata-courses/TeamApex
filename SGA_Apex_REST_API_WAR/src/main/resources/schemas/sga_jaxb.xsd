@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+	<!-- 
+		XML Schema Definition for JAXB classes
+		@author: Gourav Shenoy 
+	-->
+	
 	<!-- Request/Response jaxb wrappers -->
 	<xs:element name="submitJobRequest" type="submitJobRequest" />
 	<xs:element name="submitJobResponse" type="submitJobResponse" />
@@ -12,6 +17,8 @@
 	<xs:element name="inputFile" type="inputFile" />
 	<xs:element name="applicationInput" type="applicationInput" />
 	<xs:element name="application" type="application" />
+	<xs:element name="machine" type="machine" />
+	<xs:element name="experiment" type="experiment" />
 
 	<!-- Request/Response wrapper Definitions -->
 	<xs:complexType name="submitJobRequest">
@@ -83,6 +90,31 @@
 			<xs:element name="appName" type="xs:string" minOccurs="0" />
 			<xs:element name="scriptPath" type="xs:string" minOccurs="0" />
 			<xs:element name="appInputs" type="applicationInput" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="machine">
+		<xs:sequence>
+			<xs:element name="machineID" type="xs:string" minOccurs="0" />
+			<xs:element name="machineName" type="xs:string" minOccurs="0" />
+			<xs:element name="hostName" type="xs:string" minOccurs="0" />
+			<xs:element name="portNumber" type="xs:string" minOccurs="0" />
+			<xs:element name="workingDir" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="experiment">
+		<xs:sequence>
+			<xs:element name="jobID" type="xs:string" minOccurs="0" />
+			<xs:element name="jobName" type="xs:string" minOccurs="0" />
+			<xs:element name="machine" type="machine" minOccurs="0" />
+			<xs:element name="email" type="xs:string" minOccurs="0" />
+			<xs:element name="numNodes" type="xs:int" minOccurs="0" />
+			<xs:element name="numProcPerNode" type="xs:int" minOccurs="0" />
+			<xs:element name="status" type="xs:string" minOccurs="0" />
+			<xs:element name="wallTime" type="xs:string" minOccurs="0" />
+			<xs:element name="userName" type="xs:string" minOccurs="0" />
+			<xs:element name="application" type="application" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
 	
