@@ -7,6 +7,7 @@ import edu.sga.apex.rest.jaxb.InputFile;
 import edu.sga.apex.rest.jaxb.JobResponse;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SubmitJobRequest;
+import edu.sga.apex.rest.jaxb.User;
 
 /**
  * The Class JAXBManager.
@@ -104,10 +105,30 @@ public class JAXBManager {
 			response.setRequiredMemory(bean.getRequiredMemory());
 			response.setRequiredTime(bean.getRequiredTime());
 			response.setQueue(bean.getQueue());
-		}
-		else {
+		} else {
 			throw new Exception("Empty JobBean received. Cannot construct the response object.");
 		}
 		return response;
+	}
+	
+	/**
+	 * Gets the user dao entity.
+	 *
+	 * @param userJAXB the user jaxb
+	 * @return the user dao entity
+	 * @throws Exception the exception
+	 */
+	public static edu.sga.apex.entity.User getUserDAOEntity(User userJAXB) throws Exception {
+		edu.sga.apex.entity.User userEntity = new edu.sga.apex.entity.User();
+		
+		/* check if jaxb is valid */
+		if(userJAXB != null) {
+			userEntity.setUsername(userJAXB.getUserName());
+			userEntity.setPassword(userJAXB.getPassword());
+		} else {
+			throw new Exception("Empty User JAXB received. Cannot construct the DAO entity.");
+		}
+		
+		return userEntity;
 	}
 }

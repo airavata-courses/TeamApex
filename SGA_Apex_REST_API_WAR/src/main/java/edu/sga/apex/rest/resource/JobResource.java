@@ -34,7 +34,7 @@ import edu.sga.apex.rest.util.ExceptionUtil;
  * 
  * @author Gourav Shenoy
  */
-@Path("/job")
+@Path("job")
 public class JobResource {
 	
 	/* 
@@ -68,7 +68,7 @@ public class JobResource {
 	 * @return the response
 	 */
 	@POST
-	@Path("/submit")
+	@Path("submit")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response submitRemoteJob(SubmitJobRequest request) {
