@@ -23,6 +23,23 @@ public class ExperimentDAOUtil {
 	public static List<Experiment> getExperimentsForUser(String userName) throws Exception {
 		try {
 			EntityDAO dao = new EntityDAOImpl();
+			return dao.getExperiments(userName);
+		} catch(Exception ex) {
+			System.err.println("Exception in ExperimentDAOUtil: " + ex);
+			throw ex;
+		}
+	}
+	
+	/**
+	 * Gets the completed experiments for user.
+	 *
+	 * @param userName the user name
+	 * @return the completed experiments for user
+	 * @throws Exception the exception
+	 */
+	public static List<Experiment> getCompletedExperimentsForUser(String userName) throws Exception {
+		try {
+			EntityDAO dao = new EntityDAOImpl();
 			return dao.getCompleteExperiments(userName);
 		} catch(Exception ex) {
 			System.err.println("Exception in ExperimentDAOUtil: " + ex);
