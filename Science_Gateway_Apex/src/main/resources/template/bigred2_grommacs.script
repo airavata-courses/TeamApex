@@ -5,6 +5,7 @@
 #PBS -m abe 
 #PBS -N $job_name
 #PBS -j oe
+#PBS -q gpu
 #PBS -o $job_name.out
 #PBS -e $job_name.err
 
