@@ -54,6 +54,8 @@ public class SFTPUtil {
 			jsch.setKnownHosts(requestBean.getKnownHostsFilePath());
 			jsch.addIdentity(requestBean.getPrivateKeyFilePath(), requestBean.getPassPhrase());
 			
+			//disable host-key checking
+			session.setConfig("StrictHostKeyChecking", "no");
 			session.connect();
 		}
 		catch(Exception ex) {
