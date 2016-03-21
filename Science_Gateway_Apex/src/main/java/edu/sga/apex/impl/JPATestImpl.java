@@ -131,6 +131,7 @@ public class JPATestImpl {
 		EntityDAO dao = new EntityDAOImpl();
 
 		User user =  new User();
+		user.setId(1);
 		user.setUsername("admin");
 		user.setPassword("apex123");
 

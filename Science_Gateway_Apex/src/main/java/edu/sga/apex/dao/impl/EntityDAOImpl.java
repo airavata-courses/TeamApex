@@ -227,6 +227,9 @@ public class EntityDAOImpl implements EntityDAO {
 				+ "WHERE m.machineName='" + machineName + "'");
 		List<Machine> machines = query.getResultList();
 
+		if( machines == null || machines.size() == 0 )
+			return null;
+		
 		return machines.get(0);
 	}
 
@@ -301,7 +304,17 @@ public class EntityDAOImpl implements EntityDAO {
 		Query query = em.createQuery("SELECT a FROM Application a "
 				+ "WHERE a.appName='" + appName + "'");
 		List<Application> apps = query.getResultList();
+		
+		// Committing transaction.
+		tx.commit();
 
+		// Closing connection.
+		em.close();
+		emf.close();
+
+		if( apps == null || apps.size() == 0 )
+			return null;
+		
 		return apps.get(0);
 	}
 
@@ -346,7 +359,9 @@ public class EntityDAOImpl implements EntityDAO {
 
 		tx.begin();
 
-		User user = em.find(User.class, userName);
+		Query query = em.createQuery("SELECT u FROM User u "
+				+ "WHERE u.username='" + userName + "'");
+		List<User> users = query.getResultList();
 
 		// Committing transaction.
 		tx.commit();
@@ -355,7 +370,10 @@ public class EntityDAOImpl implements EntityDAO {
 		em.close();
 		emf.close();
 
-		return user;
+		if( users == null || users.size() == 0 )
+			return null;
+		
+		return users.get(0);
 	}
 
 	/* (non-Javadoc)
