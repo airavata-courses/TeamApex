@@ -6,6 +6,7 @@
 	<persistence-unit name="jpa-sga" transaction-type="RESOURCE_LOCAL">
 		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 		<class>edu.sga.apex.entity.User</class>
+		<class>edu.sga.apex.entity.Role</class>
 		<class>edu.sga.apex.entity.Experiment</class>
 		<class>edu.sga.apex.entity.ExperimentPK</class>
 		<class>edu.sga.apex.entity.Application</class>

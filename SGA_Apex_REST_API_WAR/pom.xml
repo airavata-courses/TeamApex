@@ -22,6 +22,9 @@
 		<!-- Jetty -->
 		<jettyVersion>9.2.11.v20150529</jettyVersion>
 
+		<!-- SQLITE Version -->
+		<sqlite.version>3.7.2</sqlite.version>
+
 		<!-- Maven war plugin -->
 		<warPluginVersion>2.6</warPluginVersion>
 
@@ -90,9 +93,9 @@
 			<version>${jettyVersion}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.eclipse.jetty</groupId>
-		    <artifactId>jetty-webapp</artifactId>
-		    <version>${jettyVersion}</version>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jettyVersion}</version>
 		</dependency>
 
 
@@ -142,13 +145,23 @@
 						<contextPath>/SGA_Apex</contextPath>
 					</webApp>
 					<loginServices>
-				      <loginService implementation="org.eclipse.jetty.security.HashLoginService">
-				        <name>ApexRealm</name>
-				        <config>${project.basedir}/jetty-config.properties</config>
-				      </loginService>
-				    </loginServices>
+						<loginService implementation="org.eclipse.jetty.security.JDBCLoginService">
+							<name>ApexRealm</name>
+							<config>${project.basedir}/jetty-jdbcConfig.properties</config>
+						</loginService>
+						<!-- <loginService implementation="org.eclipse.jetty.security.HashLoginService"> 
+							<name>ApexRealm</name> <config>${project.basedir}/jetty-config.properties</config> 
+							</loginService> -->
+					</loginServices>
 					<jettyXml>jetty.xml</jettyXml>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.xerial</groupId>
+						<artifactId>sqlite-jdbc</artifactId>
+						<version>${sqlite.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 

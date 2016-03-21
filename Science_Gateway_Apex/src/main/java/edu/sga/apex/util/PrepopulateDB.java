@@ -8,6 +8,7 @@ import edu.sga.apex.dao.impl.EntityDAOImpl;
 import edu.sga.apex.entity.AppInput;
 import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Machine;
+import edu.sga.apex.entity.Role;
 import edu.sga.apex.entity.User;
 
 /**
@@ -23,8 +24,23 @@ public class PrepopulateDB {
 			EntityDAO dao = new EntityDAOImpl();
 
 			User user =  new User();
+			user.setId(1);
 			user.setUsername("admin");
 			user.setPassword("apex123");
+
+			Role role1 = new Role();
+			role1.setId(1);
+			role1.setRole("admin");
+
+			Role role2 = new Role();
+			role2.setId(2);
+			role2.setRole("user");
+
+			List<Role> roleList = new LinkedList<Role>();
+			roleList.add(role1);
+			roleList.add(role2);
+
+			user.setRoles(roleList);
 
 			dao.saveEntity(user);
 
