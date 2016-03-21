@@ -30,11 +30,11 @@ public class PrepopulateDB {
 
 			Role role1 = new Role();
 			role1.setId(1);
-			role1.setRole("admin");
+			role1.setRole(UserRoles.ADMIN.toString());
 
 			Role role2 = new Role();
 			role2.setId(2);
-			role2.setRole("user");
+			role2.setRole(UserRoles.USER.toString());
 
 			List<Role> roleList = new LinkedList<Role>();
 			roleList.add(role1);
