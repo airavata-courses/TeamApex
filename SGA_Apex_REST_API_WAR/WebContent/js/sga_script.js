@@ -16,10 +16,10 @@ var jobID, jobName;
 function displayMessageOnSuccess(htmlString) {
 //	$( "#submitJobResp" ).css( "color", "#0000FF" );
 //	$( "#submitJobResp" ).html( htmlString );
-//	
+
 //	$("#submitJobResp").show();
 //	setTimeout(function() { $("#submitJobResp").hide(); }, 10000);
-	
+
 	$("#myModal .modal-body").html(htmlString);
 	$('#myModal').modal('show');
 }
@@ -30,7 +30,7 @@ function displayMessageOnSuccess(htmlString) {
 function displayOnError(htmlString) {
 //	$( "#submitJobResp" ).css( "color", "#FF0000" );
 //	$( "#submitJobResp" ).html( htmlString );
-	
+
 	$("#myModal .modal-body").html(htmlString);
 	$('#myModal').modal('show');
 }
@@ -42,14 +42,14 @@ function displayOnError(htmlString) {
  */
 function jobSubmitSuccess(response) {
 	var htmlString = "<p>Job ID: " + response.submitJobResponse.jobId + "<br>Status: "
-						+ response.submitJobResponse.status + "</p>";
-	
+	+ response.submitJobResponse.status + "</p>";
+
 	jobID = response.submitJobResponse.jobId;
 	displayMessageOnSuccess( htmlString );
 
 	// Hide Loading overlay
 	$("#overlay").css("visibility", "hidden");
-	
+
 	// Clear the array and form
 	fileContentURLs = [];
 	$("button[type='reset']").click();
@@ -60,7 +60,7 @@ function jobSubmitSuccess(response) {
  */
 function jobMonitorSuccess(response) {
 	var htmlString = "<p>" + response.simpleAPIResponse.message + "</p>";
-	
+
 	//alert(htmlString)
 	displayMessageOnSuccess( htmlString );
 
@@ -73,17 +73,17 @@ function jobMonitorSuccess(response) {
  */
 function jobGetStatusSuccess(response) {
 	var htmlString = "<p>"
-						+ "Job ID: " + response.jobResponse.jobId + "<br>"
-						+ "Status: " + response.jobResponse.status + "<br>"
-						+ "Queue: " + response.jobResponse.queue + "<br>"
-						+ "Required Memory: " + response.jobResponse.requiredMemory + "<br>"
-						+ "Number of Processors: " + response.jobResponse.numProcessors + "<br>"
-						+ "Number of Nodes: " + response.jobResponse.numNodes + "<br>"
-						+ "Required Time: " + response.jobResponse.requiredTime + "<br>"
-						+ "User Name: " + response.jobResponse.userName + "<br>"
-						+ "Job Name: " + response.jobResponse.jobName + "<br>"
-						+ "Elapsed Time: " + response.jobResponse.elapsedTime + "<br>"
-					 + "</p>";
+		+ "Job ID: " + response.jobResponse.jobId + "<br>"
+		+ "Status: " + response.jobResponse.status + "<br>"
+		+ "Queue: " + response.jobResponse.queue + "<br>"
+		+ "Required Memory: " + response.jobResponse.requiredMemory + "<br>"
+		+ "Number of Processors: " + response.jobResponse.numProcessors + "<br>"
+		+ "Number of Nodes: " + response.jobResponse.numNodes + "<br>"
+		+ "Required Time: " + response.jobResponse.requiredTime + "<br>"
+		+ "User Name: " + response.jobResponse.userName + "<br>"
+		+ "Job Name: " + response.jobResponse.jobName + "<br>"
+		+ "Elapsed Time: " + response.jobResponse.elapsedTime + "<br>"
+		+ "</p>";
 
 	//alert(htmlString)
 	displayMessageOnSuccess(htmlString);
@@ -99,7 +99,7 @@ function jobCancelSuccess(response) {
 	var htmlString = "<p>" + response.simpleAPIResponse.message + "</p>";
 	//alert(htmlString)
 	// displayMessageOnSuccess( htmlString );
-	
+
 	$("#cancelJobResp").css( "color", "#0000FF");
 	$("#cancelJobResp").html(htmlString);
 	$("#cancelJobResp").show();
@@ -117,7 +117,7 @@ function outputDownloadSuccess(response) {
 	var htmlString = "<p>Output File Download Should Begin Shortly</p>";
 	//alert(htmlString)
 	//displayMessageOnSuccess( htmlString );
-	
+
 	$("#downloadResp").html(htmlString);
 	$("#downloadResp").show();
 	setTimeout(function() { $("#downloadResp").hide(); }, 5000);
@@ -129,11 +129,11 @@ function outputDownloadSuccess(response) {
 /*
  * Submit Job function.
  */
-function submitJob(procnum, email, nodenum, walltime, jobname) {
+function submitJob(procnum, email, nodenum, walltime, jobname, appId, machID) {
 
 	// Show loading overlay
 	$("#overlay").css("visibility", "visible");
-	
+
 	// Construct JSON
 	var jsonData = new Object();
 	var jobRequest = new Object();
@@ -142,12 +142,14 @@ function submitJob(procnum, email, nodenum, walltime, jobname) {
 	jobRequest.numNodes = nodenum;
 	jobRequest.wallTime = walltime;
 	jobRequest.jobName = jobname;
-	
+	jobRequest.applicationID = appId;
+	jobRequest.machineID = machID;
+
 	var inputFiles = [];
 	$.each(fileContentURLs, function(i, contentURL) {
 		var inputFile = new Object();
 		inputFile.fileName = fileContentURLs[i];
-		
+
 		// file type to name mapping
 		if(fileContentURLs[i].includes('.gro')) {
 			inputFile.fileType = fileTypes[0];
@@ -155,15 +157,15 @@ function submitJob(procnum, email, nodenum, walltime, jobname) {
 		else {
 			inputFile.fileType = fileTypes[1];
 		}
-		
+
 		// add to json data
 		inputFiles.push(inputFile);
 	});
-	
+
 	jobRequest.inputFiles = inputFiles;
 	jsonData.submitJobRequest = jobRequest;
 	console.log(JSON.stringify(jsonData));
-	
+
 	$.ajax({
 		type: "POST",
 		url: baseURL + "/job/submit",

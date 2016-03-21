@@ -27,12 +27,13 @@ import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SimpleAPIResponse;
 import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 import edu.sga.apex.rest.jaxb.SubmitJobResponse;
-import edu.sga.apex.rest.util.JAXBManager;
-import edu.sga.apex.util.AppRefNames;
-import edu.sga.apex.util.ExperimentDAOUtil;
-import edu.sga.apex.util.MachineRefNames;
 import edu.sga.apex.rest.util.Constants;
 import edu.sga.apex.rest.util.ExceptionUtil;
+import edu.sga.apex.rest.util.JAXBManager;
+import edu.sga.apex.util.AppRefNames;
+import edu.sga.apex.util.ApplicationDAOUtil;
+import edu.sga.apex.util.ExperimentDAOUtil;
+import edu.sga.apex.util.MachineDAOUtil;
 
 /**
  * The API Class JobResource.
@@ -41,7 +42,7 @@ import edu.sga.apex.rest.util.ExceptionUtil;
  */
 @Path("job")
 public class JobResource {
-	
+
 	/* 
 	 * API Request JSON
 	    {
@@ -81,20 +82,27 @@ public class JobResource {
 		ObjectFactory factory = new ObjectFactory();
 		try {
 			if (request != null) {
-				
+
 				/* Convert request jaxb to middleware req bean */
 				SubmitJobRequestBean bean = JAXBManager
 						.getSubmitJobRequestBean(request);
-				
-				//TODO: Get this from the request bean
-				String application = AppRefNames.GROMMACS.toString();
-				
-				//TODO: Get this from the request bean
-				String machine = MachineRefNames.KARST.toString();
-				
+
+				System.out.println("App ID: " + bean.getApplicationID());
+				System.out.println("Machine ID: " + bean.getMachineID());
+
+				// TODO: Uncomment the following once the params are passed in req.
+				ApplicationDAOUtil appUtil = new ApplicationDAOUtil();
+				String application = appUtil.getAppNameById(bean.getApplicationID());
+				//String application = AppRefNames.GROMMACS.toString();
+
+				// TODO: Uncomment the following once the params are passed in req.
+				MachineDAOUtil machineUtil = new MachineDAOUtil();
+				String machine = machineUtil.getMachineNameById(bean.getMachineID());
+				//String machine = MachineRefNames.KARST.toString();
+
 				/* Get Karst impl */
 				//SCInterface scInterface = new KarstSCImpl(application);
-				
+
 				AppInterface appIntf = null;
 				if(application.equals(AppRefNames.GROMMACS.toString())) {
 					appIntf = new GrommacsImpl();
@@ -103,17 +111,17 @@ public class JobResource {
 
 				if( appIntf != null ) {
 					/* Submit job to Karst */
-					String jobId = appIntf.submitRemoteJob(bean);
-					
+					String jobId = appIntf.submitRemoteJob(bean, application, machine);
+
 					/* Construct response jaxb entity */
 					SubmitJobResponse response = factory.createSubmitJobResponse();
 					response.setJobId(jobId);
 					response.setStatus(Constants.STATUS_SUBMITTED);
-					
+
 					/* Build the response */
 					builder = Response.ok(response);
 					builder.status(Status.ACCEPTED);
-					
+
 				}
 			} else {
 				throw new Exception("Invalid API Request (Empty)");
@@ -126,7 +134,7 @@ public class JobResource {
 		/* Return the response */
 		return builder.build();
 	}
-	
+
 	/**
 	 * Delete job.
 	 *
@@ -140,20 +148,20 @@ public class JobResource {
 		ResponseBuilder builder = null;
 		ObjectFactory factory = new ObjectFactory();
 		try {
-			
+
 			//TODO: Get this from the request
 			String application = AppRefNames.GROMMACS.toString();
-			
+
 			/* Get Karst impl */
 			SCInterface scInterface = new KarstSCImpl(application);
 			/* Delete job oo Karst */
 			scInterface.deleteJob(jobId);
-			
+
 			/* Construct response jaxb entity */
 			SimpleAPIResponse response = factory.createSimpleAPIResponse();
 			response.setMessage("Submitted request to delete job [" + jobId + "].");
 			response.setStatus(Status.ACCEPTED.getStatusCode());
-			
+
 			/* Build the response */
 			builder = Response.ok(response);
 			builder.status(Status.ACCEPTED);
@@ -165,7 +173,7 @@ public class JobResource {
 		/* Return the response */
 		return builder.build();
 	}
-	
+
 	/**
 	 * Monitor job.
 	 *
@@ -179,21 +187,21 @@ public class JobResource {
 		ResponseBuilder builder = null;
 		ObjectFactory factory = new ObjectFactory();
 		try {
-			
+
 			//TODO: Get this from the request
 			String application = AppRefNames.GROMMACS.toString();
-			
+
 			/* Get Karst impl */
 			SCInterface scInterface = new KarstSCImpl(application);
 			/* Delete job oo Karst */
 			scInterface.monitorJob(jobId);
-			
+
 			/* Construct response jaxb entity */
 			SimpleAPIResponse response = factory.createSimpleAPIResponse();
 			response.setMessage("Submitted request to monitor job [" + jobId + "]. "
 					+ "You should now receive emails providing you more information about the status of your submitted job.");
 			response.setStatus(Status.ACCEPTED.getStatusCode());
-			
+
 			/* Build the response */
 			builder = Response.ok(response);
 			builder.status(Status.ACCEPTED);
@@ -205,7 +213,7 @@ public class JobResource {
 		/* Return the response */
 		return builder.build();
 	}
-	
+
 	/**
 	 * Gets the job status.
 	 *
@@ -218,18 +226,18 @@ public class JobResource {
 	public Response getJobStatus(@PathParam("jobId") String jobId) {
 		ResponseBuilder builder = null;
 		try {
-			
+
 			//TODO: Get this from the request
 			String application = AppRefNames.GROMMACS.toString();
-			
+
 			/* Get Karst impl */
 			SCInterface scInterface = new KarstSCImpl(application);
 			/* Get job status from Karst */
 			JobBean bean = scInterface.getJobStatus(jobId);
-			
+
 			/* Construct response jaxb entity */
 			JobResponse response = JAXBManager.getJobResponse(bean);
-			
+
 			/* Build the response */
 			builder = Response.ok(response);
 		} catch (Exception ex) {
@@ -240,7 +248,7 @@ public class JobResource {
 		/* Return the response */
 		return builder.build();
 	}
-	
+
 	/**
 	 * Gets the job output file.
 	 *
@@ -252,18 +260,18 @@ public class JobResource {
 	public Response getJobOutputFile(@PathParam("jobName") String jobName) {
 		ResponseBuilder builder = null;
 		try {
-			
+
 			//TODO: Get this from the request
 			String application = AppRefNames.GROMMACS.toString();
-			
+
 			/* Get Karst impl */
 			SCInterface scInterface = new KarstSCImpl(application);
 			/* Get job output file path */
 			String filePath = scInterface.downloadJobOutputFile(jobName);
-			
+
 			/* Create a file object */
 			File response = new File(filePath);
-			
+
 			/* Build the response */
 			builder = Response.ok(response).header("Content-Disposition", "attachment; filename=" + response.getName());
 		} catch (Exception ex) {
@@ -274,7 +282,7 @@ public class JobResource {
 		/* Return the response */
 		return builder.build();
 	}
-	
+
 	/**
 	 * Gets the experiment by machine and job id.
 	 *
@@ -290,15 +298,15 @@ public class JobResource {
 		try {
 			/* get experiment entity from db */
 			Experiment experimentDAO = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
-			
+
 			/* check if present in db */
 			if(experimentDAO == null) {
 				throw new Exception("Experiment with jobID: [" + jobID + "] on machine: [" + machineID + "] not found!");
 			}
-			
+
 			/* construct jaxb from dao */
 			edu.sga.apex.rest.jaxb.Experiment experimentResponse = JAXBManager.getExperimentJAXB(experimentDAO);
-			
+
 			/* constuct jaxb response */
 			builder = Response.ok(experimentResponse);
 		} catch (Exception ex) {

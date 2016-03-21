@@ -12,8 +12,9 @@ public interface AppInterface {
 	/**
 	 * Method that handles application related job submission actions for a given machine.
 	 * @param requestBean
-	 * @param machine
+	 * @param appName
+	 * @param machineName
 	 * @return
 	 */
-	public String submitRemoteJob(SubmitJobRequestBean requestBean);
+	public String submitRemoteJob(SubmitJobRequestBean requestBean, String appName, String machineName);
 }

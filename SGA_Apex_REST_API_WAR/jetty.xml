@@ -10,4 +10,9 @@
      </New>
    </Arg>
  </Call>
+ <Call class="org.eclipse.jetty.util.log.Log" name="getRootLogger">
+  <Call name="setDebugEnabled">
+    <Arg type="boolean">true</Arg>
+  </Call>
+</Call>
 </Configure>

@@ -22,22 +22,17 @@ import edu.sga.apex.util.MachineRefNames;
 public class GrommacsImpl implements AppInterface {
 
 	@Override
-	public String submitRemoteJob(SubmitJobRequestBean requestBean) {
+	public String submitRemoteJob(SubmitJobRequestBean requestBean,String appName, String machineName) {
 
 		try {
-			//TODO: Get this from the request bean
-			String application = AppRefNames.GROMMACS.toString();
-
-			//TODO: Get this from the request bean
-			String machine = MachineRefNames.KARST.toString();
 
 			String jobId = "";
 			SCInterface scIntf = null;
 
-			if( machine.equals(MachineRefNames.BIGRED2.toString()) ) {
+			if( machineName.equals(MachineRefNames.BIGRED2.toString()) ) {
 				scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
 			}
-			else if( machine.equals(MachineRefNames.KARST.toString()) ) {
+			else if( machineName.equals(MachineRefNames.KARST.toString()) ) {
 				scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
 			}
 
@@ -51,9 +46,9 @@ public class GrommacsImpl implements AppInterface {
 			user.setUsername("admin");
 			user.setPassword("apex123");
 
-			Machine machineObj = dao.getMachineByName(machine);
+			Machine machineObj = dao.getMachineByName(machineName);
 
-			Application app = dao.getApplicationByName(application);
+			Application app = dao.getApplicationByName(appName);
 
 			Experiment expt = new Experiment();
 
