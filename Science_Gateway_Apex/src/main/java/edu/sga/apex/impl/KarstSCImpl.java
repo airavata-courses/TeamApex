@@ -500,6 +500,7 @@ public class KarstSCImpl implements SCInterface {
 	@Override
 	public JobBean getJobStatus(String jobId) throws Exception {
 		try {
+			// FIXME: Get Login user from context.
 			String loginUser = properties.getProperty("loginUser");
 
 			// Calling the qstat command

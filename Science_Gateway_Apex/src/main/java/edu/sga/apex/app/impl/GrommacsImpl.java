@@ -11,6 +11,7 @@ import edu.sga.apex.impl.BigRed2SCImpl;
 import edu.sga.apex.impl.KarstSCImpl;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.util.AppRefNames;
+import edu.sga.apex.util.ExperimentDAOUtil;
 import edu.sga.apex.util.ExperimentStatus;
 import edu.sga.apex.util.MachineRefNames;
 
@@ -22,7 +23,7 @@ import edu.sga.apex.util.MachineRefNames;
 public class GrommacsImpl implements AppInterface {
 
 	@Override
-	public String submitRemoteJob(SubmitJobRequestBean requestBean,String appName, String machineName) {
+	public String submitRemoteJob(SubmitJobRequestBean requestBean, String appName, String machineName) {
 
 		try {
 
@@ -39,32 +40,7 @@ public class GrommacsImpl implements AppInterface {
 			jobId = scIntf.submitRemoteJob(requestBean);
 
 			//Add DB entry.
-			EntityDAO dao = new EntityDAOImpl();
-
-			// TODO: Get Logged in user from context
-			User user =  new User();
-			user.setUsername("admin");
-			user.setPassword("apex123");
-
-			Machine machineObj = dao.getMachineByName(machineName);
-
-			Application app = dao.getApplicationByName(appName);
-
-			Experiment expt = new Experiment();
-
-			expt.setJobId(jobId);
-			expt.setMachine(machineObj);
-
-			expt.setApplication(app);
-			expt.setEmail(requestBean.getEmailId());
-			expt.setJobName(requestBean.getJobName());
-			expt.setNumOfNodes(requestBean.getNumNodes());
-			expt.setProcPerNode(requestBean.getNumProcessors());
-			expt.setStatus(ExperimentStatus.QUEUED.toString());
-			expt.setUserName(user);
-			expt.setWallTime(requestBean.getWallTime());
-
-			dao.saveEntity(expt);
+			ExperimentDAOUtil.saveExperiment(requestBean, jobId, appName, machineName);
 
 			return jobId;
 		}

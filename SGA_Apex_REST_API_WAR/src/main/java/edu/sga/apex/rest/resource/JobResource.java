@@ -20,6 +20,7 @@ import edu.sga.apex.app.impl.GrommacsImpl;
 import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
 import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.impl.BigRed2SCImpl;
 import edu.sga.apex.impl.KarstSCImpl;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.rest.jaxb.JobResponse;
@@ -34,6 +35,7 @@ import edu.sga.apex.util.AppRefNames;
 import edu.sga.apex.util.ApplicationDAOUtil;
 import edu.sga.apex.util.ExperimentDAOUtil;
 import edu.sga.apex.util.MachineDAOUtil;
+import edu.sga.apex.util.MachineRefNames;
 
 /**
  * The API Class JobResource.
@@ -87,8 +89,8 @@ public class JobResource {
 				SubmitJobRequestBean bean = JAXBManager
 						.getSubmitJobRequestBean(request);
 
-				System.out.println("App ID: " + bean.getApplicationID());
-				System.out.println("Machine ID: " + bean.getMachineID());
+				//System.out.println("App ID: " + bean.getApplicationID());
+				//System.out.println("Machine ID: " + bean.getMachineID());
 
 				// TODO: Uncomment the following once the params are passed in req.
 				ApplicationDAOUtil appUtil = new ApplicationDAOUtil();
@@ -240,6 +242,7 @@ public class JobResource {
 
 			/* Build the response */
 			builder = Response.ok(response);
+
 		} catch (Exception ex) {
 			/* handle exception and return response */
 			return ExceptionUtil.handleException(ex);
@@ -296,6 +299,26 @@ public class JobResource {
 	public Response getExperimentByMachineAndJobID(@PathParam("machineID") String machineID, @PathParam("jobID") String jobID) {
 		ResponseBuilder builder = null;
 		try {
+
+			// TODO: Uncomment the following once the params are passed in req.
+			MachineDAOUtil machineUtil = new MachineDAOUtil();
+			String machineName = machineUtil.getMachineNameById(machineID);
+			//String machine = MachineRefNames.KARST.toString();
+
+			SCInterface scIntf = null;
+
+			if( machineName.equals(MachineRefNames.BIGRED2.toString()) ) {
+				scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
+			}
+			else if( machineName.equals(MachineRefNames.KARST.toString()) ) {
+				scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
+			}
+
+			JobBean bean = scIntf.getJobStatus(jobID);
+
+			//Update Experiment in DB.
+			ExperimentDAOUtil.updateExperimentStatus(jobID, machineID, bean.getStatus());
+
 			/* get experiment entity from db */
 			Experiment experimentDAO = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
 

@@ -174,7 +174,7 @@ public class JPATestImpl {
 		expt.setJobName("dummy");
 		expt.setNumOfNodes(2);
 		expt.setProcPerNode(2);
-		expt.setStatus(ExperimentStatus.COMPLETE.toString());
+		expt.setStatus(ExperimentStatus.Submitted.toString());
 		expt.setUserName(user);
 		expt.setWallTime("30");
 
@@ -190,7 +190,7 @@ public class JPATestImpl {
 		expt2.setJobName("dummy2");
 		expt2.setNumOfNodes(2);
 		expt2.setProcPerNode(2);
-		expt2.setStatus(ExperimentStatus.QUEUED.toString());
+		expt2.setStatus(ExperimentStatus.Submitted.toString());
 		expt2.setUserName(user);
 		expt2.setWallTime("30");
 

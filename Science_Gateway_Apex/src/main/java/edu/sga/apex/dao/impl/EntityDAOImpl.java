@@ -108,7 +108,7 @@ public class EntityDAOImpl implements EntityDAO {
 		tx.begin();
 
 		Query query = em.createQuery("SELECT e FROM Experiment e "
-				+ "WHERE e.status='" + ExperimentStatus.COMPLETE.toString() + "'");
+				+ "WHERE e.status='" + ExperimentStatus.Complete.toString() + "'");
 		List<Experiment> expts = query.getResultList();
 
 		// Committing transaction.
@@ -138,7 +138,7 @@ public class EntityDAOImpl implements EntityDAO {
 		tx.begin();
 
 		Query query = em.createQuery("SELECT e FROM Experiment e "
-				+ "WHERE e.status='" + ExperimentStatus.QUEUED.toString() + "'");
+				+ "WHERE e.status='" + ExperimentStatus.Queued.toString() + "'");
 		List<Experiment> expts = query.getResultList();
 
 		// Committing transaction.
