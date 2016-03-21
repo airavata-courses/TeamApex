@@ -196,10 +196,14 @@ public class JAXBManager {
 			experimentJAXB.setJobID(experiment.getJobId());
 			experimentJAXB.setJobName(experiment.getJobName());
 			experimentJAXB.setStatus(experiment.getStatus());
-			experimentJAXB.setUserName(experiment.getUserName().getUsername());
 			experimentJAXB.setWallTime(experiment.getWallTime());
 			experimentJAXB.setNumNodes(experiment.getNumOfNodes());
 			experimentJAXB.setNumProcPerNode(experiment.getProcPerNode());
+			
+			/* check if user entity exists */
+			if(experiment.getUserName() != null) {
+				experimentJAXB.setUserName(experiment.getUserName().getUsername());
+			}
 			
 			/* construct the application jaxb from dao */
 			if(experiment.getApplication() != null) {
