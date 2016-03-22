@@ -65,9 +65,7 @@ public class ExperimentDAOUtil {
 			String appName, String machineName ) {
 
 		// TODO: Get Logged in user from context
-		User user =  new User();
-		user.setUsername("admin");
-		user.setPassword("apex123");
+		User user = dao.getUserByName( requestBean.getUserName() );
 
 		Machine machineObj = dao.getMachineByName(machineName);
 

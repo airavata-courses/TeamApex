@@ -1,18 +1,11 @@
 package edu.sga.apex.app.impl;
 import edu.sga.apex.app.AppInterface;
 import edu.sga.apex.bean.SubmitJobRequestBean;
-import edu.sga.apex.dao.EntityDAO;
-import edu.sga.apex.dao.impl.EntityDAOImpl;
-import edu.sga.apex.entity.Application;
-import edu.sga.apex.entity.Experiment;
-import edu.sga.apex.entity.Machine;
-import edu.sga.apex.entity.User;
 import edu.sga.apex.impl.BigRed2SCImpl;
 import edu.sga.apex.impl.KarstSCImpl;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.util.AppRefNames;
 import edu.sga.apex.util.ExperimentDAOUtil;
-import edu.sga.apex.util.ExperimentStatus;
 import edu.sga.apex.util.MachineRefNames;
 
 /**

@@ -30,8 +30,8 @@ public class Experiment {
 	String jobName;
 
 	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
-	@JoinColumn(name="username")
-	User userName;
+	@JoinColumn(name="user")
+	User user;
 
 	@Column
 	String status;
@@ -81,11 +81,11 @@ public class Experiment {
 	}
 
 	public User getUserName() {
-		return userName;
+		return user;
 	}
 
 	public void setUserName(User userName) {
-		this.userName = userName;
+		this.user = userName;
 	}
 
 	public String getStatus() {
