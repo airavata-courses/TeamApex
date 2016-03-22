@@ -10,11 +10,11 @@ $(document).ready(function() {
 	$.get( baseURL + "/job/" + machineID + "/" + jobID, renderJobStatus);
 	
 	$("#cancelBtn").click(function() {
-		cancelJob(jobID);
+		cancelJob(machineID, jobID);
 	});
 	
 	$("#downloadBtn").click(function() {
-		downloadOutput(jobName);
+		downloadOutput(machineID, jobID);
 	});
 	
 	$("#refreshBtn").click(function() {
@@ -29,6 +29,11 @@ $(document).ready(function() {
 
 
 function renderJobStatus(response) {
+	
+	// set global variables
+	machineID = response.experiment.machine.machineID;
+	jobID = response.experiment.jobID;
+	
 	var htmlString = "<table class='table table-hover'>" +
 						"<tr class='active'>" +
 							"<td class='active'> Job ID </td>" +

@@ -22,7 +22,7 @@ $(document).ready(function() {
 	});
 
 	$("#cancelJob").submit(function(event) {
-		cancelJob($('#jobIDC').val());
+		cancelJob($('#machineCancel').val(), $('#jobIDC').val());
 		$("#cancelJob button[type='reset']").click();
 		event.preventDefault();
 	});

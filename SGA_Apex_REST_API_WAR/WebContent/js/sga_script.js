@@ -205,7 +205,7 @@ function getStatus(jobID) {
 /*
  * Cancel Job function.
  */
-function cancelJob(jobID) {
+function cancelJob(machineID, jobID) {
 	//alert("cancel job " + jobID);
 
 	// Show loading overlay
@@ -213,7 +213,7 @@ function cancelJob(jobID) {
 
 	$.ajax({
 		type: "DELETE",
-		url: baseURL + "/job/" + jobID,
+		url: baseURL + "/job/" + machineID + "/" + jobID,
 		success: jobCancelSuccess
 	});
 }
