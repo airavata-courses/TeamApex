@@ -152,20 +152,28 @@ public class JobResource {
 	 * @return the response
 	 */
 	@DELETE
-	@Path("{jobId}")
+	@Path("{machineID}/{jobID}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response deleteJob(@PathParam("jobId") String jobId) {
+	public Response deleteJob(@PathParam("machineID") String machineID, @PathParam("jobID") String jobId) {
 		ResponseBuilder builder = null;
 		ObjectFactory factory = new ObjectFactory();
 		try {
+			// TODO: Uncomment the following once the params are passed in req.
+			MachineDAOUtil machineUtil = new MachineDAOUtil();
+			String machineName = machineUtil.getMachineNameById(machineID);
+			//String machine = MachineRefNames.KARST.toString();
 
-			//TODO: Get this from the request
-			String application = AppRefNames.GROMMACS.toString();
+			SCInterface scIntf = null;
 
-			/* Get Karst impl */
-			SCInterface scInterface = new KarstSCImpl(application);
-			/* Delete job oo Karst */
-			scInterface.deleteJob(jobId);
+			if( machineName.equals(MachineRefNames.BIGRED2.toString()) ) {
+				scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
+			}
+			else if( machineName.equals(MachineRefNames.KARST.toString()) ) {
+				scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
+			}
+
+			/* Delete job on Karst */
+			scIntf.deleteJob(jobId);
 
 			/* Construct response jaxb entity */
 			SimpleAPIResponse response = factory.createSimpleAPIResponse();
@@ -236,12 +244,12 @@ public class JobResource {
 	public Response getJobStatus(@PathParam("jobId") String jobId) {
 		ResponseBuilder builder = null;
 		try {
-
 			//TODO: Get this from the request
 			String application = AppRefNames.GROMMACS.toString();
 
 			/* Get Karst impl */
 			SCInterface scInterface = new KarstSCImpl(application);
+			
 			/* Get job status from Karst */
 			JobBean bean = scInterface.getJobStatus(jobId);
 
@@ -267,18 +275,25 @@ public class JobResource {
 	 * @return the job output file
 	 */
 	@GET
-	@Path("{jobName}/output")
-	public Response getJobOutputFile(@PathParam("jobName") String jobName) {
+	@Path("{machineID}/{jobID}/output")
+	public Response getJobOutputFile(@PathParam("jobID") String jobID, @PathParam("machineID") String machineID) {
 		ResponseBuilder builder = null;
 		try {
+			// TODO: Uncomment the following once the params are passed in req.
+			MachineDAOUtil machineUtil = new MachineDAOUtil();
+			String machineName = machineUtil.getMachineNameById(machineID);
 
-			//TODO: Get this from the request
-			String application = AppRefNames.GROMMACS.toString();
+			SCInterface scIntf = null;
 
-			/* Get Karst impl */
-			SCInterface scInterface = new KarstSCImpl(application);
+			if( machineName.equals(MachineRefNames.BIGRED2.toString()) ) {
+				scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
+			}
+			else if( machineName.equals(MachineRefNames.KARST.toString()) ) {
+				scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
+			}
+			
 			/* Get job output file path */
-			String filePath = scInterface.downloadJobOutputFile(jobName);
+			String filePath = scIntf.downloadJobOutputFile(jobID, machineID);
 
 			/* Create a file object */
 			File response = new File(filePath);

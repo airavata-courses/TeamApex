@@ -4,6 +4,7 @@ import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface SCInterface.
  *
@@ -57,11 +58,12 @@ public interface SCInterface {
 	/**
 	 * Download job output file.
 	 *
-	 * @param jobName the job name
+	 * @param jobID the job id
+	 * @param machineID the machine id
 	 * @return the string
 	 * @throws Exception the exception
 	 */
-	public String downloadJobOutputFile(String jobName) throws Exception;
+	public String downloadJobOutputFile(String jobID, String machineID) throws Exception;
 	
 	/**
 	 * Submit job.

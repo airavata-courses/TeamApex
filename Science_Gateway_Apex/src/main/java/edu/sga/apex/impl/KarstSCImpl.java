@@ -21,8 +21,10 @@ import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SCPRequestBean;
 import edu.sga.apex.bean.SSHRequestBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
+import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.util.Constants;
+import edu.sga.apex.util.ExperimentDAOUtil;
 import edu.sga.apex.util.SFTPUtil;
 import edu.sga.apex.util.SSHUtil;
 
@@ -538,10 +540,14 @@ public class KarstSCImpl implements SCInterface {
 	 * @see edu.sga.apex.interfaces.SCInterface#downloadJobOutputFile(java.lang.String)
 	 */
 	@Override
-	public String downloadJobOutputFile(String jobName) throws Exception {
+	public String downloadJobOutputFile(String jobID, String machineID) throws Exception {
 		String downloadedFile = null;
 
 		try {
+			/* Get Job Name from JobID */
+			Experiment expt = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
+			String jobName = expt.getJobName();
+			
 			SCPRequestBean bean = new SCPRequestBean();
 			bean.setHostName(properties.getProperty("hostName"));
 			bean.setSshPort(Constants.SSH_PORT);
@@ -563,4 +569,5 @@ public class KarstSCImpl implements SCInterface {
 		// return the path
 		return downloadedFile;
 	}
+
 }
