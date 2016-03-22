@@ -31,6 +31,9 @@ public class SubmitJobRequestBean {
 	/** The machine id. */
 	private String machineID;
 	
+	/** The user name. */
+	private String userName;
+	
 	/** The input files. */
 	private List<InputFileBean> inputFiles;
 
@@ -180,6 +183,24 @@ public class SubmitJobRequestBean {
 	public void setInputFiles(List<InputFileBean> inputFiles) {
 		this.inputFiles = inputFiles;
 	}
+	
+	/**
+	 * Gets the user name.
+	 *
+	 * @return the user name
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * Sets the user name.
+	 *
+	 * @param userName the new user name
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -189,8 +210,8 @@ public class SubmitJobRequestBean {
 		return "SubmitJobRequestBean [jobName=" + jobName + ", emailId="
 				+ emailId + ", wallTime=" + wallTime + ", numNodes=" + numNodes
 				+ ", numProcessors=" + numProcessors + ", applicationID="
-				+ applicationID + ", machineID=" + machineID + ", inputFiles="
-				+ inputFiles + "]";
+				+ applicationID + ", machineID=" + machineID + ", userName="
+				+ userName + ", inputFiles=" + inputFiles + "]";
 	}
 
 }
