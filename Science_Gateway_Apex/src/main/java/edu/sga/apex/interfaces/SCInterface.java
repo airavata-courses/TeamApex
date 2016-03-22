@@ -4,7 +4,6 @@ import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface SCInterface.
  *

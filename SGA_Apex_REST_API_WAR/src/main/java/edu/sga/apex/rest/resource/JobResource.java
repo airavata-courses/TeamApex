@@ -148,6 +148,7 @@ public class JobResource {
 	/**
 	 * Delete job.
 	 *
+	 * @param machineID the machine id
 	 * @param jobId the job id
 	 * @return the response
 	 */
@@ -271,7 +272,8 @@ public class JobResource {
 	/**
 	 * Gets the job output file.
 	 *
-	 * @param jobName the job name
+	 * @param jobID the job id
+	 * @param machineID the machine id
 	 * @return the job output file
 	 */
 	@GET
