@@ -6,7 +6,8 @@ $(document).ready(function() {
 	
 	// get job status
 	jobID = getParameterByName("jobID");
-	$.get( baseURL + "/job/" + jobID + "/status", renderJobStatus);
+	machineID = getParameterByName("machineID");
+	$.get( baseURL + "/job/" + machineID + "/" + jobID, renderJobStatus);
 	
 	$("#cancelBtn").click(function() {
 		cancelJob(jobID);
@@ -21,7 +22,7 @@ $(document).ready(function() {
 	});
 	
 	$("#monitorJob").submit(function(event) {
-		window.location.href = jobStatusURL + $('#jobIDM').val();
+		window.location.href = jobStatusURL + $('#jobIDM').val() + "&machineID=" + $("#machineMonitor").val();
 		event.preventDefault();
 	});
 });
@@ -31,44 +32,40 @@ function renderJobStatus(response) {
 	var htmlString = "<table class='table table-hover'>" +
 						"<tr class='active'>" +
 							"<td class='active'> Job ID </td>" +
-							"<td> " + response.jobResponse.jobId + "</td>" +
+							"<td> " + response.experiment.jobID + "</td>" +
 						"</tr>" +
 						"<tr class='active'>" +
 							"<td class='active'> Job Name </td>" +
-							"<td> " + response.jobResponse.jobName + "</td>" +
+							"<td> " + response.experiment.jobName + "</td>" +
 						"</tr>" +
 						"<tr class='active'>" +
 							"<td class='active'> Status </td>" +
-							"<td> " + response.jobResponse.status + "</td>" +
+							"<td> " + response.experiment.status + "</td>" +
 						"</tr>" +
 						"<tr class='active'>" +
 							"<td class='active'> User Name </td>" +
-							"<td> " + response.jobResponse.userName + "</td>" +
+							"<td> " + response.experiment.userName + "</td>" +
 						"</tr>" +						
 						"<tr class='active'>" +
-							"<td class='active'> Queue </td>" +
-							"<td> " + response.jobResponse.queue + "</td>" +
+							"<td class='active'> Application </td>" +
+							"<td> " + response.experiment.application.appName + "</td>" +
 						"</tr>" +						
 						"<tr class='active'>" +
-							"<td class='active'> Number of Processors </td>" +
-							"<td> " + response.jobResponse.numProcessors + "</td>" +
+							"<td class='active'> Number of Processors per Node </td>" +
+							"<td> " + response.experiment.numProcPerNode + "</td>" +
 						"</tr>" +
 						"<tr class='active'>" +
 							"<td class='active'> Number of Nodes </td>" +
-							"<td> " + response.jobResponse.numNodes + "</td>" +
+							"<td> " + response.experiment.numNodes + "</td>" +
 						"</tr>" +
 						"<tr class='active'>" +
-							"<td class='active'> Required Memory </td>" +
-							"<td> " + response.jobResponse.requiredMemory + "</td>" +
+							"<td class='active'> Wall Time </td>" +
+							"<td> " + response.experiment.wallTime + "</td>" +
 						"</tr>" +
 						"<tr class='active'>" +
-							"<td class='active'> Required Time </td>" +
-							"<td> " + response.jobResponse.requiredTime + "</td>" +
-						"</tr>" +
-						"<tr class='active'>" +
-							"<td class='active'> Elapsed Time </td>" +
-							"<td> " + response.jobResponse.elapsedTime + "</td>" +
-						"</tr>" +
+							"<td class='active'> Machine </td>" +
+							"<td> " + response.experiment.machine.machineID + "</td>" +
+						"</tr>" +						
 					"</table>";
 						
 	$("#jobStatus").html(htmlString);
@@ -81,12 +78,12 @@ function renderJobStatus(response) {
 	$("#cancelBtn").show();
 	
 	// show download buttong only if completed
-	if(response.jobResponse.status.toLowerCase() == "completed") {
+	if(response.experiment.status.toLowerCase() == "completed") {
 		$("#downloadBtn").show();
 	}
 	
 	// set the job name
-	jobName = response.jobResponse.jobName;
+	jobName = response.experiment.jobName;
 }
 
 function getParameterByName(name, url) {

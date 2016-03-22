@@ -8,7 +8,7 @@ var jobStatusURL = "job_status.html?jobID=";
 var fileUploadCount = 0;
 var fileContentURLs = [];
 var fileTypes = ["Coordinate-File", "Portable-Input-Binary-File"];
-var jobID, jobName;
+var jobID, jobName, machineID;
 
 /*
  * Function to render Success message.

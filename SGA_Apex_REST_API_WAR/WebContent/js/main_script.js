@@ -34,14 +34,18 @@ $(document).ready(function() {
 	});
 
 	$("#monitorJob").submit(function(event) {
-		window.location.href = jobStatusURL + $('#jobIDM').val();
+		window.location.href = jobStatusURL + $('#jobIDM').val() + "&machineID=" + $("#machineMonitor").val();
 		event.preventDefault();
 	});
 
 	$("#myModal .modal-footer button").click(function() {
-		window.location.href = jobStatusURL + jobID;
+		window.location.href = jobStatusURL + jobID + "&machineID=" + machineID;
 	});
 
+	$("#machine").change(function() {
+		  machineID = $("#machine").val();
+	});
+	
 });
 
 function uploadFile(fileObj) {
