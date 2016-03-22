@@ -7,12 +7,13 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.SecurityContext;
 
 import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.rest.jaxb.ExperimentListResponse;
@@ -32,6 +33,9 @@ import edu.sga.apex.util.UserDAOUtil;
  */
 @Path("user")
 public class UserResource {
+	
+	@Context
+	private SecurityContext context;
 
 	/* 
 	 * API Request JSON
@@ -100,11 +104,14 @@ public class UserResource {
 	 * @return the experiments for user
 	 */
 	@GET
-	@Path("{userName}/jobs")
+	@Path("jobs")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response getExperimentsForUser(@PathParam("userName") String userName) {
+	public Response getExperimentsForUser() {
 		ResponseBuilder builder = null;
 		try {
+			/* get the logged in user */
+			String userName = context.getUserPrincipal().getName();
+			
 			/* get experiment list from db */
 			List<Experiment> experimentList = ExperimentDAOUtil.getExperimentsForUser(userName);
 			

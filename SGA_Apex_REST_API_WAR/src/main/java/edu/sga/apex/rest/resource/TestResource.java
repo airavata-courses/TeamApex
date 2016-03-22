@@ -14,10 +14,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.SecurityContext;
 
 import org.apache.wink.common.model.multipart.InMultiPart;
 import org.apache.wink.common.model.multipart.InPart;
@@ -34,6 +37,9 @@ import edu.sga.apex.rest.util.JAXBManager;
 
 @Path("/test")
 public class TestResource {
+	
+	@Context
+	private SecurityContext context;
 	
 	@GET
 	@Path("redirect")
@@ -58,7 +64,9 @@ public class TestResource {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response test() {
 		ResponseBuilder builder = null;
-		try {
+		try {	
+			System.out.println(context.getAuthenticationScheme());
+			System.out.println(context.getUserPrincipal().getName());
 			
 			SubmitJobRequest req = new SubmitJobRequest();
 			req.setEmailId("email");
