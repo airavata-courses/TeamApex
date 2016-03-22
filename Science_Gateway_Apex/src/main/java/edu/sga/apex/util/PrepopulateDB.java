@@ -70,11 +70,11 @@ public class PrepopulateDB {
 
 			AppInput input1 = new AppInput();
 			input1.setInput("pdb1y6l-EM-vacuum.tpr");
-			input1.setDescription("Topology file");
+			input1.setDescription("Coordinates velocities, molecular topology and simulation parameters - pdb1y6l-EM-vacuum.tpr");
 
 			AppInput input2 = new AppInput();
 			input2.setInput("pdb1y6l-EM-vacuum.gro");
-			input2.setDescription("Grommacs file");
+			input2.setDescription("Trajectory Coordinates Molecular Structure in Gromos87 format - pdb1y6l-EM-vacuum.gro");
 
 			inputList.add(input1);
 			inputList.add(input2);
