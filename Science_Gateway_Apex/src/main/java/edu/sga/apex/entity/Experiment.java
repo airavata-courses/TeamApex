@@ -22,14 +22,14 @@ public class Experiment {
 	private String jobId;
 
 	@Id
-	@ManyToOne( fetch = FetchType.LAZY, cascade=CascadeType.ALL )
+	@ManyToOne( fetch = FetchType.EAGER, cascade=CascadeType.ALL )
 	@JoinColumn(name="machineId")
 	private Machine machine;
 
 	@Column
 	String jobName;
 
-	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL )
 	@JoinColumn(name="user")
 	User user;
 
@@ -49,7 +49,7 @@ public class Experiment {
 	@Column
 	String email;
 
-	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL )
 	@JoinColumn(name="appId")
 	Application application;
 

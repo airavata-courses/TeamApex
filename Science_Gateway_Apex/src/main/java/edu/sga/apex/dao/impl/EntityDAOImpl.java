@@ -77,7 +77,7 @@ public class EntityDAOImpl implements EntityDAO {
 		tx.begin();
 
 		Query query = em.createQuery("SELECT e FROM Experiment e "
-				+ "WHERE e.userName.username='" + username +"'");
+				+ "WHERE e.user.username='" + username +"'");
 		List<Experiment> expts = query.getResultList();
 
 		// Committing transaction.
