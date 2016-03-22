@@ -410,9 +410,12 @@ public class BigRed2SCImpl implements SCInterface {
 				throw new RuntimeException("Failed to create pbs job script");
 			}
 
+			this.makeDir(requestBean.getUserName());
+
 			// copy the job script
 			String destJobScript = String.format(properties.getProperty("destJobScript"), 
-					properties.getProperty("loginUser"));
+					properties.getProperty("loginUser"), requestBean.getUserName());
+
 			this.copyFiles(pbsScriptPath, destJobScript);
 
 			// handle dos2unix for script
@@ -428,6 +431,7 @@ public class BigRed2SCImpl implements SCInterface {
 			SSHUtil util = new SSHUtil(bean);
 			util.executeCommands();
 
+			//TODO: Move this Grommacs specific file copy to Grommacs Impl.
 			// Copy binary
 			List<InputFileBean> inputFiles = requestBean.getInputFiles();
 			String tpr_file = null, gro_file = null;
@@ -440,7 +444,7 @@ public class BigRed2SCImpl implements SCInterface {
 			}
 
 			String destScriptPath = String.format(properties.getProperty("destScript"), 
-					properties.getProperty("loginUser"));
+					properties.getProperty("loginUser"), bean.getUserName());
 
 			// copy trp file
 			File file = new File(System.getProperty(Constants.TEMP_DIR_PROP), tpr_file);	
@@ -472,14 +476,14 @@ public class BigRed2SCImpl implements SCInterface {
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
 			String destFileEmail = String.format(properties.getProperty("destFileEmail"), 
-					properties.getProperty("loginUser"));
+					properties.getProperty("loginUser"), requestBean.getUserName());
 			String srcFileEmailPath = this.createTempFile(srcFileEmail, "sendEmail", ".sh");
 			this.copyFiles(srcFileEmailPath, destFileEmail);
 
 			// Copy Email Properties Script.
 			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
 			String destFileEmailProp = String.format(properties.getProperty("destFileEmailProp"), 
-					properties.getProperty("loginUser"));
+					properties.getProperty("loginUser"), requestBean.getUserName());
 			String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
 			this.copyFiles(srcFileEmailPropPath, destFileEmailProp);
 
@@ -545,7 +549,7 @@ public class BigRed2SCImpl implements SCInterface {
 			/* Get Job Name from JobID */
 			Experiment expt = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
 			String jobName = expt.getJobName();
-			
+
 			SCPRequestBean bean = new SCPRequestBean();
 			bean.setHostName(properties.getProperty("hostName"));
 			bean.setSshPort(Constants.SSH_PORT);
