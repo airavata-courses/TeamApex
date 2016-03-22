@@ -63,7 +63,7 @@ public class ExperimentDAOUtil {
 
 	public static void saveExperiment(SubmitJobRequestBean requestBean, String jobId,
 			String appName, String machineName ) {
-
+		System.out.println("Entered..");
 		// TODO: Get Logged in user from context
 		User user = dao.getUserByName( requestBean.getUserName() );
 
@@ -86,6 +86,7 @@ public class ExperimentDAOUtil {
 		expt.setWallTime(requestBean.getWallTime());
 
 		dao.saveEntity(expt);
+		System.out.println("saved: " + expt);
 	}
 
 	public static void updateExperimentStatus( String exptId, String machineId, String status ) {

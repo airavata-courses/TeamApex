@@ -61,6 +61,8 @@ public class JobResource {
 	            "numNodes": 2,
 	            "wallTime": "30:00",
 	            "jobName": "goshenoy-01",
+	            "machineID": "bigred201",
+	            "applicationID": "gro01",
 	            "inputFiles": [
 	    			{
 						"fileType": "T1",
@@ -122,7 +124,7 @@ public class JobResource {
 				if( appIntf != null ) {
 					/* Submit job to Karst */
 					String jobId = appIntf.submitRemoteJob(bean, application, machine);
-
+					
 					/* Construct response jaxb entity */
 					SubmitJobResponse response = factory.createSubmitJobResponse();
 					response.setJobId(jobId);
