@@ -26,7 +26,7 @@ public class Application {
 	@Column
 	String script_path;
 
-	@OneToMany( targetEntity=AppInput.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@OneToMany( targetEntity=AppInput.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL )
 	private List<AppInput> inputList;
 
 	public String getAppId() {

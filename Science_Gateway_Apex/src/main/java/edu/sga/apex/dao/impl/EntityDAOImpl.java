@@ -14,6 +14,7 @@ import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.entity.ExperimentPK;
 import edu.sga.apex.entity.Machine;
+import edu.sga.apex.entity.Role;
 import edu.sga.apex.entity.User;
 import edu.sga.apex.util.ExperimentStatus;
 
@@ -346,6 +347,7 @@ public class EntityDAOImpl implements EntityDAO {
 	/* (non-Javadoc)
 	 * @see edu.sga.apex.dao.EntityDAO#getUserByName(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public User getUserByName(String userName) {
 
@@ -406,5 +408,38 @@ public class EntityDAOImpl implements EntityDAO {
 		emf.close();
 
 		return experiment;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.sga.apex.dao.EntityDAO#getRoleByRoleName(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Role getRoleByRoleName(String roleName) {
+		// Connection details loaded from persistence.xml to create EntityManagerFactory.
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-sga");
+
+		EntityManager em = emf.createEntityManager();
+
+		// Creating a new transaction.
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		Query query = em.createQuery("SELECT r FROM Role r "
+				+ "WHERE r.role='" + roleName + "'");
+		List<Role> roles = query.getResultList();
+
+		// Committing transaction.
+		tx.commit();
+
+		// Closing connection.
+		em.close();
+		emf.close();
+
+		if( roles == null || roles.size() == 0 )
+			return null;
+		
+		return roles.get(0);
 	}
 }

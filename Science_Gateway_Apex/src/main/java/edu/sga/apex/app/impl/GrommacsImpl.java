@@ -31,6 +31,7 @@ public class GrommacsImpl implements AppInterface {
 			}
 
 			jobId = scIntf.submitRemoteJob(requestBean);
+			System.out.println("JobID: " + jobId);
 
 			//Add DB entry.
 			ExperimentDAOUtil.saveExperiment(requestBean, jobId, appName, machineName);
