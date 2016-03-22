@@ -28,7 +28,7 @@ $(document).ready(function() {
 	});
 
 	$("#downloadOP").submit(function(event) {
-		downloadOutput($('#jobNameD').val());
+		downloadOutput($('#machineDownload').val(), $('#jobIDD').val());
 		$("#downloadOP button[type='reset']").click();
 		event.preventDefault();
 	});

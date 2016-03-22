@@ -221,10 +221,10 @@ function cancelJob(jobID) {
 /*
  * Download Output function.
  */
-function downloadOutput(jobName) {
+function downloadOutput(machineID, jobID) {
 	//alert("download output job " + jobName);
 
-	$.get( baseURL + "/job/" + jobName + "/output", outputDownloadSuccess);
+	$.get( baseURL + "/job/" + machineID + "/" + jobID + "/output", outputDownloadSuccess);
 
-	window.open(baseURL + "/job/" + jobName + "/output", "_blank");
+	window.open(baseURL + "/job/" + machineID + "/" + jobID + "/output", "_blank");
 }
