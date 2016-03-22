@@ -39,7 +39,7 @@ $(document).ready(function() {
 	});
 
 	$("#myModal .modal-footer button").click(function() {
-		window.location.href = jobStatusURL + jobID + "&machineID=" + machineID;
+		window.location.href = jobStatusURL + jobID + "&machineID=" + $("#machine").val();
 	});
 
 	$("#machine").change(function() {
