@@ -7,6 +7,7 @@ import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
 import edu.sga.apex.entity.AppInput;
 import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.entity.Role;
 import edu.sga.apex.rest.jaxb.Application;
 import edu.sga.apex.rest.jaxb.ApplicationInput;
 import edu.sga.apex.rest.jaxb.ApplicationListResponse;
@@ -17,6 +18,8 @@ import edu.sga.apex.rest.jaxb.Machine;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SubmitJobRequest;
 import edu.sga.apex.rest.jaxb.User;
+import edu.sga.apex.util.UserDAOUtil;
+import edu.sga.apex.util.UserRoles;
 
 /**
  * The Class JAXBManager.
@@ -149,8 +152,14 @@ public class JAXBManager {
 		
 		/* check if jaxb is valid */
 		if(userJAXB != null) {
+			//TODO: Currently setting userID as 1+num-users. Change this logic
+			userEntity.setId(UserDAOUtil.getUserList().size() + 1);
 			userEntity.setUsername(userJAXB.getUserName());
 			userEntity.setPassword(userJAXB.getPassword());
+			
+			/* set USER role for user */
+			Role role = UserDAOUtil.getRoleByRoleName(UserRoles.USER.getRole());
+			userEntity.getRoles().add(role);
 		} else {
 			throw new Exception("Empty User JAXB received. Cannot construct the DAO entity.");
 		}

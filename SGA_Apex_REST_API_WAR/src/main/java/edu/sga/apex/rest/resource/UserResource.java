@@ -1,5 +1,6 @@
 package edu.sga.apex.rest.resource;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
@@ -15,7 +16,10 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
+import edu.sga.apex.dao.EntityDAO;
+import edu.sga.apex.dao.impl.EntityDAOImpl;
 import edu.sga.apex.entity.Experiment;
+import edu.sga.apex.entity.Role;
 import edu.sga.apex.rest.jaxb.ExperimentListResponse;
 import edu.sga.apex.rest.jaxb.ObjectFactory;
 import edu.sga.apex.rest.jaxb.SimpleAPIResponse;
@@ -25,6 +29,7 @@ import edu.sga.apex.rest.util.ExceptionUtil;
 import edu.sga.apex.rest.util.JAXBManager;
 import edu.sga.apex.util.ExperimentDAOUtil;
 import edu.sga.apex.util.UserDAOUtil;
+import edu.sga.apex.util.UserRoles;
 
 /**
  * The Class UserResource.
@@ -127,5 +132,30 @@ public class UserResource {
 
 		/* Return the response */
 		return builder.build();
+	}
+	
+	public static void main(String[] args) {
+		
+		try {
+			UserResource res = new UserResource();
+			
+			edu.sga.apex.entity.User user = new edu.sga.apex.entity.User();
+			
+			user.setPassword("rocks");
+			user.setUsername("mango");
+			
+			List<Role> roles = new LinkedList<Role>();
+			Role role = UserDAOUtil.getRoleByRoleName(UserRoles.USER.toString());
+			
+			roles.add(role);
+			user.setRoles(roles);
+			
+			EntityDAO dao = new EntityDAOImpl();
+			dao.saveEntity(user);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

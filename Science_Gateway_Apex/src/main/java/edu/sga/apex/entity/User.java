@@ -1,5 +1,6 @@
 package edu.sga.apex.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -54,6 +55,9 @@ public class User {
 	}
 
 	public List<Role> getRoles() {
+		if(roles == null) {
+			roles = new ArrayList<Role>();
+		}
 		return roles;
 	}
 

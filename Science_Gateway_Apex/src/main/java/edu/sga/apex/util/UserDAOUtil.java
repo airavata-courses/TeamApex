@@ -4,6 +4,7 @@ import java.util.List;
 
 import edu.sga.apex.dao.EntityDAO;
 import edu.sga.apex.dao.impl.EntityDAOImpl;
+import edu.sga.apex.entity.Role;
 import edu.sga.apex.entity.User;
 
 /**
@@ -66,5 +67,21 @@ public class UserDAOUtil {
 			throw ex;
 		}
 		return success;
+	}
+	
+	/**
+	 * Gets the role by role name.
+	 *
+	 * @param roleName the role name
+	 * @return the role by role name
+	 * @throws Exception the exception
+	 */
+	public static Role getRoleByRoleName(String roleName) throws Exception {
+		try {
+			return dao.getRoleByRoleName(roleName);
+		} catch(Exception ex) {
+			System.err.println("Exception in UserDAOUtil: " + ex);
+			throw ex;
+		}
 	}
 }

@@ -6,6 +6,7 @@ import edu.sga.apex.entity.AppInput;
 import edu.sga.apex.entity.Application;
 import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.entity.Machine;
+import edu.sga.apex.entity.Role;
 import edu.sga.apex.entity.User;
 
 /**
@@ -121,4 +122,12 @@ public interface EntityDAO {
 	 * @return the user by name
 	 */
 	public User getUserByName(String userName);
+	
+	/**
+	 * Gets the role by role name.
+	 *
+	 * @param roleName the role name
+	 * @return the role by role name
+	 */
+	public Role getRoleByRoleName(String roleName);
 }
