@@ -48,7 +48,7 @@
 			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Submit A Job (On KARST)</h3>
+						<h3 class="panel-title">Submit A Job</h3>
 					</div>
 					<div class="panel-body">
 						<form id="submitJob" action="">
@@ -93,23 +93,24 @@
 							</div>
 							<!-- /form-group -->
 							
-							<div class="form-group row col-xs-8">
-								<label for="experiment">Select an experiment</label>
-								<select>
-								  <option value="gromacs">gromacs</option>
+							<div id="experimentSelect" class="form-group row col-xs-8">
+								<label for="experiment">Select an Application</label>
+								<select id="application">
+								  	<!-- dynamically load applications -->
 								</select>
 							</div>
 							<!-- /form-group -->
-							<div class="form-group row col-xs-8">
+							
+							<div id="machineSelect" class="form-group row col-xs-8">
 								<label for="machine">Select a machine</label>
-								<select>
-								  <option value="karst">Karst</option>
-								  <option value="bigred2">Big Red 2</option>
+								<select id="machine">
+								  <option value="karst01">Karst</option>
+								  <option value="bigred201">Big Red 2</option>
 								</select>
 							</div>
 							<!-- /form-group -->
 
-							<div class="form-group row col-xs-8">
+							<div id="appInputDiv" class="form-group row col-xs-8">
 								<label for="inputFile1">Portable-Input-Binary-File (GROMACS)</label>
 								<input type="file" id="inputFile1" required>
 								<p class="help-block">Coordinates velocities, molecular

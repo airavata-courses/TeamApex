@@ -7,7 +7,7 @@ package edu.sga.apex.util;
  */
 public enum AppRefNames {
 
-	GROMMACS("grommacs");
+	GROMMACS("Grommacs");
 
 	String refName;
 

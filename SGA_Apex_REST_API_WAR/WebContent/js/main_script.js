@@ -1,6 +1,9 @@
 $(document).ready(function() {
 	console.log("document ready!");
 
+	// render application list
+	getApplicationList();
+	
 	$("#submitJob").submit(function(event) {
 		console.log("Handler for .submit() called.");
 
@@ -78,6 +81,35 @@ function fileUploadSuccess(data) {
 				$('#numNodes').val(), 
 				$('#wallTime').val(), 
 				$('#jobName').val(),
-				"gro01", "karst01");  // FIXME: Hardcoding temporarily
+				$("#application").val(),
+				$("#machine").val());
 	}
+}
+
+function getApplicationList() {
+	// api call to get application list
+	$.get( baseURL + "/application", applicationGetSuccess);
+}
+
+function applicationGetSuccess(response) {
+	var appID = response.applicationListResponse.applicationList.appID;
+	var appName = response.applicationListResponse.applicationList.appName;
+	var appInputList = response.applicationListResponse.applicationList.appInputs;
+	
+	var appSelectHTML = "<option value='" + appID + "'> " + appName + "</option>";
+	
+	// set the application list on UI
+	$("#experimentSelect select").html(appSelectHTML);
+	
+	var appInputHTML = "";
+	
+	// display app-input for each application
+	$.each(appInputList, function(i, item) {
+		appInputHTML += "<label for='inputFile"+ (i+1) + "'>" + item.input + "</label>"
+					+ "<input type='file' id='inputFile"+ (i+1) + "' required>"
+					+ "<p class='help-block'>" + item.description + "</p>";
+	});
+	
+	// set the application input on UI
+	$("#appInputDiv").html(appInputHTML);
 }
