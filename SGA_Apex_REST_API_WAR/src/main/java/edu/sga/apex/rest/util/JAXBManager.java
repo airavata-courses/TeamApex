@@ -36,7 +36,7 @@ public class JAXBManager {
 	 * @throws Exception the exception
 	 */
 	public static SubmitJobRequestBean getSubmitJobRequestBean(
-			SubmitJobRequest request) throws Exception {
+			SubmitJobRequest request, String userName) throws Exception {
 		
 		SubmitJobRequestBean bean = new SubmitJobRequestBean();
 		
@@ -90,6 +90,9 @@ public class JAXBManager {
 			} else {
 				bean.setNumProcessors(request.getNumProcessors());
 			}
+			
+			/* set the userName in request bean */
+			bean.setUserName(userName);
 			
 			/* set input file list */
 			if(request.getInputFiles() != null) {

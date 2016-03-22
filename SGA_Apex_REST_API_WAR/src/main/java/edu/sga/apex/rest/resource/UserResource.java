@@ -34,6 +34,7 @@ import edu.sga.apex.util.UserDAOUtil;
 @Path("user")
 public class UserResource {
 	
+	/** The context. */
 	@Context
 	private SecurityContext context;
 
@@ -100,7 +101,6 @@ public class UserResource {
 	/**
 	 * Gets the experiments for user.
 	 *
-	 * @param userName the user name
 	 * @return the experiments for user
 	 */
 	@GET

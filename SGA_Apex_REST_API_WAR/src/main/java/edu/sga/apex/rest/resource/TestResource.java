@@ -15,7 +15,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -126,10 +125,13 @@ public class TestResource {
 		ResponseBuilder builder = null;
 		ObjectFactory factory = new ObjectFactory();
 		try {
+			/* get the logged in user */
+			String userName = context.getUserPrincipal().getName();
+			
 			if (request != null) {
 				/* Convert request jaxb to middleware req bean */
 				SubmitJobRequestBean bean = JAXBManager
-						.getSubmitJobRequestBean(request);
+						.getSubmitJobRequestBean(request, userName);
 				
 				
 				for(InputFileBean ipFile : bean.getInputFiles()) {
