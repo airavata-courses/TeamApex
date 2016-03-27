@@ -444,7 +444,7 @@ public class KarstSCImpl implements SCInterface {
 			}
 
 			String destScriptPath = String.format(properties.getProperty("destScript"), 
-					properties.getProperty("loginUser"), bean.getUserName());
+					properties.getProperty("loginUser"), requestBean.getUserName());
 
 			// copy trp file
 			File file = new File(System.getProperty(Constants.TEMP_DIR_PROP), tpr_file);	
