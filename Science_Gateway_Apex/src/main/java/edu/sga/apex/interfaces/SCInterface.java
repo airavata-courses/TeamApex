@@ -10,8 +10,13 @@ import edu.sga.apex.bean.SubmitJobRequestBean;
  * @author erikadsouza
  */
 public interface SCInterface {
-	
-	
+
+	/**
+	 * Creates a directory with the specified path.
+	 * @param directory
+	 */
+	public void makeDir(String directory);
+
 	/**
 	 * Copy files.
 	 *
@@ -20,7 +25,7 @@ public interface SCInterface {
 	 * @return the string
 	 */
 	public String copyFiles(String srcFile, String destFile);
-	
+
 	/**
 	 * Function is used to get an explicit status update of a job submitted.
 	 *
@@ -28,7 +33,7 @@ public interface SCInterface {
 	 * @throws Exception the exception
 	 */
 	public void monitorJob(String jobId) throws Exception;
-	
+
 	/**
 	 * Delete job.
 	 *
@@ -36,7 +41,7 @@ public interface SCInterface {
 	 * @throws Exception the exception
 	 */
 	public void deleteJob(String jobId) throws Exception;
-	
+
 	/**
 	 * Submit remote jon.
 	 *
@@ -44,7 +49,7 @@ public interface SCInterface {
 	 * @return the string
 	 */
 	public String submitRemoteJob(SubmitJobRequestBean requestBean);
-	
+
 	/**
 	 * Gets the job status.
 	 *
@@ -53,7 +58,7 @@ public interface SCInterface {
 	 * @throws Exception the exception
 	 */
 	public JobBean getJobStatus(String jobId) throws Exception;
-	
+
 	/**
 	 * Download job output file.
 	 *
@@ -62,8 +67,8 @@ public interface SCInterface {
 	 * @return the string
 	 * @throws Exception the exception
 	 */
-	public String downloadJobOutputFile(String jobID, String machineID) throws Exception;
-	
+	public String downloadJobOutputFile(String filePath) throws Exception;
+
 	/**
 	 * Submit job.
 	 *
@@ -71,5 +76,5 @@ public interface SCInterface {
 	 */
 	@Deprecated
 	public String submitJob();
-	
+
 }

@@ -9,8 +9,8 @@ import edu.sga.apex.dao.impl.EntityDAOImpl;
  *
  */
 public class MachineDAOUtil {
-	
-	public String getMachineNameById(String machineId) {
+
+	public static String getMachineNameById(String machineId) {
 
 		EntityDAO edao = new EntityDAOImpl();
 		return edao.getMachineById(machineId).getMachineName();

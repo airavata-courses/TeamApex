@@ -21,10 +21,8 @@ import edu.sga.apex.bean.JobBean;
 import edu.sga.apex.bean.SCPRequestBean;
 import edu.sga.apex.bean.SSHRequestBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
-import edu.sga.apex.entity.Experiment;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.util.Constants;
-import edu.sga.apex.util.ExperimentDAOUtil;
 import edu.sga.apex.util.SFTPUtil;
 import edu.sga.apex.util.SSHUtil;
 
@@ -169,6 +167,10 @@ public class KarstSCImpl implements SCInterface {
 					Integer nodesProc = bean.getNumNodes()*bean.getNumProcessors();
 					line = line.replace("$nodesProc", nodesProc.toString());
 				}
+				if(line.contains("$job_dir")){
+					line = line.replace("$job_dir", String.format(properties.getProperty("jobDir"), 
+							properties.getProperty("loginUser"), bean.getUserName(), bean.getJobName()));
+				}
 				if(line.contains("$tpr_file")){
 					List<InputFileBean> inputFiles = bean.getInputFiles();
 					String tpr_file = null, gro_file = null;
@@ -229,6 +231,7 @@ public class KarstSCImpl implements SCInterface {
 	 *
 	 * @param directory the directory
 	 */
+	@Override
 	public void makeDir(String directory) {
 		System.out.println("Making directory on remote: " + directory);
 		try {
@@ -259,13 +262,13 @@ public class KarstSCImpl implements SCInterface {
 
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
-			String destFileEmail = properties.getProperty("destFileEmail");
+			String destFileEmail = properties.getProperty("jobDir") + File.separator + properties.getProperty("destFileEmail");
 			String srcFileEmailPath = this.createTempFile(srcFileEmail, "sendEmail", ".sh");
 			this.copyFiles(srcFileEmailPath, destFileEmail);
 
 			// Copy Email Properties Script.
 			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
-			String destFileEmailProp = properties.getProperty("destFileEmailProp");
+			String destFileEmailProp = properties.getProperty("jobDir") + File.separator + properties.getProperty("destFileEmailProp");
 			String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
 			this.copyFiles(srcFileEmailPropPath, destFileEmailProp);
 
@@ -363,18 +366,18 @@ public class KarstSCImpl implements SCInterface {
 
 			// copy the job script
 			String tempJobScript = properties.getProperty("tempJobScript");
-			String destJobScript = properties.getProperty("destJobScript");
+			String destJobScript = properties.getProperty("jobDir") + File.separator + properties.getProperty("destJobScript");
 			this.copyFiles(tempJobScript, destJobScript);
 
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
-			String destFileEmail = properties.getProperty("destFileEmail");
+			String destFileEmail = properties.getProperty("jobDir") + File.separator + properties.getProperty("destFileEmail");
 			String srcFileEmailPath = this.createTempFile(srcFileEmail, "sendEmail", ".sh");
 			this.copyFiles(srcFileEmailPath, destFileEmail);
 
 			// Copy Email Properties Script.
 			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
-			String destFileEmailProp = properties.getProperty("destFileEmailProp");
+			String destFileEmailProp = properties.getProperty("jobDir") + File.separator + properties.getProperty("destFileEmailProp");
 			String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
 			this.copyFiles(srcFileEmailPropPath, destFileEmailProp);
 
@@ -403,6 +406,9 @@ public class KarstSCImpl implements SCInterface {
 	@Override
 	public String submitRemoteJob(SubmitJobRequestBean requestBean) {
 		try{
+
+			this.makeDir(requestBean.getUserName() + File.separator + requestBean.getJobName());
+
 			// create the job script file
 			String pbsScriptPath = createJobScript(requestBean);
 
@@ -410,11 +416,9 @@ public class KarstSCImpl implements SCInterface {
 				throw new RuntimeException("Failed to create pbs job script");
 			}
 
-			this.makeDir(requestBean.getUserName());
-
 			// copy the job script
-			String destJobScript = String.format(properties.getProperty("destJobScript"), 
-					properties.getProperty("loginUser"), requestBean.getUserName());
+			String destJobScript = String.format(properties.getProperty("jobDir") + File.separator + properties.getProperty("destJobScript"), 
+					properties.getProperty("loginUser"), requestBean.getUserName(), requestBean.getJobName());
 
 			this.copyFiles(pbsScriptPath, destJobScript);
 
@@ -430,29 +434,6 @@ public class KarstSCImpl implements SCInterface {
 
 			SSHUtil util = new SSHUtil(bean);
 			util.executeCommands();
-
-			//TODO: Move this Grommacs specific file copy to Grommacs Impl.
-			// Copy binary
-			List<InputFileBean> inputFiles = requestBean.getInputFiles();
-			String tpr_file = null, gro_file = null;
-			for(InputFileBean ifbean: inputFiles){
-				if(ifbean.getFileType().equals("Coordinate-File")){
-					gro_file = ifbean.getFileName();
-				}else if(ifbean.getFileType().equals("Portable-Input-Binary-File")){
-					tpr_file = ifbean.getFileName();
-				}
-			}
-
-			String destScriptPath = String.format(properties.getProperty("destScript"), 
-					properties.getProperty("loginUser"), requestBean.getUserName());
-
-			// copy trp file
-			File file = new File(System.getProperty(Constants.TEMP_DIR_PROP), tpr_file);	
-			this.copyFiles(file.getAbsolutePath(), destScriptPath);
-
-			// copy gro file
-			file = new File(System.getProperty(Constants.TEMP_DIR_PROP), gro_file);	
-			this.copyFiles(file.getAbsolutePath(), destScriptPath);
 
 			/**String srcScript = properties.getProperty("srcScript");
 			String destScriptPath = String.format(properties.getProperty("destScript"), 
@@ -475,15 +456,15 @@ public class KarstSCImpl implements SCInterface {
 
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
-			String destFileEmail = String.format(properties.getProperty("destFileEmail"), 
-					properties.getProperty("loginUser"), requestBean.getUserName());
+			String destFileEmail = String.format(properties.getProperty("jobDir") + File.separator + properties.getProperty("destFileEmail"), 
+					properties.getProperty("loginUser"), requestBean.getUserName(), requestBean.getJobName());
 			String srcFileEmailPath = this.createTempFile(srcFileEmail, "sendEmail", ".sh");
 			this.copyFiles(srcFileEmailPath, destFileEmail);
 
 			// Copy Email Properties Script.
 			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
-			String destFileEmailProp = String.format(properties.getProperty("destFileEmailProp"), 
-					properties.getProperty("loginUser"), requestBean.getUserName());
+			String destFileEmailProp = String.format(properties.getProperty("jobDir") + File.separator + properties.getProperty("destFileEmailProp"), 
+					properties.getProperty("loginUser"), requestBean.getUserName(), requestBean.getJobName());
 			String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
 			this.copyFiles(srcFileEmailPropPath, destFileEmailProp);
 
@@ -505,7 +486,6 @@ public class KarstSCImpl implements SCInterface {
 	@Override
 	public JobBean getJobStatus(String jobId) throws Exception {
 		try {
-			// FIXME: Get Login user from context.
 			String loginUser = properties.getProperty("loginUser");
 
 			// Calling the qstat command
@@ -543,13 +523,14 @@ public class KarstSCImpl implements SCInterface {
 	 * @see edu.sga.apex.interfaces.SCInterface#downloadJobOutputFile(java.lang.String)
 	 */
 	@Override
-	public String downloadJobOutputFile(String jobID, String machineID) throws Exception {
+	public String downloadJobOutputFile(String filePath) throws Exception {
 		String downloadedFile = null;
 
 		try {
+
 			/* Get Job Name from JobID */
-			Experiment expt = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
-			String jobName = expt.getJobName();
+			//Experiment expt = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
+			//String jobName = expt.getJobName();
 
 			SCPRequestBean bean = new SCPRequestBean();
 			bean.setHostName(properties.getProperty("hostName"));
@@ -560,7 +541,7 @@ public class KarstSCImpl implements SCInterface {
 			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
 
 			SFTPUtil util = new SFTPUtil(bean);
-			downloadedFile = util.getFromServer(jobName + ".out");
+			downloadedFile = util.getFromServer(filePath);
 			if(downloadedFile == null) {
 				throw new FileNotFoundException("Output file does not exist on remote machine!");
 			}
@@ -572,5 +553,4 @@ public class KarstSCImpl implements SCInterface {
 		// return the path
 		return downloadedFile;
 	}
-
 }

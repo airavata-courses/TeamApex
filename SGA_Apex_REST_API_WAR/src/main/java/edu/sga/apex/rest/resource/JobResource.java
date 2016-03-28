@@ -13,9 +13,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.SecurityContext;
 
 import edu.sga.apex.app.AppInterface;
 import edu.sga.apex.app.impl.GrommacsImpl;
@@ -46,7 +46,7 @@ import edu.sga.apex.util.MachineRefNames;
  */
 @Path("job")
 public class JobResource {
-	
+
 	/** The context. */
 	@Context
 	private SecurityContext context;
@@ -117,14 +117,14 @@ public class JobResource {
 
 				AppInterface appIntf = null;
 				if(application.equals(AppRefNames.GROMMACS.toString())) {
-					appIntf = new GrommacsImpl();
+					appIntf = new GrommacsImpl(machine);
 				}
 				// else add cases for other apps here
 
 				if( appIntf != null ) {
 					/* Submit job to Karst */
 					String jobId = appIntf.submitRemoteJob(bean, application, machine);
-					
+
 					/* Construct response jaxb entity */
 					SubmitJobResponse response = factory.createSubmitJobResponse();
 					response.setJobId(jobId);
@@ -161,15 +161,18 @@ public class JobResource {
 		ResponseBuilder builder = null;
 		ObjectFactory factory = new ObjectFactory();
 		try {
-			// TODO: Uncomment the following once the params are passed in req.
-			MachineDAOUtil machineUtil = new MachineDAOUtil();
-			String machineName = machineUtil.getMachineNameById(machineID);
-			//String machine = MachineRefNames.KARST.toString();
+
+			Experiment expt = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobId, machineID);
+
+			String machineName = expt.getMachine().getMachineName();
+			String application = expt.getApplication().getAppName();
 
 			SCInterface scIntf = null;
 
 			if( machineName.equals(MachineRefNames.BIGRED2.toString()) ) {
-				scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
+				if(application.equals(AppRefNames.GROMMACS.toString())) {
+					scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
+				}
 			}
 			else if( machineName.equals(MachineRefNames.KARST.toString()) ) {
 				scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
@@ -252,7 +255,7 @@ public class JobResource {
 
 			/* Get Karst impl */
 			SCInterface scInterface = new KarstSCImpl(application);
-			
+
 			/* Get job status from Karst */
 			JobBean bean = scInterface.getJobStatus(jobId);
 
@@ -283,21 +286,22 @@ public class JobResource {
 	public Response getJobOutputFile(@PathParam("jobID") String jobID, @PathParam("machineID") String machineID) {
 		ResponseBuilder builder = null;
 		try {
-			// TODO: Uncomment the following once the params are passed in req.
-			MachineDAOUtil machineUtil = new MachineDAOUtil();
-			String machineName = machineUtil.getMachineNameById(machineID);
 
-			SCInterface scIntf = null;
+			Experiment expt = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
+			String jobName = expt.getJobName();
 
-			if( machineName.equals(MachineRefNames.BIGRED2.toString()) ) {
-				scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
+			// FIXME: Machine name in the Machine object in Experiment comes null.
+			String machineName = MachineDAOUtil.getMachineNameById(machineID);
+			System.out.println("machineName: " + machineName);
+
+			AppInterface appIntf = null;
+
+			if( expt.getApplication().getAppName().equals(AppRefNames.GROMMACS.toString()) ) {
+				appIntf = new GrommacsImpl(machineName);
 			}
-			else if( machineName.equals(MachineRefNames.KARST.toString()) ) {
-				scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
-			}
-			
+
 			/* Get job output file path */
-			String filePath = scIntf.downloadJobOutputFile(jobID, machineID);
+			String filePath = appIntf.downloadJobOutputFile(expt.getUserName().getUsername(), jobName);
 
 			/* Create a file object */
 			File response = new File(filePath);

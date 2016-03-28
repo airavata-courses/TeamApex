@@ -17,4 +17,12 @@ public interface AppInterface {
 	 * @return
 	 */
 	public String submitRemoteJob(SubmitJobRequestBean requestBean, String appName, String machineName);
+
+	/**
+	 * Method that downloads the output archive for a given job indicated by userName and jobName.
+	 * @param userName
+	 * @param jobName
+	 * @return
+	 */
+	public String downloadJobOutputFile(String userName, String jobName);
 }

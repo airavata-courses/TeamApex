@@ -6,15 +6,15 @@
 #PBS -N $job_name
 #PBS -j oe
 #PBS -q gpu
-#PBS -o $job_name.out
-#PBS -e $job_name.err
+#PBS -o $job_dir/$job_name.out
+#PBS -e $job_dir/$job_name.err
 
 module swap PrgEnv-cray PrgEnv-gnu 
 module load fftw 
 module load cudatoolkit 
 module load gromacs/gnu/gpu/4.6.5
 
-cd $PBS_O_WORKDIR
+cd $job_dir
 aprun -n 2 -N 1 mdrun_mpi -nice 0 -v -deffnm $tpr_file -c $gro_file
 
-sh ~/sendEmail.sh $job_name
+sh $job_dir/sendEmail.sh $job_name
