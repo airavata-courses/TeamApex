@@ -17,32 +17,64 @@ public class ExperimentPK implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/** The job id. */
 	String jobId;
+	
+	/** The machine. */
 	String machine;
 
+	/**
+	 * Instantiates a new experiment pk.
+	 */
 	public ExperimentPK() {}
 
+	/**
+	 * Gets the job id.
+	 *
+	 * @return the job id
+	 */
 	public String getJobId() {
 		return jobId;
 	}
 
+	/**
+	 * Sets the job id.
+	 *
+	 * @param jobId the new job id
+	 */
 	public void setJobId(String jobId) {
 		this.jobId = jobId;
 	}
 
+	/**
+	 * Gets the machine.
+	 *
+	 * @return the machine
+	 */
 	public String getMachine() {
 		return machine;
 	}
 
+	/**
+	 * Sets the machine.
+	 *
+	 * @param machine the new machine
+	 */
 	public void setMachine(String machine) {
 		this.machine = machine;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		return this.jobId.hashCode() + this.machine.hashCode();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
