@@ -118,6 +118,11 @@ public class JobResource {
 				if( appIntf != null ) {
 					/* Submit job to Karst */
 					String jobId = appIntf.submitRemoteJob(bean, application, machine);
+					
+					/* null check */
+					if(jobId == null) {
+						throw new Exception("Error submitting job request! Please try again later.");
+					}
 
 					/* Construct response jaxb entity */
 					SubmitJobResponse response = factory.createSubmitJobResponse();

@@ -37,6 +37,9 @@ public class Constants {
 	
 	public static final String USER_JOB_DIR = "%s" + File.separator + "%s";
 	
+	/** The Constant MAX_JOBID_LEN. */
+	public static final int MAX_JOBID_LEN = 10;
+	
 	/** The Constant JOB_STATUS. */
 	public static final Map<String, String> JOB_STATUS;
 	

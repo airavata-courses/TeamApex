@@ -93,14 +93,22 @@ public class GrommacsImpl implements AppInterface {
 			//Submit Job
 			String jobId = scIntf.submitRemoteJob(requestBean);
 			System.out.println("JobID: " + jobId);
-
+			
+			// Check job submission
+			if(jobId == null || 
+					jobId.isEmpty() || 
+					jobId.length() > Constants.MAX_JOBID_LEN) {
+				throw new Exception("Something went wrong while submitting remote job! "
+						+ "Please try again later.");
+			}
+				
 			//Add DB entry.
 			ExperimentDAOUtil.saveExperiment(requestBean, jobId, appName, machineName);
 
 			return jobId;
 		}
 		catch(Exception ex) {
-			ex.printStackTrace();
+			System.err.println("Exception in GrommacsImpl: " + ex);
 			return null;
 		}
 	}

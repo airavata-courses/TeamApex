@@ -52,6 +52,14 @@ public class ExperimentDAOUtil {
 		}
 	}
 
+	/**
+	 * Gets the experiment by job id and machine id.
+	 *
+	 * @param jobID the job id
+	 * @param machineID the machine id
+	 * @return the experiment by job id and machine id
+	 * @throws Exception the exception
+	 */
 	public static Experiment getExperimentByJobIDAndMachineID(String jobID, String machineID) throws Exception {
 		try {
 			return dao.getExperimentByID(jobID, machineID);
@@ -61,10 +69,17 @@ public class ExperimentDAOUtil {
 		}
 	}
 
+	/**
+	 * Save experiment.
+	 *
+	 * @param requestBean the request bean
+	 * @param jobId the job id
+	 * @param appName the app name
+	 * @param machineName the machine name
+	 */
 	public static void saveExperiment(SubmitJobRequestBean requestBean, String jobId,
 			String appName, String machineName ) {
 		System.out.println("Entered..");
-		// TODO: Get Logged in user from context
 		User user = dao.getUserByName( requestBean.getUserName() );
 
 		Machine machineObj = dao.getMachineByName(machineName);
@@ -89,6 +104,13 @@ public class ExperimentDAOUtil {
 		System.out.println("saved: " + expt);
 	}
 
+	/**
+	 * Update experiment status.
+	 *
+	 * @param exptId the expt id
+	 * @param machineId the machine id
+	 * @param status the status
+	 */
 	public static void updateExperimentStatus( String exptId, String machineId, String status ) {
 
 		Experiment exptToUpdate = dao.getExperimentByID(exptId, machineId);
