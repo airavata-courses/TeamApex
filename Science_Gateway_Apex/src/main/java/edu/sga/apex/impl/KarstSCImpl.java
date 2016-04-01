@@ -418,7 +418,7 @@ public class KarstSCImpl implements SCInterface {
 			}
 
 			// copy the job script
-			String destJobScript = String.format(properties.getProperty("jobDir") + "/" + properties.getProperty("destJobScript"), 
+			String destJobScript = String.format(properties.getProperty("jobDir") + Constants.LINUX_FILE_SEP + properties.getProperty("destJobScript"), 
 					properties.getProperty("loginUser"), requestBean.getUserName(), requestBean.getJobName());
 
 			this.copyFiles(pbsScriptPath, destJobScript);
@@ -457,14 +457,14 @@ public class KarstSCImpl implements SCInterface {
 
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
-			String destFileEmail = String.format(properties.getProperty("jobDir") + "/" + properties.getProperty("destFileEmail"), 
+			String destFileEmail = String.format(properties.getProperty("jobDir") + Constants.LINUX_FILE_SEP + properties.getProperty("destFileEmail"), 
 					properties.getProperty("loginUser"), requestBean.getUserName(), requestBean.getJobName());
 			String srcFileEmailPath = this.createTempFile(srcFileEmail, "sendEmail", ".sh");
 			this.copyFiles(srcFileEmailPath, destFileEmail);
 
 			// Copy Email Properties Script.
 			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
-			String destFileEmailProp = String.format(properties.getProperty("jobDir") + "/" + properties.getProperty("destFileEmailProp"), 
+			String destFileEmailProp = String.format(properties.getProperty("jobDir") + Constants.LINUX_FILE_SEP + properties.getProperty("destFileEmailProp"), 
 					properties.getProperty("loginUser"), requestBean.getUserName(), requestBean.getJobName());
 			String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
 			this.copyFiles(srcFileEmailPropPath, destFileEmailProp);

@@ -40,6 +40,9 @@ public class Constants {
 	/** The Constant MAX_JOBID_LEN. */
 	public static final int MAX_JOBID_LEN = 10;
 	
+	/** The Constant LINUX_FILE_SEP. */
+	public static final String LINUX_FILE_SEP = "/";
+	
 	/** The Constant JOB_STATUS. */
 	public static final Map<String, String> JOB_STATUS;
 	
