@@ -1,6 +1,5 @@
 package edu.sga.apex.rest.util;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import edu.sga.apex.bean.InputFileBean;
@@ -48,25 +47,25 @@ public class JAXBManager {
 		if (request != null) {
 			/* throw error if required field not specified */
 			if (request.getJobName() == null) {
-				throw new Exception(MessageFormat.format(Constants.MISSING_FIELD_EXCEPTION, "jobName"));
+				throw new Exception(String.format(Constants.MISSING_FIELD_EXCEPTION, "jobName"));
 			}
 			bean.setJobName(request.getJobName());
 			
 			/* throw error if required field not specified */
 			if (request.getApplicationID() == null) {
-				throw new Exception(MessageFormat.format(Constants.MISSING_FIELD_EXCEPTION, "applicationID"));
+				throw new Exception(String.format(Constants.MISSING_FIELD_EXCEPTION, "applicationID"));
 			}
 			bean.setApplicationID(request.getApplicationID());
 			
 			/* throw error if required field not specified */
 			if (request.getMachineID() == null) {
-				throw new Exception(MessageFormat.format(Constants.MISSING_FIELD_EXCEPTION, "machineID"));
+				throw new Exception(String.format(Constants.MISSING_FIELD_EXCEPTION, "machineID"));
 			}
 			bean.setMachineID(request.getMachineID());
 
 			/* throw error if required field not specified */
 			if (request.getEmailId() == null) {
-				throw new Exception(MessageFormat.format(Constants.MISSING_FIELD_EXCEPTION, "emailId"));
+				throw new Exception(String.format(Constants.MISSING_FIELD_EXCEPTION, "emailId"));
 			}
 			bean.setEmailId(request.getEmailId());
 
