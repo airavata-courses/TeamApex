@@ -2,6 +2,7 @@ package edu.sga.apex.app.impl;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Properties;
 
@@ -63,12 +64,9 @@ public class GrommacsImpl implements AppInterface {
 
 	@Override
 	public String submitRemoteJob(SubmitJobRequestBean requestBean, String appName, String machineName) {
-
 		try {
-
-			String jobId = "";
-
-			scIntf.makeDir(requestBean.getUserName() + File.separator + requestBean.getJobName());
+			// create exclusive job directory for user
+			scIntf.makeDir(MessageFormat.format(Constants.USER_JOB_DIR, requestBean.getUserName(), requestBean.getJobName()));
 
 			// Copy binary
 			List<InputFileBean> inputFiles = requestBean.getInputFiles();
@@ -93,7 +91,7 @@ public class GrommacsImpl implements AppInterface {
 			scIntf.copyFiles(file.getAbsolutePath(), destScriptPath);
 
 			//Submit Job
-			jobId = scIntf.submitRemoteJob(requestBean);
+			String jobId = scIntf.submitRemoteJob(requestBean);
 			System.out.println("JobID: " + jobId);
 
 			//Add DB entry.

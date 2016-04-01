@@ -35,10 +35,21 @@ public class ApplicationDAOUtil {
 	 * Gets the application name by querying on ID.
 	 * @param appId Application ID.
 	 * @return Application Name.
+	 * @throws Exception 
 	 */
-	public String getAppNameById(String appId) {
-
-		EntityDAO edao = new EntityDAOImpl();
-		return edao.getApplicationById(appId).getAppName();
+	public static String getAppNameById(String appId) throws Exception {
+		try {
+			Application application = dao.getApplicationById(appId);
+			
+			/* null check */
+			if(application == null) {
+				throw new Exception("Error fetching application. Possibly invalid ID or non existing application in DB.");
+			}
+			
+			return application.getAppName();
+		} catch(Exception ex) {
+			System.err.println("Exception in ApplicationDAOUtil: " + ex);
+			throw ex;
+		}
 	}
 }

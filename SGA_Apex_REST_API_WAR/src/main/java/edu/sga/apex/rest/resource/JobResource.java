@@ -99,22 +99,16 @@ public class JobResource {
 				SubmitJobRequestBean bean = JAXBManager
 						.getSubmitJobRequestBean(request, userName);
 
-				//System.out.println("App ID: " + bean.getApplicationID());
-				//System.out.println("Machine ID: " + bean.getMachineID());
+				System.out.println("App ID: " + bean.getApplicationID());
+				System.out.println("Machine ID: " + bean.getMachineID());
 
-				// TODO: Uncomment the following once the params are passed in req.
-				ApplicationDAOUtil appUtil = new ApplicationDAOUtil();
-				String application = appUtil.getAppNameById(bean.getApplicationID());
-				//String application = AppRefNames.GROMMACS.toString();
+				/* Get application from request */
+				String application = ApplicationDAOUtil.getAppNameById(bean.getApplicationID());
 
-				// TODO: Uncomment the following once the params are passed in req.
-				MachineDAOUtil machineUtil = new MachineDAOUtil();
-				String machine = machineUtil.getMachineNameById(bean.getMachineID());
-				//String machine = MachineRefNames.KARST.toString();
+				/* Get machine from request */
+				String machine = MachineDAOUtil.getMachineNameById(bean.getMachineID());
 
-				/* Get Karst impl */
-				//SCInterface scInterface = new KarstSCImpl(application);
-
+				/* Get application impl (Grommacs)*/
 				AppInterface appIntf = null;
 				if(application.equals(AppRefNames.GROMMACS.toString())) {
 					appIntf = new GrommacsImpl(machine);
@@ -330,12 +324,7 @@ public class JobResource {
 	public Response getExperimentByMachineAndJobID(@PathParam("machineID") String machineID, @PathParam("jobID") String jobID) {
 		ResponseBuilder builder = null;
 		try {
-
-			// TODO: Uncomment the following once the params are passed in req.
-			MachineDAOUtil machineUtil = new MachineDAOUtil();
-			String machineName = machineUtil.getMachineNameById(machineID);
-			//String machine = MachineRefNames.KARST.toString();
-
+			String machineName = MachineDAOUtil.getMachineNameById(machineID);
 			SCInterface scIntf = null;
 
 			if( machineName.equals(MachineRefNames.BIGRED2.toString()) ) {
