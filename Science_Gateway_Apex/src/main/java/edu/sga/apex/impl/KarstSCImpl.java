@@ -23,6 +23,7 @@ import edu.sga.apex.bean.SSHRequestBean;
 import edu.sga.apex.bean.SubmitJobRequestBean;
 import edu.sga.apex.interfaces.SCInterface;
 import edu.sga.apex.util.Constants;
+import edu.sga.apex.util.ExperimentDAOUtil;
 import edu.sga.apex.util.SFTPUtil;
 import edu.sga.apex.util.SSHUtil;
 
@@ -484,7 +485,7 @@ public class KarstSCImpl implements SCInterface {
 	 * @see edu.sga.apex.interfaces.SCInterface#getJobStatus(java.lang.String)
 	 */
 	@Override
-	public JobBean getJobStatus(String jobId) throws Exception {
+	public JobBean getJobStatus(String jobId, String machineId) throws Exception {
 		try {
 			String loginUser = properties.getProperty("loginUser");
 
@@ -509,13 +510,28 @@ public class KarstSCImpl implements SCInterface {
 			String response = util.executeCommands();
 			System.out.println("Command Executed: " + qStatCommand);
 			System.out.println("Response: " + response);
-			JobBean job = BeanManager.createJobBean(response);
 
+			JobBean job = BeanManager.createJobBean(response);
 			return job;
 		}
 		catch (Exception ex) {
-			throw new Exception("Something went wrong while executing qstat command, "
-					+ "reason: " + ex);
+			/* qstat response is empty,
+			 * if db contains job record, then status is completed
+			 * else throw exception
+			 */
+			if(ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobId, machineId) != null) {
+				// update db with completed status
+				ExperimentDAOUtil.updateExperimentStatus(jobId, machineId, Constants.JOB_STATUS.get("C"));
+				
+				// return job bean with completed status
+				JobBean job = new JobBean();
+				job.setStatus(Constants.JOB_STATUS.get("C"));
+				return job;
+			}
+			else {
+				throw new Exception("Something went wrong while executing qstat command, "
+						+ "reason: " + ex);
+			}
 		}
 	}
 

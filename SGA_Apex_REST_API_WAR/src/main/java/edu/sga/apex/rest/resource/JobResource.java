@@ -244,6 +244,7 @@ public class JobResource {
 	 * @param jobId the job id
 	 * @return the job status
 	 */
+	@Deprecated
 	@GET
 	@Path("{jobId}/status")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -257,7 +258,7 @@ public class JobResource {
 			SCInterface scInterface = new KarstSCImpl(application);
 
 			/* Get job status from Karst */
-			JobBean bean = scInterface.getJobStatus(jobId);
+			JobBean bean = scInterface.getJobStatus(jobId, null);
 
 			/* Construct response jaxb entity */
 			JobResponse response = JAXBManager.getJobResponse(bean);
@@ -340,7 +341,7 @@ public class JobResource {
 				scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
 			}
 
-			JobBean bean = scIntf.getJobStatus(jobID);
+			JobBean bean = scIntf.getJobStatus(jobID, machineID);
 
 			//Update Experiment in DB.
 			ExperimentDAOUtil.updateExperimentStatus(jobID, machineID, bean.getStatus());

@@ -54,10 +54,11 @@ public interface SCInterface {
 	 * Gets the job status.
 	 *
 	 * @param jobId the job id
+	 * @param machineId the machine id
 	 * @return the job status
 	 * @throws Exception the exception
 	 */
-	public JobBean getJobStatus(String jobId) throws Exception;
+	public JobBean getJobStatus(String jobId, String machineId) throws Exception;
 
 	/**
 	 * Download job output file.
