@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+// TODO: Auto-generated Javadoc
 /**
  * JPA Entity class for Experiment.
  * 
@@ -261,6 +262,60 @@ public class Experiment {
 	 */
 	public void setApplication(Application application) {
 		this.application = application;
+	}
+
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * Sets the user.
+	 *
+	 * @param user the new user
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	/**
+	 * Gets the created at.
+	 *
+	 * @return the created at
+	 */
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	/**
+	 * Sets the created at.
+	 *
+	 * @param createdAt the new created at
+	 */
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	/**
+	 * Gets the updated at.
+	 *
+	 * @return the updated at
+	 */
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	/**
+	 * Sets the updated at.
+	 *
+	 * @param updatedAt the new updated at
+	 */
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	/**

@@ -123,6 +123,8 @@
 		<xs:sequence>
 			<xs:element name="jobID" type="xs:string" minOccurs="0" />
 			<xs:element name="jobName" type="xs:string" minOccurs="0" />
+			<xs:element name="createdAt" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="updatedAt" type="xs:dateTime" minOccurs="0" />
 			<xs:element name="machine" type="machine" minOccurs="0" />
 			<xs:element name="email" type="xs:string" minOccurs="0" />
 			<xs:element name="numNodes" type="xs:int" minOccurs="0" />

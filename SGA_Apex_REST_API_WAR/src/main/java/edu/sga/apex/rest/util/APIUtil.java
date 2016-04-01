@@ -22,20 +22,21 @@ public class APIUtil {
 	/**
 	 * Gets the XML gregorian calendar.
 	 *
+	 * @param date the date
 	 * @return the XML gregorian calendar
 	 */
 	@SuppressWarnings("finally")
-	public static XMLGregorianCalendar getXMLGregorianCalendar() {
-		XMLGregorianCalendar date = null ;
+	public static XMLGregorianCalendar getXMLGregorianCalendar(Date date) {
+		XMLGregorianCalendar calendar = null ;
 		try {
 			GregorianCalendar c = new GregorianCalendar();
-			c.setTime(new Date());
-			date = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+			c.setTime(date);
+			calendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		finally {
-			return date;
+			return calendar;
 		}
 	}
 

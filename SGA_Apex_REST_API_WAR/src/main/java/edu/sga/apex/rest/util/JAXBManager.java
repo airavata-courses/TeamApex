@@ -208,6 +208,12 @@ public class JAXBManager {
 			experimentJAXB.setNumNodes(experiment.getNumOfNodes());
 			experimentJAXB.setNumProcPerNode(experiment.getProcPerNode());
 			
+			/* set date parameters */
+			if(experiment.getCreatedAt() != null && experiment.getUpdatedAt() != null) {
+				experimentJAXB.setCreatedAt(APIUtil.getXMLGregorianCalendar(experiment.getCreatedAt()));
+				experimentJAXB.setUpdatedAt(APIUtil.getXMLGregorianCalendar(experiment.getUpdatedAt()));
+			}
+			
 			/* check if user entity exists */
 			if(experiment.getUserName() != null) {
 				experimentJAXB.setUserName(experiment.getUserName().getUsername());
