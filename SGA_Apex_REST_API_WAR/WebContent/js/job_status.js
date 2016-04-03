@@ -82,9 +82,11 @@ function renderJobStatus(response) {
 	$("#refreshBtn").show();
 	$("#cancelBtn").show();
 	
-	// show download buttong only if completed
+	// show download button only if completed
+	// and hide cancel button
 	if(response.experiment.status.toLowerCase() == "completed") {
 		$("#downloadBtn").show();
+		$("#cancelBtn").hide();
 	}
 	
 	// set the job name

@@ -137,8 +137,6 @@ public class UserResource {
 	public static void main(String[] args) {
 		
 		try {
-			UserResource res = new UserResource();
-			
 			edu.sga.apex.entity.User user = new edu.sga.apex.entity.User();
 			
 			user.setPassword("rocks");
