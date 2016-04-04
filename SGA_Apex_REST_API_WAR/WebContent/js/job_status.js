@@ -7,7 +7,14 @@ $(document).ready(function() {
 	// get job status
 	jobID = getParameterByName("jobID");
 	machineID = getParameterByName("machineID");
-	$.get( baseURL + "/job/" + machineID + "/" + jobID, renderJobStatus);
+	
+	//$.get( baseURL + "/job/" + machineID + "/" + jobID, renderJobStatus);
+	$.ajax({
+		type: "GET",
+		url: baseURL + "/job/" + machineID + "/" + jobID,
+		success: renderJobStatus,
+		error: apiErrorResponse
+	});
 	
 	$("#cancelBtn").click(function() {
 		cancelJob(machineID, jobID);

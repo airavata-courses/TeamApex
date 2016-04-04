@@ -201,24 +201,32 @@ function submitJob(procnum, email, nodenum, walltime, jobname, appId, machID) {
  * Monitor Job Function.
  */
 function monitorJob(jobID) {
-	//alert("monitor job " + jobID);
-
 	// Show loading overlay
 	$("#overlay").css("visibility", "visible");
 
-	$.get( baseURL + "/job/" + jobID + "/monitor", jobMonitorSuccess );
+	//$.get( baseURL + "/job/" + jobID + "/monitor", jobMonitorSuccess );
+	$.ajax({
+		type: "GET",
+		url: baseURL + "/job/" + jobID + "/monitor",
+		success: jobMonitorSuccess,
+		error: apiErrorResponse
+	});
 }
 
 /*
  * Get Job Status function.
  */
 function getStatus(jobID) {
-	//alert("getstatus job " + jobID);
-
 	// Show loading overlay
 	$("#overlay").css("visibility", "visible");
 
-	$.get( baseURL + "/job/" + jobID + "/status", jobGetStatusSuccess );
+	//$.get( baseURL + "/job/" + jobID + "/status", jobGetStatusSuccess );
+	$.ajax({
+		type: "GET",
+		url: baseURL + "/job/" + jobID + "/status",
+		success: jobGetStatusSuccess,
+		error: apiErrorResponse
+	});
 }
 
 /*
@@ -233,7 +241,8 @@ function cancelJob(machineID, jobID) {
 	$.ajax({
 		type: "DELETE",
 		url: baseURL + "/job/" + machineID + "/" + jobID,
-		success: jobCancelSuccess
+		success: jobCancelSuccess,
+		error: apiErrorResponse
 	});
 }
 
@@ -241,9 +250,16 @@ function cancelJob(machineID, jobID) {
  * Download Output function.
  */
 function downloadOutput(machineID, jobID) {
-	//alert("download output job " + jobName);
+	//$.get( baseURL + "/job/" + machineID + "/" + jobID + "/output", outputDownloadSuccess);
+	$.ajax({
+		type: "GET",
+		url: baseURL + "/job/" + machineID + "/" + jobID + "/output",
+		success: outputDownloadSuccess,
+		error: apiErrorResponse
+	});
 
-	$.get( baseURL + "/job/" + machineID + "/" + jobID + "/output", outputDownloadSuccess);
-
-	window.open(baseURL + "/job/" + machineID + "/" + jobID + "/output", "_blank");
+	window.open(
+			baseURL + "/job/" + machineID + "/" + jobID + "/output", 
+			"_blank"
+	);
 }

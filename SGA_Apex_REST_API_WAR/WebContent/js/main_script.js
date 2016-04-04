@@ -58,9 +58,7 @@ function uploadFile(fileObj) {
 		processData: false,
 		type: "POST",
 		success: fileUploadSuccess,
-		error: function(err) {
-			console.log(err);
-		}
+		error: apiErrorResponse
 	});
 }
 

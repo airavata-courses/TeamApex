@@ -5,14 +5,23 @@ $(document).ready(function() {
 	$("#downloadBtn").hide();
 	
 	// get experiment list and render on page
-	$.get( baseURL + "/user/jobs", renderExperimentList);
+	$.ajax({
+		type: "GET",
+		url: baseURL + "/user/jobs",
+		success: renderExperimentList,
+		error: apiErrorResponse
+	});
 	
 	$("#downloadBtn").click(function() {
 		downloadOutput(machineID, jobID);
 	});
 	
 	$("#monitorBtn").click(function() {
-		window.location.href = jobStatusURL + jobID + "&machineID=" + machineID;
+		// open monitor on a new page
+		window.open(
+				jobStatusURL + jobID + "&machineID=" + machineID,
+				'_blank' // <- This is what makes it open in a new window.
+		);
 	});
 });
 
@@ -132,5 +141,8 @@ function renderExperimentDetails(experiment) {
 	// and hide cancel button
 	if(experiment.status.toLowerCase() == "completed") {
 		$("#downloadBtn").show();
+	}
+	else {
+		$("#downloadBtn").hide();
 	}
 }
