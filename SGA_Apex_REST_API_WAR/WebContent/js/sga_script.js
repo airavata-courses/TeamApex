@@ -31,8 +31,8 @@ function displayOnError(htmlString) {
 //	$( "#submitJobResp" ).css( "color", "#FF0000" );
 //	$( "#submitJobResp" ).html( htmlString );
 
-	$("#myModal .modal-body").html(htmlString);
-	$('#myModal').modal('show');
+	$("#errorModal .modal-body").html(htmlString);
+	$('#errorModal').modal('show');
 }
 
 ////////////SUCCESS Functions////////////
@@ -123,6 +123,24 @@ function outputDownloadSuccess(response) {
 	setTimeout(function() { $("#downloadResp").hide(); }, 5000);
 }
 
+/*
+ * API Error Response Function.
+ */
+function apiErrorResponse(response) {
+	response = response.responseJSON;
+	
+	var htmlString = "<p>" +
+					"<b>Error Message:</b> " + response.apiErrorResponse.message + "<br>" +
+					"<b>Error Trace:</b> " + String(response.apiErrorResponse.trace) + "<br>" +
+					"</p>";
+	
+	// render error message on page
+	displayOnError(htmlString);
+	
+	// Hide Loading overlay
+	$("#overlay").css("visibility", "hidden");
+}
+
 ////////////ERROR Functions////////////
 //TODO: Implement Error functions and handle errors on UI.
 
@@ -174,6 +192,7 @@ function submitJob(procnum, email, nodenum, walltime, jobname, appId, machID) {
 		},
 		data: JSON.stringify(jsonData),
 		success: jobSubmitSuccess,
+		error: apiErrorResponse,
 		dataType: "json"
 	});
 }
