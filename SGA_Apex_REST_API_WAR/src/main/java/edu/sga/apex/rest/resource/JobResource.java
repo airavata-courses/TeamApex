@@ -161,18 +161,13 @@ public class JobResource {
 		ResponseBuilder builder = null;
 		ObjectFactory factory = new ObjectFactory();
 		try {
-
-			Experiment expt = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobId, machineID);
-
-			String machineName = expt.getMachine().getMachineName();
-			String application = expt.getApplication().getAppName();
-
+			/* Get machine name from db */
+			String machineName = MachineDAOUtil.getMachineNameById(machineID);
+			
 			SCInterface scIntf = null;
 
 			if( machineName.equals(MachineRefNames.BIGRED2.toString()) ) {
-				if(application.equals(AppRefNames.GROMMACS.toString())) {
-					scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
-				}
+				scIntf = new BigRed2SCImpl(AppRefNames.GROMMACS.toString());
 			}
 			else if( machineName.equals(MachineRefNames.KARST.toString()) ) {
 				scIntf = new KarstSCImpl(AppRefNames.GROMMACS.toString());
@@ -183,7 +178,7 @@ public class JobResource {
 
 			/* Construct response jaxb entity */
 			SimpleAPIResponse response = factory.createSimpleAPIResponse();
-			response.setMessage("Submitted request to delete job [" + jobId + "].");
+			response.setMessage("Submitted request to delete job [" + jobId + "] on machine [" + machineName + "].");
 			response.setStatus(Status.ACCEPTED.getStatusCode());
 
 			/* Build the response */
@@ -348,7 +343,7 @@ public class JobResource {
 
 			/* get experiment entity from db */
 			Experiment experimentDAO = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
-
+			
 			/* check if present in db */
 			if(experimentDAO == null) {
 				throw new Exception("Experiment with jobID: [" + jobID + "] on machine: [" + machineID + "] not found!");

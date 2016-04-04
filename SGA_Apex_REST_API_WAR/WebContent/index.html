@@ -191,7 +191,26 @@
 					</div>
 				</div>
 				<!-- /error-modal -->
-
+				
+				<!-- Job Cancel Modal -->
+				<div class="modal fade" id="jobCancelModal" tabindex="-1" role="dialog" aria-labelledby="jobCancelModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="jobCancelModalLabel">Cancel Job Response</h4>
+							</div>
+							<div class="modal-body"></div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /job-cancel-modal -->
 			</div>
 			<!-- /col-md-8 -->
 
@@ -281,7 +300,6 @@
 									placeholder="Enter Job ID (eg: 1245132.m2)"
 									required>
 							</div>
-							<!-- /form-group -->
 							
 							<div id="machineSelectCancel" class="form-group row col-xs-8">
 								<label for="machineCancel">Select a machine</label>

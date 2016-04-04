@@ -97,13 +97,10 @@ function jobGetStatusSuccess(response) {
  */
 function jobCancelSuccess(response) {
 	var htmlString = "<p>" + response.simpleAPIResponse.message + "</p>";
-	//alert(htmlString)
-	// displayMessageOnSuccess( htmlString );
 
-	$("#cancelJobResp").css( "color", "#0000FF");
-	$("#cancelJobResp").html(htmlString);
-	$("#cancelJobResp").show();
-	setTimeout(function() { $("#cancelJobResp").hide(); }, 5000);
+	// show the response on modal
+	$("#jobCancelModal .modal-body").html(htmlString);
+	$('#jobCancelModal').modal('show');
 
 	// Hide Loading overlay
 	$("#overlay").css("visibility", "hidden");

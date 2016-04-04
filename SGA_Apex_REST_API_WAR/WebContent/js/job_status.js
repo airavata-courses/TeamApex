@@ -27,11 +27,6 @@ $(document).ready(function() {
 	$("#refreshBtn").click(function() {
 		location.reload();
 	});
-	
-	$("#monitorJob").submit(function(event) {
-		window.location.href = jobStatusURL + $('#jobIDM').val() + "&machineID=" + $("#machineMonitor").val();
-		event.preventDefault();
-	});
 });
 
 

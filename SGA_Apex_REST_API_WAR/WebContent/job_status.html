@@ -104,6 +104,26 @@
 					</div>
 				</div>
 				<!-- /error-modal -->
+				
+				<!-- Job Cancel Modal -->
+				<div class="modal fade" id="jobCancelModal" tabindex="-1" role="dialog" aria-labelledby="jobCancelModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="jobCancelModalLabel">Cancel Job Response</h4>
+							</div>
+							<div class="modal-body"></div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /job-cancel-modal -->
 			</div>
 			<!-- /col-md-8 -->
 			
@@ -148,8 +168,19 @@
 					<div class="panel-body">
 						<form id="downloadOP" action="">
 							<div class="form-group row col-xs-12">
-								<label for="jobNameD">Job Name</label>								
-								<input type="text" class="form-control" id="jobNameD" placeholder="Enter Job Name (eg: goshenoy-01)">
+								<label for="jobIDD">Job ID</label>
+								<input type="text" class="form-control" id="jobIDD"
+									placeholder="Enter Job ID (eg: 1245132.m2)"
+									required>
+							</div>
+							<!-- /form-group -->
+							
+							<div id="machineSelectDownload" class="form-group row col-xs-8">
+								<label for="machineDownload">Select a machine</label>
+								<select id="machineDownload">
+								  <option value="karst01">Karst</option>
+								  <option value="bigred201">Big Red 2</option>
+								</select>
 							</div>
 							<!-- /form-group -->
 							
@@ -175,8 +206,18 @@
 					<div class="panel-body">
 						<form id="cancelJob" action="">
 							<div class="form-group row col-xs-12">
-								<label for="jobIDC">Job ID</label>								
-								<input type="text" class="form-control" id="jobIDC" placeholder="Enter Job ID (eg: 1245132.m2)">
+								<label for="jobIDC">Job ID</label> 
+								<input type="text" class="form-control" id="jobIDC"
+									placeholder="Enter Job ID (eg: 1245132.m2)"
+									required>
+							</div>
+							
+							<div id="machineSelectCancel" class="form-group row col-xs-8">
+								<label for="machineCancel">Select a machine</label>
+								<select id="machineCancel">
+								  <option value="karst01">Karst</option>
+								  <option value="bigred201">Big Red 2</option>
+								</select>
 							</div>
 							<!-- /form-group -->
 							
