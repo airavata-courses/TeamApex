@@ -212,7 +212,7 @@ public class BigRed2SCImpl implements SCInterface {
 			bean.setUserName(properties.getProperty("loginUser"));
 			bean.setPassPhrase(properties.getProperty("passPhrase"));
 			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
-			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+//			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
 
 			bean.setSourceFilePath(srcFile);
 			bean.setDestFilePath(destFile);
@@ -241,7 +241,7 @@ public class BigRed2SCImpl implements SCInterface {
 			bean.setUserName(properties.getProperty("loginUser"));
 			bean.setPassPhrase(properties.getProperty("passPhrase"));
 			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
-			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+//			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
 
 			SFTPUtil util = new SFTPUtil(bean);
 			util.mkDir(directory);
@@ -276,7 +276,7 @@ public class BigRed2SCImpl implements SCInterface {
 			String sendEmailcommand = "source " + destFileEmail + " "+ jobId + " " + loginUser;
 
 			String loginKey = properties.getProperty("loginKey");
-			String knownHosts = properties.getProperty("knownHosts");
+//			String knownHosts = properties.getProperty("knownHosts");
 			String hostName = properties.getProperty("hostName");
 			String passPhrase = properties.getProperty("passPhrase");
 
@@ -286,7 +286,7 @@ public class BigRed2SCImpl implements SCInterface {
 			bean.setUserName(loginUser);
 			bean.setPassPhrase(passPhrase);
 			bean.setPrivateKeyFilePath(loginKey);
-			bean.setKnownHostsFilePath(knownHosts);
+//			bean.setKnownHostsFilePath(knownHosts);
 			bean.setCommands(sendEmailcommand);
 
 			SSHUtil util = new SSHUtil(bean);
@@ -312,7 +312,7 @@ public class BigRed2SCImpl implements SCInterface {
 			bean.setUserName(properties.getProperty("loginUser"));
 			bean.setPassPhrase(properties.getProperty("passPhrase"));
 			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
-			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+//			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
 			bean.setCommands("qdel " + jobId);
 
 			SSHUtil util = new SSHUtil(bean);
@@ -388,7 +388,7 @@ public class BigRed2SCImpl implements SCInterface {
 			bean.setUserName(properties.getProperty("loginUser"));
 			bean.setPassPhrase(properties.getProperty("passPhrase"));
 			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
-			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+//			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
 			bean.setCommands("qsub temp.script");
 
 			SSHUtil util = new SSHUtil(bean);
@@ -428,7 +428,7 @@ public class BigRed2SCImpl implements SCInterface {
 			bean.setUserName(properties.getProperty("loginUser"));
 			bean.setPassPhrase(properties.getProperty("passPhrase"));
 			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
-			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+//			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
 			bean.setCommands("dos2unix " + destJobScript);
 
 			SSHUtil util = new SSHUtil(bean);
@@ -472,7 +472,7 @@ public class BigRed2SCImpl implements SCInterface {
 			String qStatCommand = "qstat -u " + loginUser + " | grep "+ jobId;
 
 			String loginKey = properties.getProperty("loginKey");
-			String knownHosts = properties.getProperty("knownHosts");
+//			String knownHosts = properties.getProperty("knownHosts");
 			String hostName = properties.getProperty("hostName");
 			String passPhrase = properties.getProperty("passPhrase");
 
@@ -482,7 +482,7 @@ public class BigRed2SCImpl implements SCInterface {
 			bean.setUserName(loginUser);
 			bean.setPassPhrase(passPhrase);
 			bean.setPrivateKeyFilePath(loginKey);
-			bean.setKnownHostsFilePath(knownHosts);
+//			bean.setKnownHostsFilePath(knownHosts);
 			bean.setCommands(qStatCommand);
 
 			SSHUtil util = new SSHUtil(bean);
@@ -533,7 +533,7 @@ public class BigRed2SCImpl implements SCInterface {
 			bean.setUserName(properties.getProperty("loginUser"));
 			bean.setPassPhrase(properties.getProperty("passPhrase"));
 			bean.setPrivateKeyFilePath(properties.getProperty("loginKey"));
-			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
+//			bean.setKnownHostsFilePath(properties.getProperty("knownHosts"));
 
 			SFTPUtil util = new SFTPUtil(bean);
 			downloadedFile = util.getFromServer(filePath);

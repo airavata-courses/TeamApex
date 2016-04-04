@@ -132,7 +132,7 @@ public class GrommacsImpl implements AppInterface {
 					+ jobDir + Constants.LINUX_FILE_SEP + "*.trr";
 
 			String loginKey = properties.getProperty("loginKey");
-			String knownHosts = properties.getProperty("knownHosts");
+//			String knownHosts = properties.getProperty("knownHosts");
 			String hostName = properties.getProperty("hostName");
 			String passPhrase = properties.getProperty("passPhrase");
 			String loginUser = properties.getProperty("loginUser");
@@ -143,7 +143,7 @@ public class GrommacsImpl implements AppInterface {
 			bean.setUserName(loginUser);
 			bean.setPassPhrase(passPhrase);
 			bean.setPrivateKeyFilePath(loginKey);
-			bean.setKnownHostsFilePath(knownHosts);
+//			bean.setKnownHostsFilePath(knownHosts);
 			bean.setCommands(tarCommand);
 
 			SSHUtil util = new SSHUtil(bean);
