@@ -405,7 +405,7 @@ public class KarstSCImpl implements SCInterface {
 	 * @see edu.sga.apex.interfaces.SCInterface#submitRemoteJon(edu.sga.apex.bean.SubmitJobRequestBean)
 	 */
 	@Override
-	public String submitRemoteJob(SubmitJobRequestBean requestBean) {
+	public String submitRemoteJob(SubmitJobRequestBean requestBean) throws Exception {
 		try{
 
 			this.makeDir(requestBean.getUserName() + File.separator + requestBean.getJobName());
@@ -436,25 +436,6 @@ public class KarstSCImpl implements SCInterface {
 			SSHUtil util = new SSHUtil(bean);
 			util.executeCommands();
 
-			/**String srcScript = properties.getProperty("srcScript");
-			String destScriptPath = String.format(properties.getProperty("destScript"), 
-													properties.getProperty("loginUser"));
-			String srcScriptPath = this.createTempFile(srcScript, "hello", ".sh");
-
-			// Make dest directory & copy binary
-			this.makeDir("apex_scripts");
-			this.copyFiles(srcScriptPath, destScriptPath);
-
-			// handle dos2unix
-			bean.setCommands("dos2unix " + destScriptPath);
-			util = new SSHUtil(bean);
-			util.executeCommands();
-
-			// give it exe permissions
-			bean.setCommands("chmod +x " + destScriptPath);
-			util = new SSHUtil(bean);
-			util.executeCommands();**/
-
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
 			String destFileEmail = String.format(properties.getProperty("jobDir") + Constants.LINUX_FILE_SEP + properties.getProperty("destFileEmail"), 
@@ -477,7 +458,7 @@ public class KarstSCImpl implements SCInterface {
 			return jobId;
 		}catch(Exception e){
 			e.printStackTrace();
-			return "Job failed to submit";
+			throw new Exception("Job failed to submit");
 		}
 	}
 

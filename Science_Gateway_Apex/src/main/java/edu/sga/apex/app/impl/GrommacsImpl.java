@@ -108,6 +108,7 @@ public class GrommacsImpl implements AppInterface {
 		}
 		catch(Exception ex) {
 			System.err.println("Exception in GrommacsImpl: " + ex);
+			ex.printStackTrace();
 			return null;
 		}
 	}

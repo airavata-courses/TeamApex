@@ -47,8 +47,9 @@ public interface SCInterface {
 	 *
 	 * @param requestBean the request bean
 	 * @return the string
+	 * @throws Exception the exception
 	 */
-	public String submitRemoteJob(SubmitJobRequestBean requestBean);
+	public String submitRemoteJob(SubmitJobRequestBean requestBean) throws Exception;
 
 	/**
 	 * Gets the job status.

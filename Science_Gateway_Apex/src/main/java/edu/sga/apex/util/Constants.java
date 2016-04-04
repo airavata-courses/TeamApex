@@ -35,6 +35,9 @@ public class Constants {
 	/** The Constant TEMP_DIR_PROP. */
 	public static final String TEMP_DIR_PROP = "java.io.tmpdir";
 	
+	/** The Constant JOB_DIR_PROP. */
+	public static final String JOB_DIR_PROP = "jobDir";
+	
 	public static final String USER_JOB_DIR = "%s" + File.separator + "%s";
 	
 	/** The Constant MAX_JOBID_LEN. */

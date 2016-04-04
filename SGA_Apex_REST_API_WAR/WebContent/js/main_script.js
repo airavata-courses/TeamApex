@@ -6,6 +6,7 @@ $(document).ready(function() {
 	
 	$("#submitJob").submit(function(event) {
 		console.log("Handler for .submit() called.");
+		machineID = $("#machine").val();
 
 		try {
 			var file1 = $('#inputFile1')[0].files[0];
@@ -39,11 +40,7 @@ $(document).ready(function() {
 	});
 
 	$("#myModal .modal-footer button").click(function() {
-		window.location.href = jobStatusURL + jobID + "&machineID=" + $("#machine").val();
-	});
-
-	$("#machine").change(function() {
-		  machineID = $("#machine").val();
+		window.location.href = jobStatusURL + jobID + "&machineID=" + machineID;
 	});
 	
 });

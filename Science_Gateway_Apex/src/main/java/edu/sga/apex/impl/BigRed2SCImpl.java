@@ -168,6 +168,10 @@ public class BigRed2SCImpl implements SCInterface {
 					Integer nodesProc = bean.getNumNodes()*bean.getNumProcessors();
 					line = line.replace("$nodesProc", nodesProc.toString());
 				}
+				if(line.contains("$job_dir")){
+					line = line.replace("$job_dir", String.format(properties.getProperty("jobDir"), 
+							properties.getProperty("loginUser"), bean.getUserName(), bean.getJobName()));
+				}
 				if(line.contains("$tpr_file")){
 					List<InputFileBean> inputFiles = bean.getInputFiles();
 					String tpr_file = null, gro_file = null;
@@ -400,7 +404,7 @@ public class BigRed2SCImpl implements SCInterface {
 	 * @see edu.sga.apex.interfaces.SCInterface#submitRemoteJon(edu.sga.apex.bean.SubmitJobRequestBean)
 	 */
 	@Override
-	public String submitRemoteJob(SubmitJobRequestBean requestBean) {
+	public String submitRemoteJob(SubmitJobRequestBean requestBean) throws Exception {
 		try{
 			// create the job script file
 			String pbsScriptPath = createJobScript(requestBean);
@@ -412,8 +416,8 @@ public class BigRed2SCImpl implements SCInterface {
 			this.makeDir(requestBean.getUserName());
 
 			// copy the job script
-			String destJobScript = String.format(properties.getProperty("destJobScript"), 
-					properties.getProperty("loginUser"), requestBean.getUserName());
+			String destJobScript = String.format(properties.getProperty("jobDir") + Constants.LINUX_FILE_SEP + properties.getProperty("destJobScript"), 
+					properties.getProperty("loginUser"), requestBean.getUserName(), requestBean.getJobName());
 
 			this.copyFiles(pbsScriptPath, destJobScript);
 
@@ -430,59 +434,17 @@ public class BigRed2SCImpl implements SCInterface {
 			SSHUtil util = new SSHUtil(bean);
 			util.executeCommands();
 
-			//TODO: Move this Grommacs specific file copy to Grommacs Impl.
-			// Copy binary
-			List<InputFileBean> inputFiles = requestBean.getInputFiles();
-			String tpr_file = null, gro_file = null;
-			for(InputFileBean ifbean: inputFiles){
-				if(ifbean.getFileType().equals("Coordinate-File")){
-					gro_file = ifbean.getFileName();
-				}else if(ifbean.getFileType().equals("Portable-Input-Binary-File")){
-					tpr_file = ifbean.getFileName();
-				}
-			}
-
-			String destScriptPath = String.format(properties.getProperty("destScript"), 
-					properties.getProperty("loginUser"), bean.getUserName());
-
-			// copy trp file
-			File file = new File(System.getProperty(Constants.TEMP_DIR_PROP), tpr_file);	
-			this.copyFiles(file.getAbsolutePath(), destScriptPath);
-
-			// copy gro file
-			file = new File(System.getProperty(Constants.TEMP_DIR_PROP), gro_file);	
-			this.copyFiles(file.getAbsolutePath(), destScriptPath);
-
-			/**String srcScript = properties.getProperty("srcScript");
-			String destScriptPath = String.format(properties.getProperty("destScript"), 
-													properties.getProperty("loginUser"));
-			String srcScriptPath = this.createTempFile(srcScript, "hello", ".sh");
-
-			// Make dest directory & copy binary
-			this.makeDir("apex_scripts");
-			this.copyFiles(srcScriptPath, destScriptPath);
-
-			// handle dos2unix
-			bean.setCommands("dos2unix " + destScriptPath);
-			util = new SSHUtil(bean);
-			util.executeCommands();
-
-			// give it exe permissions
-			bean.setCommands("chmod +x " + destScriptPath);
-			util = new SSHUtil(bean);
-			util.executeCommands();**/
-
 			// Copy Email send script.
 			String srcFileEmail = properties.getProperty("srcFileEmail");
-			String destFileEmail = String.format(properties.getProperty("destFileEmail"), 
-					properties.getProperty("loginUser"), requestBean.getUserName());
+			String destFileEmail = String.format(properties.getProperty("jobDir") + Constants.LINUX_FILE_SEP + properties.getProperty("destFileEmail"), 
+					properties.getProperty("loginUser"), requestBean.getUserName(), requestBean.getJobName());
 			String srcFileEmailPath = this.createTempFile(srcFileEmail, "sendEmail", ".sh");
 			this.copyFiles(srcFileEmailPath, destFileEmail);
-
+	
 			// Copy Email Properties Script.
 			String srcFileEmailProp = properties.getProperty("srcFileEmailProp");
-			String destFileEmailProp = String.format(properties.getProperty("destFileEmailProp"), 
-					properties.getProperty("loginUser"), requestBean.getUserName());
+			String destFileEmailProp = String.format(properties.getProperty("jobDir") + Constants.LINUX_FILE_SEP + properties.getProperty("destFileEmailProp"), 
+					properties.getProperty("loginUser"), requestBean.getUserName(), requestBean.getJobName());
 			String srcFileEmailPropPath = this.createTempFile(srcFileEmailProp, "sendmail", ".properties");
 			this.copyFiles(srcFileEmailPropPath, destFileEmailProp);
 
@@ -494,7 +456,7 @@ public class BigRed2SCImpl implements SCInterface {
 			return jobId;
 		}catch(Exception e){
 			e.printStackTrace();
-			return "Job failed to submit";
+			throw new Exception("Job failed to submit");
 		}
 	}
 
