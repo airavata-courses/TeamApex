@@ -248,12 +248,12 @@ function cancelJob(machineID, jobID) {
  */
 function downloadOutput(machineID, jobID) {
 	//$.get( baseURL + "/job/" + machineID + "/" + jobID + "/output", outputDownloadSuccess);
-	$.ajax({
-		type: "GET",
-		url: baseURL + "/job/" + machineID + "/" + jobID + "/output",
-		success: outputDownloadSuccess,
-		error: apiErrorResponse
-	});
+	//$.ajax({
+	//	type: "GET",
+	//	url: baseURL + "/job/" + machineID + "/" + jobID + "/output",
+	//	success: outputDownloadSuccess,
+	//	error: apiErrorResponse
+	//});
 
 	window.open(
 			baseURL + "/job/" + machineID + "/" + jobID + "/output", 
