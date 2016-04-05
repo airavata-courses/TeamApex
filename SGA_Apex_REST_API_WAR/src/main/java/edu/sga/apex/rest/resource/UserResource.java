@@ -1,9 +1,11 @@
 package edu.sga.apex.rest.resource;
 
+import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -42,6 +44,9 @@ public class UserResource {
 	/** The context. */
 	@Context
 	private SecurityContext context;
+	
+	@Context
+	private HttpSession session;
 
 	/* 
 	 * API Request JSON
@@ -134,6 +139,39 @@ public class UserResource {
 		return builder.build();
 	}
 	
+	/**
+	 * User logout.
+	 *
+	 * @return the response
+	 */
+	@GET
+	@Path("logout")
+	@Produces({ MediaType.TEXT_HTML })
+	public Response userLogout() {
+		ResponseBuilder builder = null;
+		try {
+			/* Invalidate the session to logout */
+			session.invalidate();
+			
+			/* Home page*/
+			URI response = new URI("/");
+			
+			/* Send redirect */
+			builder = Response.temporaryRedirect(response);
+		} catch (Exception ex) {
+			/* handle exception and return response */
+			return ExceptionUtil.handleException(ex);
+		}
+
+		/* Return the response */
+		return builder.build();
+	}
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		try {
