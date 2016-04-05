@@ -21,4 +21,7 @@ public class Constants {
 	
 	/** The Constant TEMP_DIR. */
 	public static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
+	
+	/** The Constant MISSING_FIELD_EXCEPTION. */
+	public static final String MISSING_FIELD_EXCEPTION = "%s parameter not specified. Please pass this field in the request JSON.";
 }

@@ -3,6 +3,7 @@ package edu.sga.apex.util;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.regex.Pattern;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -51,9 +52,11 @@ public class SFTPUtil {
 		try {
 			session = jsch.getSession(requestBean.getUserName(), requestBean.getHostName(), requestBean.getSshPort());
 			
-			jsch.setKnownHosts(requestBean.getKnownHostsFilePath());
+//			jsch.setKnownHosts(requestBean.getKnownHostsFilePath());
 			jsch.addIdentity(requestBean.getPrivateKeyFilePath(), requestBean.getPassPhrase());
 			
+			//disable host-key checking
+			session.setConfig("StrictHostKeyChecking", "no");
 			session.connect();
 		}
 		catch(Exception ex) {
@@ -165,7 +168,11 @@ public class SFTPUtil {
 		System.out.println("[SFTP] Request Bean: " + this.requestBean);
 		
 		try {
-			String[] folders = path.split("/");
+			// Regex to handle escape in windows separator
+			String pattern = Pattern.quote(File.separator);
+			String[] folders = path.split(pattern);
+			
+			// Iterate over folders & create non-existing ones
 			for (String folder : folders) {
 			    if (folder.length() > 0) {
 			        try {
@@ -196,8 +203,8 @@ public class SFTPUtil {
 	 */
 	public static void main(String[] args) {
 		SCPRequestBean bean = new SCPRequestBean();
-		bean.setDestFilePath("goshenoy01.out");
-		bean.setSourceFilePath("C:\\folder1\\ex1.txt");
+//		bean.setDestFilePath("goshenoy01.out");
+//		bean.setSourceFilePath("C:\\folder1\\ex1.txt");
 		bean.setHostName("karst.uits.iu.edu");
 		bean.setSshPort(Constants.SSH_PORT);
 		bean.setUserName("goshenoy");
@@ -206,9 +213,15 @@ public class SFTPUtil {
 		bean.setKnownHostsFilePath("C:\\Users\\Gaurav-PC\\.ssh\\known_hosts");
 		
 		SFTPUtil util = new SFTPUtil(bean);
-		String filePath = util.getFromServer("goshenoy01.out");
-		System.out.println(filePath);
-		File file = new File(filePath);
-		System.out.println(file.getAbsolutePath());
+		
+		/* Test download file */
+//		String filePath = util.getFromServer("goshenoy01.out");
+//		System.out.println(filePath);
+//		File file = new File(filePath);
+//		System.out.println(file.getAbsolutePath());
+		
+		/* Test MkDir */
+		util.mkDir("dir1" + File.separator + "dir2");
+		System.out.println("Completed!");
 	}
 }

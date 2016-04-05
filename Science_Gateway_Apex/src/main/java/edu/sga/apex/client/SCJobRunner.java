@@ -1,6 +1,7 @@
 package edu.sga.apex.client;
 
 import edu.sga.apex.impl.KarstSCImpl;
+import edu.sga.apex.util.AppRefNames;
 import edu.sga.apex.util.Constants;
 
 /**
@@ -26,7 +27,7 @@ public class SCJobRunner {
 		}
 
 		if ( args[0].equals(Constants.SUBMITJOB) ) {
-			KarstSCImpl kimpl = new KarstSCImpl();
+			KarstSCImpl kimpl = new KarstSCImpl(AppRefNames.GROMMACS.toString());
 			kimpl.submitJob();
 			//System.out.println("Job submitted successfuly.");
 		}
@@ -38,7 +39,7 @@ public class SCJobRunner {
 
 			String jobName = args[1];
 
-			KarstSCImpl kimpl = new KarstSCImpl();
+			KarstSCImpl kimpl = new KarstSCImpl(AppRefNames.GROMMACS.toString());
 			kimpl.monitorJob(jobName);
 			System.out.println("Request to monitor job " + jobName
 					+ " submitted successfuly.");

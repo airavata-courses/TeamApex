@@ -49,9 +49,11 @@ public class SSHUtil {
 		try {
 			session = jsch.getSession(requestBean.getUserName(), requestBean.getHostName(), requestBean.getSshPort());
 			
-			jsch.setKnownHosts(requestBean.getKnownHostsFilePath());
+//			jsch.setKnownHosts(requestBean.getKnownHostsFilePath());
 			jsch.addIdentity(requestBean.getPrivateKeyFilePath(), requestBean.getPassPhrase());
 			
+			//disable host-key checking
+			session.setConfig("StrictHostKeyChecking", "no");
 			session.connect();
 		}
 		catch(Exception ex) {

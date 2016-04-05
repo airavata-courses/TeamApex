@@ -1,0 +1,20 @@
+#!/bin/bash
+#PBS -k o
+#PBS -l nodes=$nodes:ppn=$processors_per_node,walltime=$walltime 
+#PBS -M $emailId
+#PBS -m abe 
+#PBS -N $job_name
+#PBS -j oe
+#PBS -q gpu
+#PBS -o $job_dir/$job_name.out
+#PBS -e $job_dir/$job_name.err
+
+module swap PrgEnv-cray PrgEnv-gnu 
+module load fftw 
+module load cudatoolkit 
+module load gromacs/gnu/gpu/4.6.5
+
+cd $job_dir
+aprun -n 2 -N 1 mdrun_mpi -nice 0 -v -deffnm $tpr_file -c $gro_file
+
+sh $job_dir/sendEmail.sh $job_name

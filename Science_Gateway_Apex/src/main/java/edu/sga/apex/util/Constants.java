@@ -1,5 +1,6 @@
 package edu.sga.apex.util;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +34,17 @@ public class Constants {
 	
 	/** The Constant TEMP_DIR_PROP. */
 	public static final String TEMP_DIR_PROP = "java.io.tmpdir";
+	
+	/** The Constant JOB_DIR_PROP. */
+	public static final String JOB_DIR_PROP = "jobDir";
+	
+	public static final String USER_JOB_DIR = "%s" + File.separator + "%s";
+	
+	/** The Constant MAX_JOBID_LEN. */
+	public static final int MAX_JOBID_LEN = 10;
+	
+	/** The Constant LINUX_FILE_SEP. */
+	public static final String LINUX_FILE_SEP = "/";
 	
 	/** The Constant JOB_STATUS. */
 	public static final Map<String, String> JOB_STATUS;
