@@ -124,7 +124,7 @@ public class GrommacsImpl implements AppInterface {
 					properties.getProperty("loginUser"), userName, jobName);
 
 			// Build Tar.
-			String tarCommand = "tar -cf " 
+			String tarCommand = "tar -Pcf " 
 					+ jobDir + Constants.LINUX_FILE_SEP + jobName + ".tar "
 					+ jobDir + Constants.LINUX_FILE_SEP + "*.out "
 					+ jobDir + Constants.LINUX_FILE_SEP + "*.edr "
@@ -152,7 +152,7 @@ public class GrommacsImpl implements AppInterface {
 			System.out.println("Response: " + response);
 
 			// Download the Tar.
-			String downloadedFile = scIntf.downloadJobOutputFile(jobDir + Constants.LINUX_FILE_SEP + jobName + ".tar ");
+			String downloadedFile = scIntf.downloadJobOutputFile(jobDir + Constants.LINUX_FILE_SEP + jobName + ".tar");
 			return downloadedFile;
 		}
 		catch(Exception ex) {
