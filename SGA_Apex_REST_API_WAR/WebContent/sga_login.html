@@ -39,7 +39,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong>Team APEX</strong> Login Form</h1>
+                            <h1><strong>Team APEX</strong> Authentication Form</h1>
                             <div class="description">
                             	<p>
 	                            	This application is a <strong>Science Gateway Software-as-a-Service</strong> model that submits
@@ -52,8 +52,8 @@
                         <div class="col-sm-6 col-sm-offset-3 form-box">
                         	<div class="form-top">
                         		<div class="form-top-left">
-                        			<h3>Login to our site</h3>
-                            		<p>Enter your username and password to log on:</p>
+                        			<h3>Login/Register to our site</h3>
+                            		<p>Enter your username and password to authenticate:</p>
                         		</div>
                         		<div class="form-top-right">
                         			<i class="fa fa-key"></i>
@@ -69,11 +69,35 @@
 			                        	<label class="sr-only" for="form-password">Password</label>
 			                        	<input type="password" name="j_password" placeholder="Password..." class="form-password form-control" id="form-password">
 			                        </div>
-			                        <button type="submit" class="btn">Sign in!</button>
+			                        <button type="submit" class="btn btn-success">Sign in!</button>
+			                        
+			                        <!-- register button -->
+									<button id="registerBtn" type="button" class="btn btn-warning">Register</button>
 			                    </form>
 		                    </div>
                         </div>
                     </div>
+                    
+                    <!-- Register User Modal -->
+					<div class="modal fade" id="userRegisterModal" tabindex="-1" role="dialog" aria-labelledby="userRegisterModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="userRegisterModalLabel">Register User Response</h4>
+								</div>
+								<div class="modal-body"></div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /register-user-modal -->
+					
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 social-login">
                         	<h3>Check out our code on..</h3>

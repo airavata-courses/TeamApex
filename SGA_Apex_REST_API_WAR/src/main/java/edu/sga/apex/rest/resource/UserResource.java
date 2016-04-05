@@ -73,7 +73,7 @@ public class UserResource {
 			
 			/* check if user already exists */
 			if(UserDAOUtil.isUserExists(user.getUserName())) {
-				throw new EntityExistsException("User with UserName: " + user.getUserName() + "already exists!");
+				throw new EntityExistsException("User with Username: [" + user.getUserName() + "] already exists!");
 			}
 			else {
 				/* create a new user in db */
