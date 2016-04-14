@@ -9,8 +9,8 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
     secret_access_key: $AWS_SECRET_KEY
     bucket: airavata-team-apex
-    endpoint: airavata-team-apex.s3-us-east-1.amazonaws.com
-    region: us-east-1
+    endpoint: airavata-team-apex.s3-us-west-2.amazonaws.com
+    region: us-west-2
     skip_cleanup: true
     acl: public_read
     detect_encoding: true
