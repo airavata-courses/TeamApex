@@ -14,6 +14,8 @@ deploy:
     skip_cleanup: true
     acl: public_read
     detect_encoding: true
+    local_dir: SGA_Apex_REST_API_WAR
+    key: target/SGA_Apex_REST_API_WAR-0.1.0.war
     on:
       repo: airavata-courses/TeamApex
       all_branches: true
