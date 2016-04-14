@@ -12,7 +12,6 @@ deploy:
     endpoint: airavata-team-apex.s3-us-east-1.amazonaws.com
     region: us-east-1
     skip_cleanup: true
-    local-dir: output
     acl: public_read
     detect_encoding: true
 notifications:
