@@ -8,7 +8,7 @@ script: cd "SGA_Build" && mvn -e clean install
 before_deploy:
   - cd ..
   - pwd && ls -l
-  - zip -r SGA_Apex_REST_API_WAR.zip SGA_Apex_REST_API_WAR || true
+  - zip -r SGA_Apex_REST_API_WAR.zip SGA_Apex_REST_API_WAR appspec.yml || true
   - mkdir -p "dpl_cd_upload"
   - mv SGA_Apex_REST_API_WAR.zip dpl_cd_upload/SGA_Apex_REST_API_WAR.zip || true
   - pwd && ls -l

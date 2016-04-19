@@ -6,12 +6,12 @@ files:
 hooks:
   BeforeInstall:
     - location: SGA_Apex_REST_API_WAR/src/main/resources/scripts/before-install.sh
-	  runas: root
+      runas: root
   AfterInstall:
     - location: SGA_Apex_REST_API_WAR/src/main/resources/scripts/after-install.sh
       timeout: 180
-	  runas: root
+      runas: root
   ApplicationStart:
     - location: SGA_Apex_REST_API_WAR/src/main/resources/scripts/install.sh
       timeout: 3600
-	  runas: root
+      runas: root
