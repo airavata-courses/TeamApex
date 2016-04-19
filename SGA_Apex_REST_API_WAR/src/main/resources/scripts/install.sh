@@ -4,4 +4,5 @@ mvn -e clean install
 
 echo 'Installing SGA_Apex_REST_API_WAR'
 cd ../SGA_Apex_REST_API_WAR
+mvn -e clean install
 mvn jetty:run
