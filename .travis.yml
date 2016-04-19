@@ -34,6 +34,7 @@ deploy:
     bundle_type: zip
     application: SGA-TeamApex-AWS
     deployment_group: AWSCodeDeploy
+    region: us-west-2
     on:
       repo: airavata-courses/TeamApex
       all_branches: true
