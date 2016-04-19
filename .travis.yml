@@ -8,9 +8,9 @@ script: cd "SGA_Build" && mvn -e clean install
 before_deploy:
   - cd ..
   - pwd && ls -l
-  - zip -r SGA_Apex_REST_API_WAR.zip SGA_Apex_REST_API_WAR appspec.yml || true
+  - zip -r SGA_Apex_Application.zip Science_Gateway_Apex SGA_Apex_REST_API_WAR appspec.yml || true
   - mkdir -p "dpl_cd_upload"
-  - mv SGA_Apex_REST_API_WAR.zip dpl_cd_upload/SGA_Apex_REST_API_WAR.zip || true
+  - mv SGA_Apex_Application.zip dpl_cd_upload/SGA_Apex_Application.zip || true
   - pwd && ls -l
 
 deploy:
@@ -30,7 +30,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
     secret_access_key: $AWS_SECRET_KEY
     bucket: airavata-team-apex
-    key: SGA_Apex_REST_API_WAR.zip
+    key: SGA_Apex_Application.zip
     bundle_type: zip
     application: AWSCodeDeploy
     deployment_group: AWSCodeDeploy
