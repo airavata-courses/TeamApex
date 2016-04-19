@@ -6,10 +6,11 @@ install: true
 script: cd "SGA_Build" && mvn -e clean install
 
 before_deploy:
-  - pwd
-  - ls -l
+  - cd ..
+  - pwd && ls -l
   - mkdir -p "dpl_cd_upload"
   - mv "SGA_Apex_REST_API_WAR/target/SGA_Apex_REST_API_WAR-0.1.0.war" "dpl_cd_upload/SGA_Apex_REST_API_WAR-0.1.0.war"
+  - pwd && ls -l
 
 deploy:
   - provider: s3
