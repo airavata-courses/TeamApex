@@ -32,7 +32,7 @@ deploy:
     bucket: airavata-team-apex
     key: SGA_Apex_REST_API_WAR.zip
     bundle_type: zip
-    application: SGA-TeamApex-AWS
+    application: AWSCodeDeploy
     deployment_group: AWSCodeDeploy
     region: us-west-2
     on:
