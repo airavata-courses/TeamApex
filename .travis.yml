@@ -4,17 +4,21 @@ jdk:
 sudo: false
 install: true
 script: cd "SGA_Build" && mvn -e clean install
+
+before_deploy:
+  - mkdir -p "dpl_cd_upload"
+  - mv "SGA_Apex_REST_API_WAR/target/SGA_Apex_REST_API_WAR-0.1.0.war" "dpl_cd_upload/SGA_Apex_REST_API_WAR-0.1.0.war"
+
 deploy:
-    provider: s3
+  - provider: s3
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
     secret_access_key: $AWS_SECRET_KEY
+    local_dir: dpl_cd_upload
     bucket: airavata-team-apex
-    endpoint: airavata-team-apex.s3-us-west-2.amazonaws.com
     region: us-west-2
     skip_cleanup: true
     acl: public_read
     detect_encoding: true
-    key: SGA_Apex_REST_API_WAR/target/SGA_Apex_REST_API_WAR-0.1.0.war
     on:
       repo: airavata-courses/TeamApex
       all_branches: true
