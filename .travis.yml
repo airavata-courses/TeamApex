@@ -6,7 +6,7 @@ install: true
 
 before_script:
   - pwd && ls -al
-  - cd Science_Gateway_Apex/src/main/resources
+  - cd Science_Gateway_Apex/src/main/resources/scripts
   - source replace_props.sh
   - pwd && ls -al
 
