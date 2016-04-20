@@ -10,6 +10,8 @@ before_script:
   - cd -
   - cat Science_Gateway_Apex/src/main/resources/karst_config.properties
   - cat Science_Gateway_Apex/src/main/resources/bigred2_config.properties
+  - cat Science_Gateway_Apex/src/main/resources/scripts/karst/sendmail.properties
+  - cat Science_Gateway_Apex/src/main/resources/scripts/bigred2/sendmail.properties
 
 script: cd "SGA_Build" && mvn -e clean install
 
@@ -45,8 +47,7 @@ deploy:
       repo: airavata-courses/TeamApex
       all_branches: true
 after_deploy:
-  - whoami
-  - pwd && ls -l
+  - echo "Performing after deploy procedures..."
 notifications:
   email:
     recipients:
