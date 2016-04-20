@@ -8,10 +8,6 @@ before_script:
   - cd Science_Gateway_Apex/src/main/resources/scripts
   - source replace_props.sh
   - cd -
-  - cat Science_Gateway_Apex/src/main/resources/karst_config.properties
-  - cat Science_Gateway_Apex/src/main/resources/bigred2_config.properties
-  - cat Science_Gateway_Apex/src/main/resources/scripts/karst/sendmail.properties
-  - cat Science_Gateway_Apex/src/main/resources/scripts/bigred2/sendmail.properties
 
 script: cd "SGA_Build" && mvn -e clean install
 
