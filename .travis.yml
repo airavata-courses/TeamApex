@@ -5,11 +5,11 @@ sudo: false
 install: true
 
 before_script:
-  - pwd && ls -al
   - cd Science_Gateway_Apex/src/main/resources/scripts
   - source replace_props.sh
+  - cat Science_Gateway_Apex/src/main/resources/karst_config.properties
+  - cat Science_Gateway_Apex/src/main/resources/bigred2_config.properties
   - cd -
-  - pwd && ls -al
 
 script: cd "SGA_Build" && mvn -e clean install
 
