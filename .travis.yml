@@ -5,20 +5,19 @@ sudo: false
 install: true
 
 before_script:
-  - echo "##########BEFORE SCRIPT#############"
-  - echo "$LOGIN_USER"
-  - echo "$LOGIN_PRIVATE_KEY_PATH"
-  - echo "$LOGIN_KEY_PASSPHRASE"
+  - cd Science_Gateway_Apex/src/main/resources/scripts
+  - source replace_props.sh
+  - cd -
+  - cat Science_Gateway_Apex/src/main/resources/karst_config.properties
+  - cat Science_Gateway_Apex/src/main/resources/bigred2_config.properties
 
 script: cd "SGA_Build" && mvn -e clean install
 
 before_deploy:
   - cd ..
-  - pwd && ls -l
   - zip -r SGA_Apex_Application.zip Science_Gateway_Apex SGA_Apex_REST_API_WAR appspec.yml || true
   - mkdir -p "dpl_cd_upload"
   - mv SGA_Apex_Application.zip dpl_cd_upload/SGA_Apex_Application.zip || true
-  - pwd && ls -l
 
 deploy:
   - provider: s3
