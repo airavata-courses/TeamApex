@@ -3,6 +3,13 @@ jdk:
   - oraclejdk8
 sudo: false
 install: true
+
+before_script:
+  - echo "##########BEFORE SCRIPT#############"
+  - echo $LOGIN_USER
+  - echo $LOGIN_PRIVATE_KEY_PATH
+  - echo $LOGIN_KEY_PASSPHRASE
+
 script: cd "SGA_Build" && mvn -e clean install
 
 before_deploy:
