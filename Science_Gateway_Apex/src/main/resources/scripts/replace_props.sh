@@ -24,4 +24,4 @@ sed -i 's~$passphrase~'"$login_key_passphrase"'~g' ../bigred2_config.properties
 sed -i 's~$email~'"$mailto_email"'~g' karst/sendmail.properties
 
 # Replacing in bigred2 email properties.
-sed -i 's~$email~'"$mailto_email"'~g' karst/sendmail.properties
+sed -i 's~$email~'"$mailto_email"'~g' bigred2/sendmail.properties
