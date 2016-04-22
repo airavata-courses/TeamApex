@@ -22,7 +22,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
     secret_access_key: $AWS_SECRET_KEY
     local_dir: dpl_cd_upload
-    bucket: airavata-team-apex
+    bucket: sga-team-apex
     region: us-west-2
     skip_cleanup: true
     acl: public_read
@@ -33,11 +33,11 @@ deploy:
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
     secret_access_key: $AWS_SECRET_KEY
-    bucket: airavata-team-apex
+    bucket: sga-team-apex
     key: SGA_Apex_Application.zip
     bundle_type: zip
-    application: AWSCodeDeploy
-    deployment_group: AWSCodeDeploy
+    application: SGA-TeamApex
+    deployment_group: SGA-TeamApex
     region: us-west-2
     on:
       repo: airavata-courses/TeamApex
