@@ -41,11 +41,30 @@ function renderExperimentList(response) {
 	
 	var experimentList = response.experimentListResponse.experimentList;
 	var srNo = 1;
+
+	// check if experiment list is empty
+	if(!experimentList) {
+		var noResultsHTML = "<div class='panel panel-default'>" +
+								"<div class='panel-body'>" +
+									"No experiments found in the database to show! " +
+									"Try creating an experiment <a href='/SGA_Apex'>here</a>" +
+								"</div>" +
+							"</div";
+		// Render html
+		$("#experimentList").html(noResultsHTML);
+		
+		// Hide Loading overlay
+		$("#overlay").css("visibility", "hidden");
+		
+		// Return
+		return;
+	} else if(!$.isArray(experimentList)) {
+		// add the single dict to array
+		experimentList = [experimentList];
+	}
 	
 	$.each(experimentList, function(i, item) {
-		
 		var date = new Date(item.createdAt);
-		
 		htmlString += "<tr>" +
 							"<td>" + (srNo++) + "</td>" +
 							"<td>" + item.jobName + "</td>" +
@@ -74,7 +93,7 @@ function renderExperimentList(response) {
 		jobID = tableData[2];
 		machineID = tableData[3];
 		
-		var experiment = $.grep(response.experimentListResponse.experimentList, function (element, index) {
+		var experiment = $.grep(experimentList, function (element, index) {
 		    return element.jobID == jobID && 
 		    		element.machine.machineID == machineID;
 		});
