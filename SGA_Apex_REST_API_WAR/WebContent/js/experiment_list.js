@@ -19,8 +19,8 @@ $(document).ready(function() {
 	$("#monitorBtn").click(function() {
 		// open monitor on a new page
 		window.open(
-				jobStatusURL + jobID + "&machineID=" + machineID,
-				'_blank' // <- This is what makes it open in a new window.
+			jobStatusURL + jobID + "&machineID=" + machineID,
+			'_blank' // <- This is what makes it open in a new window.
 		);
 	});
 });
@@ -28,31 +28,50 @@ $(document).ready(function() {
 
 function renderExperimentList(response) {
 	var htmlString = "<table id='experimentListTable' class='table table-hover'>" +
-					 		"<thead>" +
-								"<tr class='active'>" +
-									"<th data-field='srNo' data-sortable='true'> Sr No </th>" +
-									"<th data-field='expName' data-sortable='true'> Experiment Name </th>" +
-									"<th data-field='expID' data-sortable='true'> Experiment ID </th>" +
-									"<th data-field='machine' data-sortable='true'> Machine </th>" +
-									"<th data-field='createdAt' data-sortable='true'> Created Date </th>" +
-								"</tr>" + 
-							"</thead>" +
-							"<tbody>";
+		 		"<thead>" +
+					"<tr class='active'>" +
+						"<th data-field='srNo' data-sortable='true'> Sr No </th>" +
+						"<th data-field='expName' data-sortable='true'> Experiment Name </th>" +
+						"<th data-field='expID' data-sortable='true'> Experiment ID </th>" +
+						"<th data-field='machine' data-sortable='true'> Machine </th>" +
+						"<th data-field='createdAt' data-sortable='true'> Created Date </th>" +
+					"</tr>" + 
+				"</thead>" +
+				"<tbody>";
 	
 	var experimentList = response.experimentListResponse.experimentList;
 	var srNo = 1;
+
+	// check if experiment list is empty
+	if(!experimentList) {
+		var noResultsHTML = "<div class='panel panel-default'>" +
+					"<div class='panel-body'>" +
+						"No experiments found in the database to show! " +
+						"Try creating an experiment <a href='/SGA_Apex'>here</a>" +
+					"</div>" +
+				"</div";
+		// Render html
+		$("#experimentList").html(noResultsHTML);
+		
+		// Hide Loading overlay
+		$("#overlay").css("visibility", "hidden");
+		
+		// Return
+		return;
+	} else if(!$.isArray(experimentList)) {
+		// add the single dict to array
+		experimentList = [experimentList];
+	}
 	
 	$.each(experimentList, function(i, item) {
-		
 		var date = new Date(item.createdAt);
-		
 		htmlString += "<tr>" +
-							"<td>" + (srNo++) + "</td>" +
-							"<td>" + item.jobName + "</td>" +
-							"<td>" + item.jobID + "</td>" +
-							"<td>" + item.machine.machineID + "</td>" +
-							"<td>" + date.toDateString() + "</td>" +
-						"</tr>";
+					"<td>" + (srNo++) + "</td>" +
+					"<td>" + item.jobName + "</td>" +
+					"<td>" + item.jobID + "</td>" +
+					"<td>" + item.machine.machineID + "</td>" +
+					"<td>" + date.toDateString() + "</td>" +
+				"</tr>";
 	});
 		
 	htmlString += "</tbody> </table>";
@@ -74,7 +93,7 @@ function renderExperimentList(response) {
 		jobID = tableData[2];
 		machineID = tableData[3];
 		
-		var experiment = $.grep(response.experimentListResponse.experimentList, function (element, index) {
+		var experiment = $.grep(experimentList, function (element, index) {
 		    return element.jobID == jobID && 
 		    		element.machine.machineID == machineID;
 		});
@@ -90,47 +109,47 @@ function renderExperimentDetails(experiment) {
 	var date = new Date(experiment.createdAt);
 	
 	var htmlString = "<table class='table table-hover'>" +
-						"<tr class='active'>" +
-							"<td class='active'> Job ID </td>" +
-							"<td> " + experiment.jobID + "</td>" +
-						"</tr>" +
-						"<tr class='active'>" +
-							"<td class='active'> Job Name </td>" +
-							"<td> " + experiment.jobName + "</td>" +
-						"</tr>" +
-						"<tr class='active'>" +
-							"<td class='active'> Created Date </td>" +
-							"<td> " + date.toDateString() + "</td>" +
-						"</tr>" +
-						"<tr class='active'>" +
-							"<td class='active'> Status </td>" +
-							"<td> " + experiment.status + "</td>" +
-						"</tr>" +
-						"<tr class='active'>" +
-							"<td class='active'> User Name </td>" +
-							"<td> " + experiment.userName + "</td>" +
-						"</tr>" +						
-						"<tr class='active'>" +
-							"<td class='active'> Application </td>" +
-							"<td> " + experiment.application.appName + "</td>" +
-						"</tr>" +						
-						"<tr class='active'>" +
-							"<td class='active'> Number of Processors per Node </td>" +
-							"<td> " + experiment.numProcPerNode + "</td>" +
-						"</tr>" +
-						"<tr class='active'>" +
-							"<td class='active'> Number of Nodes </td>" +
-							"<td> " + experiment.numNodes + "</td>" +
-						"</tr>" +
-						"<tr class='active'>" +
-							"<td class='active'> Wall Time </td>" +
-							"<td> " + experiment.wallTime + "</td>" +
-						"</tr>" +
-						"<tr class='active'>" +
-							"<td class='active'> Machine </td>" +
-							"<td> " + experiment.machine.machineID + "</td>" +
-						"</tr>" +						
-					"</table>";
+				"<tr class='active'>" +
+					"<td class='active'> Job ID </td>" +
+					"<td> " + experiment.jobID + "</td>" +
+				"</tr>" +
+				"<tr class='active'>" +
+					"<td class='active'> Job Name </td>" +
+					"<td> " + experiment.jobName + "</td>" +
+				"</tr>" +
+				"<tr class='active'>" +
+					"<td class='active'> Created Date </td>" +
+					"<td> " + date.toDateString() + "</td>" +
+				"</tr>" +
+				"<tr class='active'>" +
+					"<td class='active'> Status </td>" +
+					"<td> " + experiment.status + "</td>" +
+				"</tr>" +
+				"<tr class='active'>" +
+					"<td class='active'> User Name </td>" +
+					"<td> " + experiment.userName + "</td>" +
+				"</tr>" +						
+				"<tr class='active'>" +
+					"<td class='active'> Application </td>" +
+					"<td> " + experiment.application.appName + "</td>" +
+				"</tr>" +						
+				"<tr class='active'>" +
+					"<td class='active'> Number of Processors per Node </td>" +
+					"<td> " + experiment.numProcPerNode + "</td>" +
+				"</tr>" +
+				"<tr class='active'>" +
+					"<td class='active'> Number of Nodes </td>" +
+					"<td> " + experiment.numNodes + "</td>" +
+				"</tr>" +
+				"<tr class='active'>" +
+					"<td class='active'> Wall Time </td>" +
+					"<td> " + experiment.wallTime + "</td>" +
+				"</tr>" +
+				"<tr class='active'>" +
+					"<td class='active'> Machine </td>" +
+					"<td> " + experiment.machine.machineID + "</td>" +
+				"</tr>" +						
+			"</table>";
 						
 	$("#experimentDetails").html(htmlString);
 	
