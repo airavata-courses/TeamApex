@@ -1,0 +1,52 @@
+language: java
+jdk:
+  - oraclejdk8
+sudo: false
+install: true
+
+before_script:
+  - cd Science_Gateway_Apex/src/main/resources/scripts
+  - source replace_props.sh
+  - cd -
+
+script: cd "SGA_Build" && mvn -e clean install
+
+before_deploy:
+  - cd ..
+  - zip -r SGA_Apex_Application.zip Science_Gateway_Apex SGA_Apex_REST_API_WAR appspec.yml || true
+  - mkdir -p "dpl_cd_upload"
+  - mv SGA_Apex_Application.zip dpl_cd_upload/SGA_Apex_Application.zip || true
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    local_dir: dpl_cd_upload
+    bucket: sga-team-apex
+    region: us-west-2
+    skip_cleanup: true
+    acl: public_read
+    detect_encoding: true
+    on:
+      repo: airavata-courses/TeamApex
+      all_branches: true
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: sga-team-apex
+    key: SGA_Apex_Application.zip
+    bundle_type: zip
+    application: SGA-TeamApex
+    deployment_group: SGA-TeamApex
+    region: us-west-2
+    on:
+      repo: airavata-courses/TeamApex
+      all_branches: true
+after_deploy:
+  - echo "Performing after deploy procedures..."
+notifications:
+  email:
+    recipients:
+      - erika27desouza@gmail.com
+      - vaglomangirish@gmail.com
+      - shenoy.200@gmail.com
