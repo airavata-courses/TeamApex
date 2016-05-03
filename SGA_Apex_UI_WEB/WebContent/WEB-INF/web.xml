@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>SGA_Apex_UI_WEB</display-name>
+  <filter>
+		<filter-name>cross-origin</filter-name>
+		<filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>cross-origin</filter-name>
+		<url-pattern>/sga/rest/*</url-pattern>
+	</filter-mapping>
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>ApexRealm</realm-name>
+		<form-login-config>
+			<form-login-page>/sga_login.html</form-login-page>
+			<form-error-page>/login-error.html</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<!-- Session Configuration -->
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Secure resources</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+			<role-name>user</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Open resources</web-resource-name>
+			<url-pattern>/assets/*</url-pattern>
+			<url-pattern>/sga/rest/user/register</url-pattern>
+		</web-resource-collection>
+	</security-constraint>
+</web-app>

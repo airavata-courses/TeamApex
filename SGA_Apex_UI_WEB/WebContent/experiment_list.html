@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SGA | Team Apex | Experiment List</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" />
+
+</head>
+<body style="padding-top: 70px;">
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+				</button>
+				<a class="navbar-brand" href="/SGA_Apex">SGA Team-Apex</a>
+			</div>
+			<!-- /navbar-header -->
+			
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/SGA_Apex">Home</a></li>
+					<li><a href="experiment_list.html">My Experiments</a></li>
+					<li><a href="team.html">Our Team</a></li>
+					<li><a target="_blank"	href="https://github.com/airavata-courses/TeamApex/wiki">Project Wiki</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="#">Logout <span	class="sr-only">(current)</span></a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Experiment List</h3>
+					</div>
+					<div id="experimentList" class="panel-body"">
+						<!-- body dynamically loaded by JS -->
+						
+						<!-- Overlay Div -->
+						<div class="form-group row col-xs-4" id="overlay">
+							<table width=100%> 
+							    <tr>
+							        <td style="text-align: center; vertical-align: middle;">
+							            <img src="images/loading_image.gif"></img>
+							        </td>
+							    </tr>
+							</table>
+						</div>
+						<!-- /overlay-div -->
+					</div>
+					<!-- /panel-body -->
+				</div>
+				<!-- panel -->
+				
+				<!-- Error Modal -->
+				<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="errorModalLabel">Error Occured</h4>
+							</div>
+							<div class="modal-body"></div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /error-modal -->
+				
+			</div>
+			<!-- /col-md-8 -->
+			
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Experiment Details</h3>
+					</div>
+					<div id="experimentDetails" class="panel-body"">
+						<!-- body dynamically loaded by JS -->
+						<div class="well">Click on any experiment row in table on the left to view details here.</div>
+					</div>
+					<!-- /panel-body -->
+					
+					<div class="panel-footer">
+						<!-- refresh button -->
+						<button id="monitorBtn" type="button" class="btn btn-success" style="display:none;">
+	 							<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+	 							Monitor
+						</button>
+						
+						<!-- download button -->
+						<button id="downloadBtn" type="button" class="btn btn-primary" style="display:none;">
+	 							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+	 							Output
+						</button>				
+					</div>
+					<!-- /panel-footer -->
+					
+				</div>
+				<!-- panel -->
+			</div>
+			<!-- /col-md-6 -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+
+
+	<!-- Jquery Plugin -->
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	
+	<!-- Bootstrap Javascript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+	<!-- Core logic scripts -->
+	<script src="js/sga_script.js"></script>
+	<script src="js/main_script.js"></script>
+	<script src="js/experiment_list.js"></script>
+	
+</body>
+</html>

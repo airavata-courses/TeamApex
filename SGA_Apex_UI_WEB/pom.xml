@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>edu.sga.apex</groupId>
+	<artifactId>SGA_Apex_UI_WEB</artifactId>
+	<version>0.0.1</version>
+	<packaging>war</packaging>
+	<name>SGA_Apex_UI_WEB</name>
+
+	<properties>
+		<!-- Logging -->
+		<slf4j.version>1.7.5</slf4j.version>
+
+		<!-- Jetty -->
+		<jettyVersion>9.2.11.v20150529</jettyVersion>
+
+		<!-- SQLITE Version -->
+		<sqlite.version>3.7.2</sqlite.version>
+
+		<!-- Maven war plugin -->
+		<warPluginVersion>2.6</warPluginVersion>
+		
+		<!-- MySQL Version -->
+		<mysql_version>5.1.6</mysql_version>
+	</properties>
+
+	<dependencies>
+		<!-- SLF4J Logging -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<!-- <scope>compile</scope> -->
+		</dependency>
+
+		<!-- Jetty server -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<directory>target</directory>
+		<outputDirectory>target/classes</outputDirectory>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${warPluginVersion}</version>
+				<configuration>
+					<webXml>WebContent\WEB-INF\web.xml</webXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- Plugin for maven-jetty -->
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jettyVersion}</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<connectors>
+						<httpConnector>
+							<port>8081</port>
+						</httpConnector>
+					</connectors>
+					<webAppSourceDirectory>${project.basedir}/WebContent</webAppSourceDirectory>
+					<webApp>
+						<contextPath>/SGA_Apex</contextPath>
+					</webApp>
+					<loginServices>
+						<loginService implementation="org.eclipse.jetty.security.JDBCLoginService">
+							<name>ApexRealm</name>
+							<config>${project.basedir}/jetty-jdbcConfig.properties</config>
+						</loginService>
+						<!-- <loginService implementation="org.eclipse.jetty.security.HashLoginService"> 
+							<name>ApexRealm</name> <config>${project.basedir}/jetty-config.properties</config> 
+							</loginService> -->
+					</loginServices>
+					<jettyXml>jetty.xml</jettyXml>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.xerial</groupId>
+						<artifactId>sqlite-jdbc</artifactId>
+						<version>${sqlite.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>${mysql_version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+
+	</build>
+</project>

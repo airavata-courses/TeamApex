@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+	<Call name="addBean">
+		<!-- <Arg> <New class="org.eclipse.jetty.security.HashLoginService"> <Set 
+			name="name">ApexRealm</Set> <Set name="config"><SystemProperty name="jetty.home" 
+			default="."/>jetty-config.properties</Set> <Set name="refreshInterval">0</Set> 
+			</New> </Arg> -->
+		<Arg>
+			<New class="org.eclipse.jetty.security.JDBCLoginService">
+				<Set name="name">ApexRealm</Set>
+				<Set name="config"><SystemProperty name="jetty.home" default="."/>${project.basedir}/jetty-jdbcConfig.properties</Set>
+			</New>
+		</Arg>
+	</Call>
+	<Call class="org.eclipse.jetty.util.log.Log" name="getRootLogger">
+		<Call name="setDebugEnabled">
+			<Arg type="boolean">true</Arg>
+		</Call>
+	</Call>
+</Configure>
