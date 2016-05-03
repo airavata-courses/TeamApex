@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -160,6 +161,26 @@ public class TestResource {
 		return builder.build();
 	}
 	
+	/**
+	 * Allow options.
+	 *
+	 * @return the response
+	 */
+	@OPTIONS
+	public Response allowOPTIONS() {
+		ResponseBuilder builder = Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
+		return builder.build();
+	}
+	
+	/**
+	 * Creates the temp file.
+	 *
+	 * @param inputStream the input stream
+	 * @param fileName the file name
+	 * @return the string
+	 */
 	private String createTempFile(InputStream inputStream, String fileName) {
 		OutputStream outputStream = null;
 		String outfile = null;

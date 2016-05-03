@@ -6,6 +6,7 @@ import java.io.File;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -360,6 +361,19 @@ public class JobResource {
 		}
 
 		/* Return the response */
+		return builder.build();
+	}
+	
+	/**
+	 * Allow options.
+	 *
+	 * @return the response
+	 */
+	@OPTIONS
+	public Response allowOPTIONS() {
+		ResponseBuilder builder = Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
 		return builder.build();
 	}
 }
