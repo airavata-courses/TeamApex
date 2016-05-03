@@ -8,6 +8,9 @@ before_script:
   - cd Science_Gateway_Apex/src/main/resources/scripts
   - source replace_props.sh
   - cd -
+  - cd SGA_Apex_REST_API_WAR/src/main/resources/scripts
+  - source replace_props.sh
+  - cd -
 
 script: cd "SGA_Build" && mvn -e clean install
 
