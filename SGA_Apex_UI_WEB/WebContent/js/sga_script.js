@@ -271,16 +271,23 @@ function cancelJob(machineID, jobID) {
  * Download Output function.
  */
 function downloadOutput(machineID, jobID) {
-	//$.get( baseURL + "/job/" + machineID + "/" + jobID + "/output", outputDownloadSuccess);
-	//$.ajax({
-	//	type: "GET",
-	//	url: baseURL + "/job/" + machineID + "/" + jobID + "/output",
-	//	success: outputDownloadSuccess,
-	//	error: apiErrorResponse
-	//});
+//	$.get( baseURL + "/job/" + machineID + "/" + jobID + "/output", outputDownloadSuccess);
+//	$.ajax({
+//		type: "GET",
+//		url: baseURL + "/job/" + machineID + "/" + jobID + "/output",
+//		beforeSend: function(xhr){
+//			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+//		},
+//		success: outputDownloadSuccess,
+//		error: apiErrorResponse
+//	});
 
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
+	
 	window.open(
-			baseURL + "/job/" + machineID + "/" + jobID + "/output", 
+			"http://" + username + ":" + password + "@" + 
+			"apex-api-host:8080/SGA_Apex/sga/rest/job/" + machineID + "/" + jobID + "/output", 
 			"_blank"
 	);
 }
