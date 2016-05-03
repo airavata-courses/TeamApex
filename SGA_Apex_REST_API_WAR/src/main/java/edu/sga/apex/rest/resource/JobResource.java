@@ -119,7 +119,7 @@ public class JobResource {
 				if( appIntf != null ) {
 					/* Submit job to Karst */
 					String jobId = appIntf.submitRemoteJob(bean, application, machine);
-					
+
 					/* null check */
 					if(jobId == null) {
 						throw new Exception("Error submitting job request! Please try again later.");
@@ -164,7 +164,7 @@ public class JobResource {
 		try {
 			/* Get machine name from db */
 			String machineName = MachineDAOUtil.getMachineNameById(machineID);
-			
+
 			SCInterface scIntf = null;
 
 			if( machineName.equals(MachineRefNames.BIGRED2.toString()) ) {
@@ -344,7 +344,7 @@ public class JobResource {
 
 			/* get experiment entity from db */
 			Experiment experimentDAO = ExperimentDAOUtil.getExperimentByJobIDAndMachineID(jobID, machineID);
-			
+
 			/* check if present in db */
 			if(experimentDAO == null) {
 				throw new Exception("Experiment with jobID: [" + jobID + "] on machine: [" + machineID + "] not found!");
@@ -363,18 +363,89 @@ public class JobResource {
 		/* Return the response */
 		return builder.build();
 	}
-	
+
 	/**
 	 * Allow options.
 	 *
 	 * @return the response
 	 */
 	@OPTIONS
-	@Path("*")
-	public Response allowOPTIONS() {
+	@Path("submit")
+	public Response allowOPTIONSSubmit() {
 		ResponseBuilder builder = Response.ok()
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
 		return builder.build();
 	}
+
+	/**
+	 * Allow options.
+	 *
+	 * @return the response
+	 */
+	@OPTIONS
+	@Path("{machineID}/{jobID}")
+	public Response allowOPTIONSDelete() {
+		ResponseBuilder builder = Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
+		return builder.build();
+	}
+
+	/**
+	 * Allow options.
+	 *
+	 * @return the response
+	 */
+	@OPTIONS
+	@Path("{jobId}/monitor")
+	public Response allowOPTIONSMonitor() {
+		ResponseBuilder builder = Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
+		return builder.build();
+	}
+
+	/**
+	 * Allow options.
+	 *
+	 * @return the response
+	 */
+	@OPTIONS
+	@Path("{jobId}/status")
+	public Response allowOPTIONSGetStatus() {
+		ResponseBuilder builder = Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
+		return builder.build();
+	}
+
+	/**
+	 * Allow options.
+	 *
+	 * @return the response
+	 */
+	@OPTIONS
+	@Path("{machineID}/{jobID}/output")
+	public Response allowOPTIONSGetOutFile() {
+		ResponseBuilder builder = Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
+		return builder.build();
+	}
+
+	/**
+	 * Allow options.
+	 *
+	 * @return the response
+	 */
+	@OPTIONS
+	@Path("{machineID}/{jobID}")
+	public Response allowOPTIONSGetExpt() {
+		ResponseBuilder builder = Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
+		return builder.build();
+	}
+
 }
