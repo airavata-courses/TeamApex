@@ -8,10 +8,16 @@ $(document).ready(function() {
 	jobID = getParameterByName("jobID");
 	machineID = getParameterByName("machineID");
 	
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
+	
 	//$.get( baseURL + "/job/" + machineID + "/" + jobID, renderJobStatus);
 	$.ajax({
 		type: "GET",
 		url: baseURL + "/job/" + machineID + "/" + jobID,
+		beforeSend: function(xhr){
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+		},
 		success: renderJobStatus,
 		error: apiErrorResponse
 	});

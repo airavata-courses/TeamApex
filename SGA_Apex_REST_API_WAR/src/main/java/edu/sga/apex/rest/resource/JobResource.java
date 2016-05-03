@@ -370,6 +370,7 @@ public class JobResource {
 	 * @return the response
 	 */
 	@OPTIONS
+	@Path("*")
 	public Response allowOPTIONS() {
 		ResponseBuilder builder = Response.ok()
 				.header("Access-Control-Allow-Origin", "*")

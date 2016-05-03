@@ -48,6 +48,9 @@ function uploadFile(fileObj) {
 	var data = new FormData();
 	data.append("file", fileObj);
 	console.log(data);
+	
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
 
 	$.ajax({
 		url: baseURL + '/file/upload',
@@ -56,6 +59,9 @@ function uploadFile(fileObj) {
 		contentType: false,
 		processData: false,
 		type: "POST",
+		beforeSend: function(xhr){
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+		},
 		success: fileUploadSuccess,
 		error: apiErrorResponse
 	});

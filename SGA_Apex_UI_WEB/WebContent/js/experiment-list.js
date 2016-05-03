@@ -1,6 +1,17 @@
 $(document).ready(function() {
+//	$.get( baseURL + "/user/jobs", renderExperimentList);
+
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
 	
-	$.get( baseURL + "/user/jobs", renderExperimentList);
+	$.ajax({
+		type: "GET",
+		url: baseURL + "/user/jobs",
+		beforeSend: function(xhr){
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+		},
+		success: renderExperimentList
+	});
 	
 	$("#monitorJob").submit(function(event) {
 		window.location.href = jobStatusURL + $('#jobIDM').val() + "&machineID=" + $("#machineMonitor").val();

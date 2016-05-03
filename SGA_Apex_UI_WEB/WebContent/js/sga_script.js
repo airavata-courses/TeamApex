@@ -180,6 +180,9 @@ function submitJob(procnum, email, nodenum, walltime, jobname, appId, machID) {
 	jobRequest.inputFiles = inputFiles;
 	jsonData.submitJobRequest = jobRequest;
 	console.log(JSON.stringify(jsonData));
+	
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
 
 	$.ajax({
 		type: "POST",
@@ -188,6 +191,9 @@ function submitJob(procnum, email, nodenum, walltime, jobname, appId, machID) {
 			'Content-type': "application/json"
 		},
 		data: JSON.stringify(jsonData),
+		beforeSend: function(xhr){
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+		},
 		success: jobSubmitSuccess,
 		error: apiErrorResponse,
 		dataType: "json"
@@ -200,11 +206,17 @@ function submitJob(procnum, email, nodenum, walltime, jobname, appId, machID) {
 function monitorJob(jobID) {
 	// Show loading overlay
 	$("#overlay").css("visibility", "visible");
+	
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
 
 	//$.get( baseURL + "/job/" + jobID + "/monitor", jobMonitorSuccess );
 	$.ajax({
 		type: "GET",
 		url: baseURL + "/job/" + jobID + "/monitor",
+		beforeSend: function(xhr){
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+		},
 		success: jobMonitorSuccess,
 		error: apiErrorResponse
 	});
@@ -216,11 +228,17 @@ function monitorJob(jobID) {
 function getStatus(jobID) {
 	// Show loading overlay
 	$("#overlay").css("visibility", "visible");
+	
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
 
 	//$.get( baseURL + "/job/" + jobID + "/status", jobGetStatusSuccess );
 	$.ajax({
 		type: "GET",
 		url: baseURL + "/job/" + jobID + "/status",
+		beforeSend: function(xhr){
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+		},
 		success: jobGetStatusSuccess,
 		error: apiErrorResponse
 	});
@@ -234,10 +252,16 @@ function cancelJob(machineID, jobID) {
 
 	// Show loading overlay
 	$("#overlay").css("visibility", "visible");
+	
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
 
 	$.ajax({
 		type: "DELETE",
 		url: baseURL + "/job/" + machineID + "/" + jobID,
+		beforeSend: function(xhr){
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+		},
 		success: jobCancelSuccess,
 		error: apiErrorResponse
 	});

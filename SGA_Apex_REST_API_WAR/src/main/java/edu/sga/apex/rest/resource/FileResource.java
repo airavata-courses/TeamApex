@@ -95,6 +95,7 @@ public class FileResource {
 	 * @return the response
 	 */
 	@OPTIONS
+	@Path("upload")
 	public Response allowOPTIONS() {
 		ResponseBuilder builder = Response.ok()
 				.header("Access-Control-Allow-Origin", "*")

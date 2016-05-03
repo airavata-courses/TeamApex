@@ -4,10 +4,16 @@ $(document).ready(function() {
 	$("#monitorBtn").hide();
 	$("#downloadBtn").hide();
 	
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
+	
 	// get experiment list and render on page
 	$.ajax({
 		type: "GET",
 		url: baseURL + "/user/jobs",
+		beforeSend: function(xhr){
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+		},
 		success: renderExperimentList,
 		error: apiErrorResponse
 	});

@@ -201,8 +201,23 @@ public class UserResource {
 	 *
 	 * @return the response
 	 */
+	@Path("jobs")
 	@OPTIONS
 	public Response allowOPTIONS() {
+		ResponseBuilder builder = Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
+		return builder.build();
+	}
+	
+	/**
+	 * Allow options.
+	 *
+	 * @return the response
+	 */
+	@Path("register")
+	@OPTIONS
+	public Response allowOPTIONSREGISTER() {
 		ResponseBuilder builder = Response.ok()
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
