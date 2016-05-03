@@ -42,7 +42,6 @@ $(document).ready(function() {
 	$("#myModal .modal-footer button").click(function() {
 		window.location.href = jobStatusURL + jobID + "&machineID=" + machineID;
 	});
-	
 });
 
 function uploadFile(fileObj) {
@@ -87,7 +86,17 @@ function fileUploadSuccess(data) {
 
 function getApplicationList() {
 	// api call to get application list
-	$.get( baseURL + "/application", applicationGetSuccess);
+	var username = $.jStorage.get('username', 'admin');
+	var password = $.jStorage.get('password', 'apex123');
+	
+	$.ajax({
+		type: "GET",
+		url: baseURL + "/application",
+		beforeSend: function(xhr){
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+		},
+		success: applicationGetSuccess
+	});
 }
 
 function applicationGetSuccess(response) {

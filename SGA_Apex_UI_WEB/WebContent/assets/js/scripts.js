@@ -56,6 +56,12 @@ jQuery(document).ready(function() {
 			dataType: "json"
 		});
 	});
+    
+    $("#loginBtn").on('click', function() {
+		// cache locally
+		$.jStorage.set('username', $('#j_username').val());
+		$.jStorage.set('password', $('#j_password').val());
+	});
 });
 
 /**

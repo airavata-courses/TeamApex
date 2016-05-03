@@ -3,7 +3,7 @@
  * @author: Mangirish Wagle
  */
 
-var baseURL = "/SGA_Apex/sga/rest";
+var baseURL = "http://apex-api-host:8080/SGA_Apex/sga/rest";
 var jobStatusURL = "job_status.html?jobID=";
 var fileUploadCount = 0;
 var fileContentURLs = [];

@@ -38,7 +38,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Open resources</web-resource-name>
-			<url-pattern>/assets/*</url-pattern>
+			<url-pattern>/assets/*</url-pattern>			
 			<url-pattern>/sga/rest/user/register</url-pattern>
 		</web-resource-collection>
 	</security-constraint>

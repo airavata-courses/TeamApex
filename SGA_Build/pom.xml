@@ -10,6 +10,7 @@
 	<modules>
 		<module>../Science_Gateway_Apex</module>
 		<module>../SGA_Apex_REST_API_WAR</module>
+		<module>../SGA_Apex_UI_WEB</module>
 		<module>../SGA_Apex_Client</module>
 	</modules>
 </project>

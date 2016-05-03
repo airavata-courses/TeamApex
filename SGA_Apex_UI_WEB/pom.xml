@@ -19,7 +19,7 @@
 
 		<!-- Maven war plugin -->
 		<warPluginVersion>2.6</warPluginVersion>
-		
+
 		<!-- MySQL Version -->
 		<mysql_version>5.1.6</mysql_version>
 	</properties>
@@ -78,11 +78,9 @@
 				<version>${jettyVersion}</version>
 				<configuration>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<connectors>
-						<httpConnector>
-							<port>8081</port>
-						</httpConnector>
-					</connectors>
+					<httpConnector>
+						<port>8081</port>
+					</httpConnector>
 					<webAppSourceDirectory>${project.basedir}/WebContent</webAppSourceDirectory>
 					<webApp>
 						<contextPath>/SGA_Apex</contextPath>
