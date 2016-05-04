@@ -3,6 +3,7 @@ package edu.sga.apex.rest.resource;
 import java.io.IOException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -85,6 +86,20 @@ public class FileResource {
 		} 
 
 		/* Return the response */
+		return builder.build();
+	}
+	
+	/**
+	 * Allow options.
+	 *
+	 * @return the response
+	 */
+	@OPTIONS
+	@Path("upload")
+	public Response allowOPTIONS() {
+		ResponseBuilder builder = Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Origin,Authorization");
 		return builder.build();
 	}
 }

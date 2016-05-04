@@ -28,12 +28,8 @@
 	</filter-mapping>
 
 	<login-config>
-		<auth-method>FORM</auth-method>
-		<realm-name>ApexRealm</realm-name>
-		<form-login-config>
-			<form-login-page>/sga_login.html</form-login-page>
-			<form-error-page>/login-error.html</form-error-page>
-		</form-login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>ApexRealm</realm-name>		
 	</login-config>
 
 	<!-- Session Configuration -->
@@ -45,6 +41,7 @@
 		<web-resource-collection>
 			<web-resource-name>Secure resources</web-resource-name>
 			<url-pattern>/*</url-pattern>
+			<http-method-omission>OPTIONS</http-method-omission>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>admin</role-name>

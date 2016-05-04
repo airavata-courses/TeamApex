@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SGA | Team Apex | Dashboard</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/sga_apex.css">
+
+</head>
+<body style="padding-top: 70px;">
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">SGA Team-Apex</a>
+			</div>
+			<!-- /navbar-header -->
+
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/SGA_Apex">Home</a></li>
+					<li><a href="experiment_list.html">My Experiments</a></li>
+					<li><a href="team.html">Our Team</a></li>
+					<li><a target="_blank"
+						href="https://github.com/airavata-courses/TeamApex/wiki">Project
+							Wiki</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="#">Logout <span
+							class="sr-only">(current)</span></a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Submit A Job</h3>
+					</div>
+					<div class="panel-body">
+						<form id="submitJob" action="">
+							<div class="form-group row col-xs-8">
+								<label for="jobName">Job Name</label> 
+								<input type="text"
+									class="form-control" id="jobName"
+									placeholder="Enter Job Name (eg: goshenoy-01)"
+									required>
+							</div>
+							<!-- /form-group -->
+
+							<div class="form-group row col-xs-8">
+								<label for="numProc">Number of Processors</label> 
+								<input type="number" class="form-control" id="numProc"
+									placeholder="Enter Number of Processors (eg: 16)"
+									required>
+							</div>
+							<!-- /form-group -->
+
+							<div class="form-group row col-xs-8">
+								<label for="numNodes">Number of Nodes</label> 
+								<input type="number" class="form-control" id="numNodes"
+									placeholder="Enter Number of Nodes (eg: 2)"
+									required>
+							</div>
+							<!-- /form-group -->
+
+							<div class="form-group row col-xs-8">
+								<label for="email">Email ID</label> 
+								<input type="email" class="form-control" id="email"
+									placeholder="Enter Email ID (eg: abc@indiana.edu)"
+									required>
+							</div>
+							<!-- /form-group -->
+
+							<div class="form-group row col-xs-8">
+								<label for="wallTime">Wall Time (hh:mm:ss)</label>
+								<input type="text" class="form-control" id="wallTime"
+									placeholder="Enter Wall-Time (eg: 30:00)"
+									required>
+							</div>
+							<!-- /form-group -->
+							
+							<div id="experimentSelect" class="form-group row col-xs-8">
+								<label for="experiment">Select an Application</label>
+								<select id="application">
+								  	<!-- dynamically load applications -->
+								</select>
+							</div>
+							<!-- /form-group -->
+							
+							<div id="machineSelect" class="form-group row col-xs-8">
+								<label for="machine">Select a machine</label>
+								<select id="machine">
+								  <option value="karst01">Karst</option>
+								  <option value="bigred201">Big Red 2</option>
+								</select>
+							</div>
+							<!-- /form-group -->
+
+							<div id="appInputDiv" class="form-group row col-xs-8">
+								<label for="inputFile1">Portable-Input-Binary-File (GROMACS)</label>
+								<input type="file" id="inputFile1" required>
+								<p class="help-block">Coordinates velocities, molecular
+									topology and simulation parameters - pdb1y6l-EM-vacuum.tpr</p>
+
+								<label for="inputFile2">Coordinate-File (GROMACS)</label>
+								<input type="file" id="inputFile2" required>
+								<p class="help-block">Trajectory Coordinates Molecular
+									Structure in Gromos87 format - pdb1y6l-EM-vacuum.gro</p>
+							</div>
+							<!-- /form-group -->
+
+							<!-- buttons -->
+							<div class="form-group row col-xs-8">
+								<button type="submit" class="btn btn-success">Submit Job</button>
+								<button type="reset" class="btn btn-warning">Clear Form</button>
+							</div>
+						</form>
+						<!-- /form -->
+
+						<!-- Overlay Div -->
+						<div id=overlay style="visibility: hidden">
+							<table width=100% height=100%>
+								<tr>
+									<td style="text-align: center; vertical-align: middle;">
+									<img src="images/loading_image.gif"></img></td>
+								</tr>
+							</table>
+						</div>
+
+					</div>
+					<!-- /panel-body -->
+
+					<div id="submitJobResp" class="panel-footer" style="display: none;"></div>
+					<!-- /panel-footer -->
+				</div>
+				<!-- panel -->
+
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Submit Job
+									Response</h4>
+							</div>
+							<div class="modal-body"></div>
+							<div class="modal-footer">
+								<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  -->
+								<button type="button" class="btn btn-primary">Continue</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /modal -->
+				
+				<!-- Error Modal -->
+				<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="errorModalLabel">Error Occured</h4>
+							</div>
+							<div class="modal-body"></div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /error-modal -->
+				
+				<!-- Job Cancel Modal -->
+				<div class="modal fade" id="jobCancelModal" tabindex="-1" role="dialog" aria-labelledby="jobCancelModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="jobCancelModalLabel">Cancel Job Response</h4>
+							</div>
+							<div class="modal-body"></div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /job-cancel-modal -->
+			</div>
+			<!-- /col-md-8 -->
+
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Monitor A Job</h3>
+					</div>
+					<div class="panel-body">
+						<form id="monitorJob" action="">
+							<div class="form-group row col-xs-12">
+								<label for="jobIDM">Job ID</label> 
+								<input type="text" class="form-control" id="jobIDM"
+									placeholder="Enter Job ID (eg: 1245132.m2)"
+									required>
+							</div>
+							<!-- /form-group -->
+							
+							<div id="machineSelectMonitor" class="form-group row col-xs-8">
+								<label for="machineMonitor">Select a machine</label>
+								<select id="machineMonitor">
+								  <option value="karst01">Karst</option>
+								  <option value="bigred201">Big Red 2</option>
+								</select>
+							</div>
+							<!-- /form-group -->
+
+							<!-- buttons -->
+							<div class="form-group row col-xs-8">
+								<button type="submit" class="btn btn-success">Monitor Job</button>
+								<button type="reset" class="btn btn-warning">Clear Box</button>
+							</div>
+						</form>
+						<!-- /form -->
+					</div>
+					<!-- /panel-body -->
+				</div>
+				<!-- panel-1 -->
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Download Output Files</h3>
+					</div>
+					<div class="panel-body">
+						<form id="downloadOP" action="">
+							<div class="form-group row col-xs-12">
+								<label for="jobIDD">Job ID</label>
+								<input type="text" class="form-control" id="jobIDD"
+									placeholder="Enter Job ID (eg: 1245132.m2)"
+									required>
+							</div>
+							<!-- /form-group -->
+							
+							<div id="machineSelectDownload" class="form-group row col-xs-8">
+								<label for="machineDownload">Select a machine</label>
+								<select id="machineDownload">
+								  <option value="karst01">Karst</option>
+								  <option value="bigred201">Big Red 2</option>
+								</select>
+							</div>
+							<!-- /form-group -->
+
+							<!-- buttons -->
+							<div class="form-group row col-xs-8">
+								<button type="submit" class="btn btn-success">Download Output</button>
+								<button type="reset" class="btn btn-warning">Clear Box</button>
+							</div>
+						</form>
+						<!-- /form -->
+					</div>
+					<!-- /panel-body -->
+
+					<div id="downloadResp" class="panel-footer" style="display: none;"></div>
+					<!-- /panel-footer -->
+				</div>
+				<!-- panel-2 -->
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Cancel A Job</h3>
+					</div>
+					<div class="panel-body">
+						<form id="cancelJob" action="">
+							<div class="form-group row col-xs-12">
+								<label for="jobIDC">Job ID</label> 
+								<input type="text" class="form-control" id="jobIDC"
+									placeholder="Enter Job ID (eg: 1245132.m2)"
+									required>
+							</div>
+							
+							<div id="machineSelectCancel" class="form-group row col-xs-8">
+								<label for="machineCancel">Select a machine</label>
+								<select id="machineCancel">
+								  <option value="karst01">Karst</option>
+								  <option value="bigred201">Big Red 2</option>
+								</select>
+							</div>
+							<!-- /form-group -->
+
+							<!-- buttons -->
+							<div class="form-group row col-xs-8">
+								<button type="submit" class="btn btn-success">Cancel
+									Job</button>
+								<button type="reset" class="btn btn-warning">Clear Box</button>
+							</div>
+						</form>
+						<!-- /form -->
+					</div>
+					<!-- /panel-body -->
+
+					<div id="cancelJobResp" class="panel-footer" style="display: none;"></div>
+					<!-- /panel-footer -->
+				</div>
+				<!-- panel-3 -->
+			</div>
+			<!-- /col-md-4 -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+
+
+	<!-- Jquery Plugin -->
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+
+	<!-- Bootstrap Javascript -->
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<!-- JStorage -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
+	<script src="assets/js/jstorage.js"></script>
+
+	<!-- Core logic scripts -->
+	<script src="js/sga_script.js"></script>
+	<script src="js/main_script.js"></script>
+
+</body>
+</html>
