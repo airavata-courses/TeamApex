@@ -9,7 +9,8 @@ Implemented microservices for UI, Database and API and Middleware.
 
 Following are the links for:-
 
-*[Testing Microservices setup on AWS using CI/ CD](https://github.com/airavata-courses/TeamApex/wiki/Milestone-6:-Milestone-6-Setup)
+* [Testing Microservices setup on AWS using CI/ CD](https://github.com/airavata-courses/TeamApex/wiki/Milestone-6:-Milestone-6-Setup)
 
-*[Testing Microservices setup on AWS using CI/ CD](https://github.com/airavata-courses/TeamApex/wiki/Milestone-6:-Steps-to-provision-RDS-MySQL-Instance)
+* [Informational page for RDS DB Instance setup](https://github.com/airavata-courses/TeamApex/wiki/Milestone-6:-Steps-to-provision-RDS-MySQL-Instance)
+
 (P.S. These steps are not needed to be executed for the milestone 6. The DB instance has been setup and the page is just informational.)
