@@ -13,4 +13,4 @@ Following are the links for:-
 
 * [Informational page for RDS DB Instance setup](https://github.com/airavata-courses/TeamApex/wiki/Milestone-6:-Steps-to-provision-RDS-MySQL-Instance)
 
-(P.S. These steps are not needed to be executed for the milestone 6. The DB instance has been setup and the page is just informational.)
+  (P.S. These steps are not needed to be executed for the milestone 6. The DB instance has been setup and the page is just informational.)
