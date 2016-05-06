@@ -2,7 +2,7 @@
 jQuery(document).ready(function() {
 	
 	// base url
-	var baseURL = "/SGA_Apex/sga/rest";
+	var baseURL = "http://apex-api-host:8080/SGA_Apex/sga/rest";
 	
     /*
         Fullscreen background
