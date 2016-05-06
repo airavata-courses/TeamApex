@@ -43,12 +43,19 @@ jQuery(document).ready(function() {
 		jsonData.user = userRequest;
 		console.log(JSON.stringify(jsonData));
 		
+		var username = $.jStorage.get('username', 'admin');
+		var password = $.jStorage.get('password', 'apex123');
+
+		
 		// register user api
 		$.ajax({
 			type: "POST",
 			url: baseURL + "/user/register",
 			headers: {
 				'Content-type': "application/json"
+			},
+			beforeSend: function(xhr){
+				xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
 			},
 			data: JSON.stringify(jsonData),
 			success: registerUserSuccess,
