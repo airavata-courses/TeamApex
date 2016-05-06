@@ -2,7 +2,7 @@
 jQuery(document).ready(function() {
 	
 	// base url
-	var baseURL = "/SGA_Apex/sga/rest";
+	var baseURL = "http://apex-api-host:8080/SGA_Apex/sga/rest";
 	
     /*
         Fullscreen background
@@ -37,11 +37,15 @@ jQuery(document).ready(function() {
 		// Construct JSON
 		var jsonData = new Object();
 		var userRequest = new Object();
-		userRequest.userName = $('#form-username').val();
-		userRequest.password = $('#form-password').val();
+		userRequest.userName = $('#j_username').val();
+		userRequest.password = $('#j_password').val();
 		
 		jsonData.user = userRequest;
 		console.log(JSON.stringify(jsonData));
+		
+		var username = $.jStorage.get('username', 'admin');
+		var password = $.jStorage.get('password', 'apex123');
+
 		
 		// register user api
 		$.ajax({
@@ -49,6 +53,9 @@ jQuery(document).ready(function() {
 			url: baseURL + "/user/register",
 			headers: {
 				'Content-type': "application/json"
+			},
+			beforeSend: function(xhr){
+				xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
 			},
 			data: JSON.stringify(jsonData),
 			success: registerUserSuccess,
