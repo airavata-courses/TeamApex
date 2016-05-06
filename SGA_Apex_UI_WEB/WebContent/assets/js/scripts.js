@@ -37,8 +37,8 @@ jQuery(document).ready(function() {
 		// Construct JSON
 		var jsonData = new Object();
 		var userRequest = new Object();
-		userRequest.userName = $('#form-username').val();
-		userRequest.password = $('#form-password').val();
+		userRequest.userName = $('#j_username').val();
+		userRequest.password = $('#j_password').val();
 		
 		jsonData.user = userRequest;
 		console.log(JSON.stringify(jsonData));
